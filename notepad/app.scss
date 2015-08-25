@@ -70,5 +70,12 @@ body {
 }
 
 .content-node.todo {
+  padding-left: 20px;
   padding-bottom: 20px;
+  position: relative;
+}
+
+.content-node.todo .done {
+  position: absolute;
+  left: 0px;
 }
