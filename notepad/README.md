@@ -145,21 +145,18 @@ In the configuration object we pass the `Note` article class that we just define
 TodoComponent.Prototype = function() {
   ...
   this.render = function() {
-    // Checkbox defining wheter a todo is done or not
-    var checkbox = $$('input').attr({type: 'checkbox'}).on('mousedown', this.toggleDone);
-    if (this.props.node.done) {
-      checkbox.attr('checked', '1');
-    }
+    // Checkbox defining wheter a todo is done or not. We don't want the cursor
+    // to move inside this area,so we set contenteditable to false
+    var checkbox = $$('span').addClass('done').attr({contenteditable: false}).append(
+      $$(Icon, {icon: this.props.node.done ? "fa-check-square-o" : "fa-square-o"})
+    );
+    checkbox.on('mousedown', this.toggleDone);
 
     var el = $$('div')
       .addClass(this.getClassNames())
       .attr("data-id", this.props.node.id)
       .append([
-        // Wrapper for the checkbox. We don't want the cursor
-        // to move inside this area, so we set contenteditable to false
-        $$('span').attr({contenteditable: false}).append(
-          checkbox
-        ),
+        checkbox,
         // TextProperty is used to render annotated content.
         // It takes a doc and a path to a text property as an input.
         $$(TextProperty).addProps({
