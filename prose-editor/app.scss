@@ -1,0 +1,52 @@
+// Substance Base Styles
+@import 'node_modules/substance/ui/styles/index';
+
+// Substance HTML Editor styles
+@import 'node_modules/substance/ui/styles/editor';
+
+body {
+  background: #f1f1f1;
+  padding: 30px;
+  overflow: hidden;
+}
+
+.footer {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  right: 10px;
+}
+
+/* Editor component
+------------------------------------------------------- */
+
+.editor-component {
+  position: fixed;
+  top: 10px;
+  bottom: 40px;
+  left: 10px;
+  right: 10px;
+  border: 1px solid #ddd;
+  background: white;
+  color: #222;
+}
+
+.toolbar {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.editor-component .container-node {
+  padding: 20px;
+  position: absolute;
+  top: 40px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  overflow: auto;
+}
+
