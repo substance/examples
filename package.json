@@ -3,7 +3,7 @@
   "repository": "substance/demos",
   "description": "Substance Demos",
   "dependencies": {
-    "substance": "substance/substance#master",
+    "substance": "1.0.0-beta",
     "jquery": "*"
   },
   "devDependencies": {
