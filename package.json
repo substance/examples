@@ -2,6 +2,7 @@
   "name": "substance-demos",
   "repository": "substance/demos",
   "description": "Substance Demos",
+  "license": "MIT",
   "dependencies": {
     "substance": "1.0.0-beta",
     "jquery": "*"
