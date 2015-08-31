@@ -11,7 +11,7 @@ You can start playing around with the code by cloning this repo and starting the
 
 ```bash
 $ git clone https://github.com/substance/demos.git
-$ cd editor
+$ cd demos
 $ npm install
 $ npm start
 ```
