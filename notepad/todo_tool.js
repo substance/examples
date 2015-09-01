@@ -1,13 +1,13 @@
 'use strict';
 
-var Tool = require('substance/surface/tool');
-var TodoTool = Tool.extend({
+var AnnotationTool = require('substance/ui/tools/annotation_tool');
+
+var TodoTool = AnnotationTool.extend({
 
   name: "todo",
 
   // Update toolstate according to current selection
-  update: function(surface, sel) {
-    this.surface = surface;
+  update: function(sel, surface) {
     var doc = this.getDocument();
     var path = sel.getPath();
     var node = doc.get(path[0]);
@@ -27,8 +27,7 @@ var TodoTool = Tool.extend({
       active = true;
     }
 
-    this.setToolState({
-      surface: surface,
+    this.setState({
       sel: sel,
       targetType: targetType,
       active: active,
@@ -37,8 +36,8 @@ var TodoTool = Tool.extend({
   },
 
   performAction: function() {
-    var surface = this.surface;
-    var state = this.getToolState();
+    var surface = this.getSurface();
+    var state = this.getState();
     var editor = surface.getEditor();
 
     // A Surface transaction performs a sequence of document operations
