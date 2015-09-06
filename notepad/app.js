@@ -1,23 +1,17 @@
 'use strict';
 
-var Substance = require('substance');
-var OO = Substance.OO;
-var Writer = require("substance/ui/writer");
+var $ = window.$ = require('jquery');
+var Notepad = require('./notepad');
+var Component = require('substance/ui/component');
+var $$ = Component.$$;
 
-// var tools = require('./tools');
-// var components = require('./components');
-var stateHandlers = require('./state_handlers');
+$(function() {
+  var htmlContent = $('#editor_container').html();
+  $('#editor_container').empty();
 
-function ScienceWriter(parent, params) {
-  params.props.config = {
-    containerId: 'body',
-    components: components,
-    tools: tools,
-    stateHandlers: stateHandlers
-  };
-  Writer.call(this, parent, params);
-}
+  var notepad = $$(Notepad, {
+    content: htmlContent
+  });
 
-OO.inherit(ScienceWriter, Writer);
-
-module.exports = ScienceWriter;
+  Component.mount(notepad, $('#editor_container'));
+});
