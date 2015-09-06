@@ -4,7 +4,7 @@
   "description": "Substance Demos",
   "license": "MIT",
   "dependencies": {
-    "substance": "substance/substance#tools-refactor",
+    "substance": "substance/substance#writer",
     "jquery": "*"
   },
   "devDependencies": {
