@@ -19,7 +19,12 @@ Backend.Prototype = function() {
     var doc = new Article();
     doc.loadHtml(TEST_DOCUMENT);
     window.doc = doc;
-    cb(null, doc);
+    // The problem was, that there was another setProps while
+    // the initial render was running - leading to a double trigger of didMount
+    // need to make it more robust in this regard
+    setTimeout(function() {
+      cb(null, doc);
+    });
   };
 
   this.saveDocument = function(doc, cb) {
