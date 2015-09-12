@@ -38,8 +38,8 @@ App.Prototype = function() {
   };
 };
 
-OO.inherit(App, Component.Root);
+OO.inherit(App, Component);
 
 $(function() {
-  new App().mount($('#container'));
+  Component.mount($$(App), $('#container'));
 });
