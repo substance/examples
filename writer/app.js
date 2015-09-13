@@ -26,7 +26,7 @@ App.Prototype = function() {
 
   this.render = function() {
     return $$('div').addClass('app').append(
-      $$(BasicWriter).key('writer')
+      $$(BasicWriter).ref('writer')
     );
   };
 

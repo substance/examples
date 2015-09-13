@@ -25,10 +25,10 @@ ContentEditor.Prototype = function() {
   this.render = function() {
     var doc = this.props.doc;
     return $$('div').addClass('panel-content-inner').append(
-      // $$(TitleEditor).key('title').addProps({ doc: doc }),
+      // $$(TitleEditor).ref('title').addProps({ doc: doc }),
       // The full fledged document (ContainerEditor)
-      $$("div").key("main").addClass("document-content").append(
-        $$(ContainerNodeComponent).key('editor')
+      $$("div").ref("main").addClass("document-content").append(
+        $$(ContainerNodeComponent).ref('editor')
           .attr('contenteditable', true)
           .addProps({
             doc: doc,
