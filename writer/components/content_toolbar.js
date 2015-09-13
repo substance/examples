@@ -21,8 +21,8 @@ var ContentToolbar = Component.extend({
       $$(UndoTool).append($$(Icon, {icon: "fa-undo"})),
       $$(RedoTool).append($$(Icon, {icon: "fa-repeat"})),
       $$(StrongTool).append($$(Icon, {icon: "fa-bold"})),
-      $$(EmphasisTool).append($$(Icon, {icon: "fa-italic"})),
-      $$(LinkTool).append($$(Icon, {icon: "fa-link"}))
+      $$(EmphasisTool).append($$(Icon, {icon: "fa-italic"}))
+      // $$(LinkTool).append($$(Icon, {icon: "fa-link"}))
     );
     return el;
   }
