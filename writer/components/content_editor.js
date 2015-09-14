@@ -30,7 +30,7 @@ ContentEditor.Prototype = function() {
       $$("div").ref("main").addClass("document-content").append(
         $$(ContainerNodeComponent).ref('editor')
           .attr('contenteditable', true)
-          .addProps({
+          .setProps({
             doc: doc,
             node: this.props.node,
             editor: this.editor
