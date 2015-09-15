@@ -4,7 +4,7 @@ var Article = require('substance/article');
 var TEST_DOCUMENT = [
   '<p>Hello world.</p>',
   '<h1>Heading 1</h1>',
-  '<p>Lorem ipsum.</p>',
+  '<p>Lorem ipsum with a <a href="http://substance.io">link</a>.</p>',
   '<h2>Heading 2</h2>'
 ].join('\n');
 

@@ -23,7 +23,7 @@ var ContentToolbar = Component.extend({
       $$(RedoTool).append($$(Icon, {icon: "fa-repeat"})),
       $$(StrongTool).append($$(Icon, {icon: "fa-bold"})),
       $$(EmphasisTool).append($$(Icon, {icon: "fa-italic"})),
-      // $$(LinkTool).append($$(Icon, {icon: "fa-link"}))
+      $$(LinkTool).append($$(Icon, {icon: "fa-link"}))
     );
     return el;
   }
