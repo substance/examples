@@ -2,6 +2,13 @@ var Editor = require('substance/ui/editor');
 var Note = require('./note');
 var Toolbar = require('./toolbar');
 
+var ToggleTodoCommand = require('./toggle_todo_command');
+var ToggleMarkCommand = require('./toggle_mark_command');
+
+var commands = require('substance/surface/commands');
+commands.push(ToggleMarkCommand);
+commands.push(ToggleTodoCommand);
+
 // Configure custom Notepad editor
 // ----------------------
 // 
@@ -12,6 +19,7 @@ var Notepad = Editor.extend({
   config: {
     article: Note,
     toolbar: Toolbar,
+    commands: commands,
     components: {
       "paragraph": require('substance/ui/nodes/paragraph_component'),
       "link": require('substance/ui/nodes/link_component'),

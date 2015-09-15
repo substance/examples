@@ -48,9 +48,9 @@ TodoComponent.Prototype = function() {
         checkbox,
         // TextProperty is used to render annotated content.
         // It takes a doc and a path to a text property as an input.
-        $$(TextProperty).addProps({
+        $$(TextProperty, {
           doc: this.props.doc,
-          path: [ this.props.node.id, "content"]
+          path: [ this.props.node.id, "content"]          
         })
       ]);
 
