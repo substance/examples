@@ -30,6 +30,16 @@ function TopicWriter(parent, params) {
   };
 
   Writer.call(this, parent, params);
+
+  // action handlers
+  this.actions({
+    "switch-state": this.switchState,
+    "switchContext": this.switchContext,
+    "open-modal": this.openModal,
+    "close-modal": this.closeModal,
+    "request-save": this.requestSave,
+    "execute-command": this.executeCommand,
+  });
 }
 
 TopicWriter.Prototype = function() {

@@ -86,7 +86,6 @@ EditTopicCitationPanel.Prototype = function() {
 
   this.handleCancel = function(e) {
     e.preventDefault();
-    debugger;
     this.send("switchContext", "toc");
   };
 
