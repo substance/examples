@@ -8,7 +8,6 @@ var TEST_DOCUMENT = [
   '<h2>Heading 2</h2>'
 ].join('\n');
 
-
 var AVAILABLE_TOPICS = [
   {
     "id": "topic_austria",
@@ -26,7 +25,7 @@ var AVAILABLE_TOPICS = [
   {
     "id": "topic_linzer_torte",
     "type": "food",
-    "name": "Hugary",
+    "name": "Linzer Torte",
     "wikipediaUrl": "https://en.wikipedia.org/wiki/Linzer_torte"
   }
 ];

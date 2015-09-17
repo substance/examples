@@ -19,3 +19,23 @@
 .topic-citation.active {
   background: rgba(11, 157, 217, 0.6);
 }
+
+
+// Edit TopicCitationPanel
+// ------------------------
+
+.edit-topic-citation-panel-component {
+  
+  .topic {
+    color: #444;
+    display: block;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    border-left: 2px solid transparent;
+  }
+
+  .topic.active {
+    background: #fff;
+    border-left: 2px solid #0b9dd9;
+  }
+}

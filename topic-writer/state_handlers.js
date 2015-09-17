@@ -64,7 +64,6 @@ var stateHandlers = {
     
 
     function getActiveAnnotations(state) {
-      console.log('getActiveAnnotations', state);
       if (!state) return [];
 
       // Subjects-specific
@@ -90,7 +89,6 @@ var stateHandlers = {
         // Use reference handler
         return _.map(doc.entityReferencesIndex.get(state.topicId));
       } else if (state.topicCitationId) {
-        console.log('topicCitationId', state.topicCitationId);
         return [ doc.get(state.topicCitationId) ];
       }
       return [];
@@ -107,7 +105,6 @@ var stateHandlers = {
         anno.setActive(false);
       });
       _.each(activeAnnos, function(anno) {
-        console.log('yo', anno.id);
         anno.setActive(true);
       });
       return true;

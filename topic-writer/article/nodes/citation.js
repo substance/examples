@@ -22,7 +22,9 @@ Citation.static.matchElement = function($el) {
 };
 
 Citation.static.fromHtml = function($el, converter) {
+  var id = converter.defaultId($el, 'citation');
   var citation = {
+    id: id,
     target: $el.attr('data-rid')
   };
 

@@ -62,7 +62,7 @@ TopicWriter.Prototype = function() {
   };
 
   this.getInitialState = function() {
-    return {"contextId": "toc"};
+    return {'contextId': 'editTopicCitation', 'topicCitationId': 'topic_citation_1'};
   };
 
   this.openModal = function(modalState) {
