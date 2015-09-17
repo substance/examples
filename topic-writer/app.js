@@ -1,6 +1,6 @@
 'use strict';
 
-var $ = window.$ = require('jquery');
+window.$ = require('jquery');
 var Substance = require('substance');
 var OO = Substance.OO;
 var Component = Substance.Component;
@@ -8,7 +8,7 @@ var $$ = Component.$$;
 
 var Backend = require("./services/backend");
 var Notifications = require("./services/notifications");
-var BasicWriter = require("./basic_writer");
+var TopicWriter = require("./topic_writer");
 
 function App() {
   Component.Root.apply(this, arguments);
@@ -26,7 +26,7 @@ App.Prototype = function() {
 
   this.render = function() {
     return $$('div').addClass('app').append(
-      $$(BasicWriter).ref('writer')
+      $$(TopicWriter).ref('writer')
     );
   };
 

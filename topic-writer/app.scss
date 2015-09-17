@@ -1,0 +1,21 @@
+// Substance Base Styles
+@import 'node_modules/substance/ui/styles/index';
+
+// Pull in common writer styles
+@import 'node_modules/substance/ui/styles/writer';
+
+// TOC Panel
+@import 'node_modules/substance/ui/styles/modules/toc_panel';
+
+// Custom styles go here
+// ------------------------
+
+.topic-citation {
+  background: rgba(11, 157, 217, 0.075);
+  color: #1B6685;
+  border-bottom: 1px solid rgba(11, 157, 217, 0.4);
+}
+
+.topic-citation.active {
+  background: rgba(11, 157, 217, 0.6);
+}
