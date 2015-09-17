@@ -50,6 +50,8 @@ app.listen(port, function() {
 
 // Use static server
 app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, 'assets')));
+app.use(express.static(path.join(__dirname, 'assets', 'font-awesome-4.4.0')));
 
 // Export app for requiring in test files
 module.exports = app;
