@@ -107,6 +107,12 @@ var stateHandlers = {
       _.each(activeAnnos, function(anno) {
         anno.setActive(true);
       });
+
+      // HACK: send a custom event to the doc that
+      // annotations active state has changed
+      // We need a better mechanism here
+      var activeAnnoIds = _.pluck(activeAnnos, 'id');
+      doc.emit('annotations:highlighted', activeAnnoIds);
       return true;
     } else {
       return false;
