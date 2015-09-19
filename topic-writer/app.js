@@ -25,16 +25,24 @@ function App() {
 App.Prototype = function() {
 
   this.render = function() {
-    return $$('div').addClass('app').append(
-      $$(TopicWriter).ref('writer')
-    );
+    var el = $$('div').addClass('app');
+
+    // Init writer only after doc has been loaded
+    if (this.state.doc) {
+      el.append($$(TopicWriter, {
+        doc: this.state.doc
+      }).ref('writer'));
+    }
+    return el;
   };
 
   this.didMount = function() {
-    var self = this;
+    
     this.backend.getDocument('sample', function(err, doc) {
-      self.refs.writer.setProps({doc: doc});
-    });
+      this.setState({
+        doc: doc
+      });
+    }.bind(this));
   };
 };
 
