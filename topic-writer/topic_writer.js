@@ -14,78 +14,27 @@ var ModalPanel = require('substance/ui/writer/modal_panel');
 var ContentToolbar = require('./components/content_toolbar');
 
 var components = require('./components');
-var stateHandlers = require('./state_handlers');
-
-
-// Ideas:
-// 
-// - Remove fixed things like contentToolbar from registry
 
 function TopicWriter(parent, params) {
+  // We can define the config here
   params.props.config = {
     panelOrder: ['toc'],
     containerId: 'body',
-    components: components,
-    stateHandlers: stateHandlers
+    components: components
   };
 
   Writer.call(this, parent, params);
 
-  // action handlers
-  this.actions({
-    "switch-state": this.switchState,
-    "switchContext": this.switchContext,
-    "open-modal": this.openModal,
-    "close-modal": this.closeModal,
-    "request-save": this.requestSave,
-    "execute-command": this.executeCommand,
-  });
+  // TODO: Can we define more action handlers here?
+  // this.actions({
+  //   "my-action": this.myAction
+  // });
 }
 
 TopicWriter.Prototype = function() {
 
-  this._panelPropsFromState = function (state) {
-    var props = _.omit(state, 'contextId');
-    props.doc = this.props.doc;
-    return props;
-  };
-
-  this._getActivePanelElement = function() {
-    if (this.componentRegistry.contains(this.state.contextId)) {
-      var panelComponent = this.componentRegistry.get(this.state.contextId);
-      return $$(panelComponent).setProps(this._panelPropsFromState(this.state));
-    } else {
-      console.warn("Could not find component for contextId:", this.state.contextId);
-    }
-  };
-
-  this._getActiveModalPanelElement = function() {
-    var state = this.state;
-    if (state.modal) {
-      var modalPanelComponent = this.componentRegistry.get(state.modal.contextId);
-      if (modalPanelComponent) {
-        return $$(modalPanelComponent).setProps(this._panelPropsFromState(state.modal));
-      } else {
-        console.warn("Could not find component for contextId:", state.modal.contextId);
-      }
-    }
-  };
-
   this.getInitialState = function() {
     return {'contextId': 'editTopicCitation', 'topicCitationId': 'topic_citation_1'};
-  };
-
-  this.openModal = function(modalState) {
-    var newState = _.cloneDeep(this.state);
-    newState.modal = modalState;
-    this.setState(newState);
-  };
-
-  // handles 'close-modal'
-  this.closeModal = function() {
-    var newState = _.cloneDeep(this.state);
-    delete newState.modal;
-    this.setState(newState);
   };
 
   this.render = function() {
@@ -118,18 +67,12 @@ TopicWriter.Prototype = function() {
           this.renderContextPanel()
         )
     );
-    // Modal panel, if active
-    if (this.state.modal) {
-      el.append(
-        this.renderModalPanel()
-      );      
-    }
 
-    // status bar
+    // Status bar
     el.append(
       $$(StatusBar).ref('statusBar').setProps({ doc: doc })
     );
-    // clipboard
+    // Clipboard
     el.append(
       $$('div').ref('clipboard').addClass("clipboard")
     );
@@ -137,31 +80,96 @@ TopicWriter.Prototype = function() {
     return el;
   };
 
-  this.renderModalPanel = function() {
-    var modalPanelElement = this._getActiveModalPanelElement();
-    if (!modalPanelElement) {
-      // Just render an empty div if no modal active available
-      return $$('div');
-    } else {
-      var el = $$(ModalPanel).ref('modal-panel').setProps({
-        panelElement: modalPanelElement
-      });
-      if (this.state.modal) {
-        el.extendProps(this.state.modal);
-      }
-      return el;
-    }
-  };
-
   this.renderContextPanel = function() {
-    var panelElement = this._getActivePanelElement();
-
+    var panelElement = this.getActivePanelElement();
     if (!panelElement) {
       return $$('div').append("No panels are registered");
     } else {
       return $$('div').ref('context-panel').append(panelElement);
     }
   };
+
+
+  this.onSelectionChanged = function(sel, surface) {
+    var contentContainer = surface.getContainer();
+    var doc = this.getDocument();
+
+    if (sel.equals(this.prevSelection)) {
+      return;
+    }
+    this.prevSelection = sel;
+
+    if (sel.isNull() || !sel.isPropertySelection() || !sel.isCollapsed()) return false;
+    if (surface.getContainerId() !== "body") return false;
+
+    // From topics panel
+    // ---------------
+    //
+
+    var annotations = doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "topic_citation");
+
+    if (annotations.length > 0) {
+      var topicCitation = annotations[0];
+      // Trigger state change
+      this.setState({
+        contextId: "editTopicCitation",
+        topicCitationId: topicCitation.id,
+        noScroll: true
+      });
+      return true;
+    }
+  };
+
+  // Hande Writer state change updates
+  // --------------
+  // 
+  // Here we update highlights
+
+  this.handleStateUpdate = function(newState) {
+    console.log('handle state update');
+    var oldState = this.state;
+    var doc = this.getDocument();
+
+    function getActiveAnnotations(state) {
+      if (!state) return [];
+
+      // Topic-specific annos
+      // --------------------
+      //
+      if (state.contextId === "topics" && state.topicId) {
+        // Use reference handler
+        return _.map(doc.entityReferencesIndex.get(state.topicId));
+      } else if (state.topicCitationId) {
+        return [ doc.get(state.topicCitationId) ];
+      }
+      return [];
+    }
+
+    var oldActiveAnnos = _.compact(getActiveAnnotations(oldState));
+    var activeAnnos = getActiveAnnotations(newState);
+    if (oldActiveAnnos.length || activeAnnos.length) {
+      var tmp = _.without(oldActiveAnnos, activeAnnos);
+      activeAnnos = _.without(activeAnnos, oldActiveAnnos);
+      oldActiveAnnos = tmp;
+
+      _.each(oldActiveAnnos, function(anno) {
+        anno.setActive(false);
+      });
+      _.each(activeAnnos, function(anno) {
+        anno.setActive(true);
+      });
+
+      // HACK: send a custom event to the doc that
+      // annotations active state has changed
+      // We need a better mechanism here
+      var activeAnnoIds = _.pluck(activeAnnos, 'id');
+      doc.emit('annotations:highlighted', activeAnnoIds);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 };
 
 OO.inherit(TopicWriter, Writer);

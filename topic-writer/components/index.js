@@ -1,6 +1,5 @@
 module.exports = {
   // Writer UI
-  'content_toolbar': require('./content_toolbar'),
   'content_editor': require('./content_editor'),
 
   // Content Nodes

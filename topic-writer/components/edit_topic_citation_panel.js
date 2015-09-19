@@ -40,7 +40,6 @@ EditTopicCitationPanel.Prototype = function() {
         });
       }.bind(this));
     } else {
-      console.log('init');
       topicEls = [$$('div')];
     }
 
@@ -60,16 +59,13 @@ EditTopicCitationPanel.Prototype = function() {
   };
 
   this.didMount = function() {
-    console.log('EditTopicCitationPanel.didMount');
+    // console.log('EditTopicCitationPanel.didMount');
     var backend = this.context.backend;
     backend.getTopics(function(err, topics) {
       this.setState({
         topics: topics
       });
     }.bind(this));
-
-    // this.tool = this.context.toolRegistry.get('cite');
-    // if (!this.tool) throw new Error('cite tool not found in registry');
   };
 
   this.willUnmount = function() {
