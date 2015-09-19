@@ -8,29 +8,53 @@ var Icon = require("substance/ui/font_awesome_icon");
 var $$ = Component.$$;
 
 var Topic = Component.extend({
+  onClick: function() {
+    this.send('selectTopic', this.props.topic.id);
+  },
   render: function() {
-    var el = $$('a').attr('href', '#').addClass('topic');
+    var el = $$('a')
+      .addClass('topic')
+      .attr('href', '#')
+      .on('click', this.onClick);
 
     if (this.props.active) {
       el.addClass('active');
     }
 
     el.append([
-      $$('div').addClass('name').append(this.props.topic.name)
+      $$('div')
+        .addClass('name')
+        .append(this.props.topic.name)
     ]);
     return el;
   }
 });
 
+// EditTopicCitationPanel
+// --------------------------
+
 function EditTopicCitationPanel() {
   Component.apply(this, arguments);
+  this.actions({
+    "selectTopic": this.selectTopic
+  });
 }
 
 EditTopicCitationPanel.Prototype = function() {
 
+  this.selectTopic = function(topicId) {
+    var surface = this.context.surface;
+
+    surface.transaction(function(tx, args) {
+      tx.set([this.props.topicCitationId, 'target'], topicId);
+      return args;
+    }.bind(this));
+
+    this.rerender();
+  };
+
   this.render = function() {
     var topicEls;
-  
 
     if (this.state.topics) {
       topicEls = this.state.topics.map(function(topic) {
@@ -59,17 +83,12 @@ EditTopicCitationPanel.Prototype = function() {
   };
 
   this.didMount = function() {
-    // console.log('EditTopicCitationPanel.didMount');
     var backend = this.context.backend;
     backend.getTopics(function(err, topics) {
       this.setState({
         topics: topics
       });
     }.bind(this));
-  };
-
-  this.willUnmount = function() {
-    // this.$el.off('click', '.back', this.handleCancel);
   };
 
   // Determines wheter an item is active
@@ -84,29 +103,8 @@ EditTopicCitationPanel.Prototype = function() {
     e.preventDefault();
     this.send("switchContext", "toc");
   };
-
-  this.getItems = function(citationType) {
-    var doc = this.props.doc;
-    var collection = doc.getCollection(citationType);
-    return collection.getItems();
-  };
-
-  // Called with entityId when an entity has been clicked
-  this.handleSelection = function(targetId) {
-    // var citationId = this.props.citationId;
-    // this.tool.toggleTarget(citationId, targetId);
-    // this.rerender();
-  };
 };
 
 OO.inherit(EditTopicCitationPanel, Component);
-
-// Panel configuration
-// ----------------
-
-EditTopicCitationPanel.icon = "fa-bullseye";
-
-// No context switch toggle is shown
-EditTopicCitationPanel.isDialog = true;
 
 module.exports = EditTopicCitationPanel;

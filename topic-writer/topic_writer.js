@@ -14,24 +14,25 @@ var ModalPanel = require('substance/ui/writer/modal_panel');
 var ContentToolbar = require('./components/content_toolbar');
 
 var components = require('./components');
+var commands = require('./commands');
 
 function TopicWriter(parent, params) {
   // We can define the config here
   params.props.config = {
     panelOrder: ['toc'],
     containerId: 'body',
-    components: components
+    components: components,
+    commands: commands
   };
 
   Writer.call(this, parent, params);
-
-  // TODO: Can we define more action handlers here?
-  // this.actions({
-  //   "my-action": this.myAction
-  // });
 }
 
 TopicWriter.Prototype = function() {
+
+  this.myAction = function(param) {
+    console.log('myaction', param);
+  };
 
   this.getInitialState = function() {
     return {'contextId': 'editTopicCitation', 'topicCitationId': 'topic_citation_1'};

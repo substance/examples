@@ -11,6 +11,7 @@ var TextTool = require('substance/ui/tools/text_tool');
 var StrongTool = require('substance/ui/tools/strong_tool');
 var EmphasisTool = require('substance/ui/tools/emphasis_tool');
 var LinkTool = require('substance/ui/tools/link_tool');
+var TopicCitationTool = require('../tools/topic_citation_tool');
 
 var ContentToolbar = Component.extend({
   displayName: "ContentToolbar",
@@ -23,7 +24,8 @@ var ContentToolbar = Component.extend({
       $$(RedoTool).append($$(Icon, {icon: "fa-repeat"})),
       $$(StrongTool).append($$(Icon, {icon: "fa-bold"})),
       $$(EmphasisTool).append($$(Icon, {icon: "fa-italic"})),
-      $$(LinkTool).append($$(Icon, {icon: "fa-link"}))
+      $$(LinkTool).append($$(Icon, {icon: "fa-link"})),
+      $$(TopicCitationTool).append($$(Icon, {icon: "fa-tag"}))
     );
     return el;
   }
