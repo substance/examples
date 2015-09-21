@@ -30,10 +30,6 @@ function TopicWriter(parent, params) {
 
 TopicWriter.Prototype = function() {
 
-  this.myAction = function(param) {
-    console.log('myaction', param);
-  };
-
   this.getInitialState = function() {
     return {'contextId': 'editTopicCitation', 'topicCitationId': 'topic_citation_1'};
   };
@@ -41,10 +37,6 @@ TopicWriter.Prototype = function() {
   this.render = function() {
     var doc = this.props.doc;
     var el = $$('div').addClass('writer-component');
-
-    if (!doc) {
-      return el.append($$('div').append('Loading'));
-    }
 
     // Basic 2-column layout
     // -------------
@@ -77,7 +69,6 @@ TopicWriter.Prototype = function() {
     el.append(
       $$('div').ref('clipboard').addClass("clipboard")
     );
-
     return el;
   };
 
@@ -94,9 +85,13 @@ TopicWriter.Prototype = function() {
     var contentContainer = surface.getContainer();
     var doc = this.getDocument();
 
+    // Skip if selection did not change
+    // TODO: this should probably be checked before we
+    // emit the selection:changed event
     if (sel.equals(this.prevSelection)) {
       return;
     }
+
     this.prevSelection = sel;
 
     if (sel.isNull() || !sel.isPropertySelection() || !sel.isCollapsed()) return false;
