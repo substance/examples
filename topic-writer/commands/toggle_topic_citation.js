@@ -1,6 +1,6 @@
 'use strict';
 
-var AnnotationCommand = require('substance/surface/commands/toggle_annotation');
+var AnnotationCommand = require('substance/ui/commands/toggle_annotation');
 
 var ToggleTopicCitationCommand = AnnotationCommand.extend({
   static: {
@@ -17,8 +17,6 @@ var ToggleTopicCitationCommand = AnnotationCommand.extend({
       target: null
     };
   }
-
 });
-
 
 module.exports = ToggleTopicCitationCommand;
