@@ -5,7 +5,7 @@ var Toolbar = require('./toolbar');
 var ToggleTodoCommand = require('./toggle_todo_command');
 var ToggleMarkCommand = require('./toggle_mark_command');
 
-var commands = require('substance/surface/commands');
+var commands = require('substance/ui/commands');
 commands.push(ToggleMarkCommand);
 commands.push(ToggleTodoCommand);
 

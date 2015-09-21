@@ -1,7 +1,7 @@
 'use strict';
 
 var OO = require('substance/basics/oo');
-var Command = require('substance/surface/commands/command');
+var Command = require('substance/ui/commands/command');
 
 var ToggleTodoCommand = function(surface) {
   Command.call(this, surface);
