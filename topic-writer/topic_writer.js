@@ -31,7 +31,7 @@ function TopicWriter(parent, params) {
 TopicWriter.Prototype = function() {
 
   this.getInitialState = function() {
-    return {'contextId': 'editTopicCitation', 'topicCitationId': 'topic_citation_1'};
+    return {'contextId': 'toc'};
   };
 
   this.render = function() {
@@ -102,7 +102,6 @@ TopicWriter.Prototype = function() {
     //
 
     var annotations = doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "topic_citation");
-
     if (annotations.length > 0) {
       var topicCitation = annotations[0];
       // Trigger state change

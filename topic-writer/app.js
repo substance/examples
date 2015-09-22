@@ -1,24 +1,23 @@
 'use strict';
 
 window.$ = require('jquery');
+
 var Substance = require('substance');
 var OO = Substance.OO;
 var Component = Substance.Component;
 var $$ = Component.$$;
-
 var Backend = require("./services/backend");
-var Notifications = require("./services/notifications");
 var TopicWriter = require("./topic_writer");
 
 function App() {
   Component.Root.apply(this, arguments);
 
   this.backend = new Backend();
-  this.notifications = new Notifications();
 
+  // We make this available to child components if they need access to the
+  // backend too
   this.childContext = {
     backend: this.backend,
-    notifications: this.notifications
   };
 }
 
@@ -27,17 +26,22 @@ App.Prototype = function() {
   this.render = function() {
     var el = $$('div').addClass('app');
 
-    // Init writer only after doc has been loaded
+    // Inject Writer only after doc has been loaded
     if (this.state.doc) {
       el.append($$(TopicWriter, {
-        doc: this.state.doc
+        doc: this.state.doc,
+        onDocumentSave: function(doc, changes, cb) {
+          setTimeout(function() {
+            console.log('We pretend to save the document...');
+            cb(null);
+          }, 2000);
+        }
       }).ref('writer'));
     }
     return el;
   };
 
   this.didMount = function() {
-    
     this.backend.getDocument('sample', function(err, doc) {
       this.setState({
         doc: doc

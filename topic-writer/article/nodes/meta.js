@@ -38,7 +38,6 @@ ArticleMeta.static.fromHtml = function($el, converter) {
   } else {
     converter.warning('Meta: no abstract found.');
   }
-
   return meta;
 };
 

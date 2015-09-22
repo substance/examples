@@ -56,10 +56,6 @@ Backend.Prototype = function() {
     });
   };
 
-  this.saveDocument = function(doc, cb) {
-    cb('Not supported in dev version');
-  };
-
   this.getTopics = function(cb) {
     cb(null, AVAILABLE_TOPICS);
   };
