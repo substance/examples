@@ -85,15 +85,6 @@ TopicWriter.Prototype = function() {
     var contentContainer = surface.getContainer();
     var doc = this.getDocument();
 
-    // Skip if selection did not change
-    // TODO: this should probably be checked before we
-    // emit the selection:changed event
-    if (sel.equals(this.prevSelection)) {
-      return;
-    }
-
-    this.prevSelection = sel;
-
     if (sel.isNull() || !sel.isPropertySelection() || !sel.isCollapsed()) return false;
     if (surface.getContainerId() !== "body") return false;
 
@@ -124,29 +115,15 @@ TopicWriter.Prototype = function() {
     var doc = this.getDocument();
 
     function getActiveNodes(state) {
-      if (!state) return [];
-
       // Topic citations
-      // --------------------
-      //
-
-      if (state.contextId === "topics" && state.topicId) {
-        // Use reference handler
-        return _.map(doc.entityReferencesIndex.get(state.topicId));
-      } else if (state.topicCitationId) {
+      if (state.topicCitationId) {
         return [ state.topicCitationId ];
       }
       return [];
     }
 
-    var activeAnnos = _.compact(getActiveNodes(newState));
-
-    if (activeAnnos.length > 0) {
-      doc.setHighlights(activeAnnos);
-      return true;
-    } else {
-      return false;
-    }
+    var activeAnnos = getActiveNodes(newState);
+    doc.setHighlights(activeAnnos);
   }
 
 };

@@ -7,10 +7,16 @@
     </abstract>
     <url>https://en.wikipedia.org/wiki/Linz</url>
   </meta>
+  <resources>
+    <comment id="comment_1">
+      <p>Hello world</p>
+      <p>La la la <strong>strong</strong></p>
+    </comment>
+  </resources>
   <body>
-    <p id="p1">Linz (/ˈlɪnts/; German pronunciation: [ˈlɪnt͡s]; Czech: Linec) is the third-largest city of Austria and capital of the state of Upper Austria (German: Oberösterreich). It is located in the north centre of Austria, approximately 30 kilometres (19 miles) south of the Czech border, on both sides of the <cite id="topic_citation_1" data-rid="topic_river_danube" data-rtype="topic">River Danube</cite>. The population of the city is 193,814, and that of the Greater Linz conurbation is about 271,000. In 2009 Linz, together with the Lithuanian capital Vilnius, was chosen as the European Capital of Culture. Since December 1, 2014 Linz is a member of the UNESCO Creative Cities (UCCN) network as a City of Media Arts. Cities receive this title for enriching the urban lifestyle through the sponsorship and successful integration of media art and involving society in these electronic art forms.[2] Linz is well known for the <cite id="topic_citation_2" data-rid="topic_linzer_torte" data-rtype="topic">Linzer torte</cite>, which is said to be the oldest cake in the world, with its first recipe dating from 1653.</p>
+    <p id="p1">Linz (/ˈlɪnts/; German pronunciation: [ˈlɪnt͡s]; Czech: Linec) is the third-largest city of Austria and capital of the state of Upper Austria (German: Oberösterreich). It is located in the north centre of Austria, approximately 30 kilometres (19 miles) south of the Czech border, on both sides of the <cite id="topic_citation_1" data-rid="topic_river_danube" data-rtype="topic">River Danube</cite>. The population of the city is 193,814, and that of the Greater Linz conurbation is about 271,000. In 2009 Linz, together with the Lithuanian capital Vilnius, was chosen as the European Capital of Culture. Since <comment-start target="comment_1"/> December 1, 2014 Linz is a member of the UNESCO Creative Cities (UCCN) network as a City of Media Arts. Cities receive this title for enriching the urban lifestyle through the sponsorship and successful integration of media art and involving society in these electronic art forms.[2] Linz is well known for the <cite id="topic_citation_2" data-rid="topic_linzer_torte" data-rtype="topic">Linzer torte</cite>, which is said to be the oldest cake in the world, with its first recipe dating from 1653.</p>
     <h1>Heading 1</h1>
-    <p id="p2">Lorem ipsum with a <a href="http://substance.io">link</a>.</p>
+    <p id="p2">Lorem ipsum <comment-end target="comment_1"/> with a <a href="http://substance.io">link</a>.</p>
     <h2>Heading 2</h2>
   </body>
 </article>
