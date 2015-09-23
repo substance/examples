@@ -20,18 +20,15 @@ var CommentEditor = Editor.extend({
 
 function EditCommentPanel() {
   Component.apply(this, arguments);
-  this.actions({
-    "saveComment": this.saveComment
-  });
 }
 
 EditCommentPanel.Prototype = function() {
 
-  this.saveComment = function(topicId) {
-    var surface = this.context.surface;
-    var comment = this.commentEditor.getContent();
+  this.saveComment = function(e) {
+    var surface = this.context.controller.getSurface();
+    var comment = this.refs.commentEditor.getContent();
     surface.transaction(function(tx, args) {
-      tx.set([this.props.comment.id, 'content'], comment);
+      tx.set([this.props.commentId, 'content'], comment);
       return args;
     }.bind(this));
 
@@ -49,11 +46,20 @@ EditCommentPanel.Prototype = function() {
         $$('a').addClass('back').attr('href', '#')
           .on('click', this.handleCancel)
           .append($$(Icon, {icon: 'fa-chevron-left'})),
-        $$('div').addClass('label').append("Write a comment")
+        $$('div').addClass('label').append("Write a comment"),
+        $$('a').addClass('remove').attr('href', '#')
+          .on('click', this.handleDelete)
+          .append($$(Icon, {icon: 'fa-trash'}))
       ),
       $$('div').addClass("panel-content").append(
-        $$('div').addClass("comments").append(
-          $$(CommentEditor, {content: comment.content})
+        $$('div').addClass("comment-editor").append(
+          $$(CommentEditor, {content: comment.content}).key('commentEditor'),
+          $$('button').addClass('button action save-comment')
+            .on('click', this.saveComment)
+            .append('Save comment'),
+          $$('button').addClass('button action cancel')
+            .on('click', this.handleCancel)
+            .append('Cancel') 
         )
       )
     );
@@ -62,9 +68,9 @@ EditCommentPanel.Prototype = function() {
   
   this.handleDelete = function(e) {
     e.preventDefault();
-    var surface = this.context.surface;
+    var surface = this.context.controller.getSurface();
     surface.transaction(function(tx, args) {
-      tx.delete(this.props.comment.id);
+      tx.delete(this.props.commentId);
     }.bind(this));
 
     this.handleCancel(e);
