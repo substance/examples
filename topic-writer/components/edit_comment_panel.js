@@ -8,6 +8,8 @@ var Icon = require("substance/ui/font_awesome_icon");
 var Editor = require('substance/ui/editor');
 var $$ = Component.$$;
 
+
+
 // EditCommentPanel
 // --------------------------
 
@@ -31,19 +33,11 @@ EditCommentPanel.Prototype = function() {
     this.handleCancel(e);
   };
 
-  this.commentEditor = Component.extend({
-    render: function() {
-      var el = $$('div')
-        .addClass('comment');
-      
-      Component.mount($$(Editor, {
-        content: comment
-      }), el);
-    }
-  });
+
 
   this.render = function() {
 
+    var comment = this.props.doc.get(this.props.commentId);
 
     return $$('div').addClass("panel dialog edit-comment-panel-component").append(
       $$('div').addClass("dialog-header").append(
@@ -54,17 +48,11 @@ EditCommentPanel.Prototype = function() {
       ),
       $$('div').addClass("panel-content").append(
         $$('div').addClass("comments").append(
-          this.commentEditor
+          //comment.content
+          $$(Editor, {content: comment.content})
         )
       )
     );
-  };
-
-  this.didMount = function() {
-    var comment = this.doc.get(this.props.commentId);
-    this.setState({
-      comment: comment
-    });
   };
 
   

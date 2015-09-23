@@ -16,6 +16,8 @@ var ContentToolbar = require('./components/content_toolbar');
 var components = require('./components');
 var commands = require('./commands');
 
+var helpers = require('substance/document/helpers');
+
 function TopicWriter(parent, params) {
   // We can define the config here
   params.props.config = {
@@ -92,9 +94,14 @@ TopicWriter.Prototype = function() {
     // ---------------
     //
 
-    var annotations = doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "topic_citation");
-    if (annotations.length > 0) {
-      var topicCitation = annotations[0];
+
+    function activeAnno(type) {
+      return helpers.getAnnotationsForSelection(doc, sel, type, "body")[0]; 
+    }
+
+    var topicCitation = activeAnno("topic_citation");
+
+    if (topicCitation) {
       // Trigger state change
       this.setState({
         contextId: "editTopicCitation",
@@ -103,6 +110,27 @@ TopicWriter.Prototype = function() {
       });
       return true;
     }
+
+    var comment = activeAnno("comment");
+
+    if (comment) {
+      this.setState({
+        contextId: "editComment",
+        commentId: comment.id,
+        noScroll: true
+      });
+      return true;
+    }
+    // var comments = doc.nodeIndex.get('comment');
+    // var comment = comments[Object.keys(comments)[0]];
+    // if (comment) {
+    //   this.setState({
+    //     contextId: "editComment",
+    //     commentId: comment.id,
+    //     noScroll: true
+    //   });
+    //   return true;
+    // }
   };
 
   // Hande Writer state change updates
