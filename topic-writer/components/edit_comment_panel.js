@@ -9,7 +9,6 @@ var Editor = require('substance/ui/editor');
 var $$ = Component.$$;
 
 
-
 // EditCommentPanel
 // --------------------------
 
