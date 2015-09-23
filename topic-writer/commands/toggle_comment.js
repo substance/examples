@@ -8,13 +8,9 @@ var ToggleCommentCommand = AnnotationCommand.extend({
     annotationType: 'comment'
   },
 
-  afterCreate: function() {
-    console.log("TODO: request app state change. problem: commands currently don't have access to the app context");
-  },
-
   getAnnotationData: function() {
     return {
-      content: "<p></p>",
+      content: "<p>abc</p>",
     };
   }
 });
