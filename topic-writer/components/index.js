@@ -11,4 +11,5 @@ module.exports = {
   // Panels
   "toc": require("substance/ui/writer/toc_panel"),
   "editTopicCitation": require('./edit_topic_citation_panel'),
+  "editComment": require('./edit_comment_panel')
 };

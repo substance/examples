@@ -17,9 +17,11 @@ var _ = require('substance/helpers');
 
 var Meta = require('./nodes/meta');
 var TopicCitation = require('./nodes/topic_citation');
+var Comment = require('./nodes/comment');
 
 var nodes = [
   Meta,
+  Comment,
   TopicCitation,
   Document.Paragraph,
   Document.Blockquote,
