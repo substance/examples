@@ -4,9 +4,9 @@ var Comment = ContainerAnnotation.extend({
   name: "comment",
   properties: {
     "content": "string",
-    "creator": "string",
-    "created_at": "date",
-    "replies": ["array", "id"]
+    // "creator": "string",
+    // "created_at": "date",
+    // "replies": ["array", "id"]
   }
 });
 
