@@ -10,7 +10,8 @@ var commands = [
   require('substance/ui/commands/toggle_strong'),
   require('substance/ui/commands/toggle_emphasis'),
   require('substance/ui/commands/toggle_link'),
-  require('./toggle_topic_citation')
+  require('./toggle_topic_citation'),
+  require('./toggle_comment')
 ];
 
 module.exports = commands;
