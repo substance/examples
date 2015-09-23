@@ -15,7 +15,6 @@ var ToggleCommentCommand = AnnotationCommand.extend({
   getAnnotationData: function() {
     return {
       content: "<p></p>",
-      
     };
   }
 });
