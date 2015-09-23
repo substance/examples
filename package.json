@@ -4,7 +4,7 @@
   "description": "Substance Demos",
   "license": "MIT",
   "dependencies": {
-    "substance": "substance/substance#substance-controller",
+    "substance": "substance/substance#master",
     "jquery": "*"
   },
   "devDependencies": {
@@ -20,5 +20,5 @@
   "scripts": {
     "bundle": "gulp"
   },
-  "version": "1.0.0-beta"
+  "version": "1.0.0-beta.2"
 }
