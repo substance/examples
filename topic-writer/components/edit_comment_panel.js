@@ -6,8 +6,14 @@ var OO = Substance.OO;
 var Component = Substance.Component;
 var Icon = require("substance/ui/font_awesome_icon");
 var Editor = require('substance/ui/editor');
+var CommentToolbar = require('./comment_toolbar');
 var $$ = Component.$$;
 
+var CommentEditor = Editor.extend({
+  config: {
+    toolbar: CommentToolbar
+  }
+}); 
 
 // EditCommentPanel
 // --------------------------
@@ -47,8 +53,7 @@ EditCommentPanel.Prototype = function() {
       ),
       $$('div').addClass("panel-content").append(
         $$('div').addClass("comments").append(
-          //comment.content
-          $$(Editor, {content: comment.content})
+          $$(CommentEditor, {content: comment.content})
         )
       )
     );

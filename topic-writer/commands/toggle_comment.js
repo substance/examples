@@ -10,7 +10,7 @@ var ToggleCommentCommand = AnnotationCommand.extend({
 
   getAnnotationData: function() {
     return {
-      content: "<p>abc</p>",
+      content: "<p></p>",
     };
   }
 });

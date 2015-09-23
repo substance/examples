@@ -28,6 +28,10 @@ function TopicWriter(parent, params) {
   };
 
   Writer.call(this, parent, params);
+
+  this.controller.connect(this, {
+    'command:executed': this.onCommandExecuted
+  });
 }
 
 TopicWriter.Prototype = function() {
@@ -80,6 +84,15 @@ TopicWriter.Prototype = function() {
       return $$('div').append("No panels are registered");
     } else {
       return $$('div').ref('context-panel').append(panelElement);
+    }
+  };
+
+  this.onCommandExecuted = function(info, commandName) {
+    if (commandName === 'toggleComment' && info.mode === 'create') {
+      this.setState({
+        contextId: 'editComment',
+        commentId: info.anno.id
+      })
     }
   };
 

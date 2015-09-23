@@ -8,10 +8,6 @@ var ToggleTopicCitationCommand = AnnotationCommand.extend({
     annotationType: 'topic_citation'
   },
 
-  afterCreate: function() {
-    console.log("TODO: request app state change. problem: commands currently don't have access to the app context");
-  },
-
   getAnnotationData: function() {
     return {
       target: null
