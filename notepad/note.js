@@ -33,7 +33,7 @@ var Note = function() {
 };
 
 Note.Prototype = function() {
-
+  
 };
 
 OO.inherit(Note, SubstanceArticle);
