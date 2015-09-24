@@ -53,6 +53,14 @@ EditCommentPanel.Prototype = function() {
     );
   };
 
+  this.didMount = function() {
+    var commentEditor = this.refs.commentEditor;
+    var commentId = this.props.commentId;
+    if (!commentId) {
+      commentEditor.selectAll();
+    }
+  };
+
   this.saveComment = function(e) {
     var surface = this.context.controller.getSurface();
     var commentId = this.props.commentId;

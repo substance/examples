@@ -1,4 +1,5 @@
 var commands = [
+  require('substance/ui/commands/select_all'),
   require('substance/ui/commands/undo'),
   require('substance/ui/commands/redo'),
   require('substance/ui/commands/save'),
