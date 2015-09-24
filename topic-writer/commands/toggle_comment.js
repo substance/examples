@@ -18,6 +18,10 @@ var ToggleCommentCommand = AnnotationCommand.extend({
     return {
       content: "<p></p>",
     };
+  },
+
+  canDelete: function() {
+    return false;
   }
 });
 

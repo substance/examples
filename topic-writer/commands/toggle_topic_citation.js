@@ -12,6 +12,10 @@ var ToggleTopicCitationCommand = AnnotationCommand.extend({
     return {
       target: null
     };
+  },
+
+  canDelete: function() {
+    return false;
   }
 });
 
