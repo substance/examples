@@ -90,10 +90,11 @@ TopicWriter.Prototype = function() {
   this.onCommandExecuted = function(info, commandName) {
     if (commandName === 'toggleComment' && info.mode === 'create') {
       this.setState({
-        contextId: 'editComment',
-        commentId: info.anno.id
+        contextId: 'editComment'
       })
     }
+
+
   };
 
   this.onSelectionChanged = function(sel, surface) {

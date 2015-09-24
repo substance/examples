@@ -8,6 +8,12 @@ var ToggleCommentCommand = AnnotationCommand.extend({
     annotationType: 'comment'
   },
 
+  executeCreate: function() {
+    return {
+      mode: 'create'
+    };
+  };
+
   getAnnotationData: function() {
     return {
       content: "<p></p>",

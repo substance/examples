@@ -19,9 +19,20 @@ function App() {
   this.childContext = {
     backend: this.backend,
   };
+
+  this.actions({
+    'saveDocument': this.saveDocument
+  });
 }
 
 App.Prototype = function() {
+
+  this.saveDocument = function(doc, changes, cb) {
+    setTimeout(function() {
+      console.log('We pretend to save the document...');
+      cb(null);
+    }, 2000);
+  },
 
   this.render = function() {
     var el = $$('div').addClass('app');
