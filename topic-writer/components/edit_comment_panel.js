@@ -25,35 +25,6 @@ function EditCommentPanel() {
 
 EditCommentPanel.Prototype = function() {
 
-  this.saveComment = function(e) {
-    var surface = this.context.controller.getSurface();
-    var commentId = this.props.commentId;
-    var comment = this.refs.commentEditor.getContent();
-    if(commentId) {
-      surface.transaction(function(tx, args) {
-        tx.set([this.props.commentId, 'content'], comment);
-        return args;
-      }.bind(this));
-    } else {
-      var sel = surface.getSelection();
-      surface.transaction(function(tx, args) {
-        createAnnotation(tx, {
-          selection: sel,
-          containerId: 'body',
-          annotationType:'comment',
-          annotationData: {
-            content: comment
-          }
-        });
-        return args;
-      }.bind(this));
-    }
-
-    this.handleCancel(e);
-  };
-
-
-
   this.render = function() {
     var commentId = this.props.commentId;
     var comment = commentId ? this.props.doc.get(commentId) : {content: "<p>What's on your mind?</p>"};
@@ -82,6 +53,46 @@ EditCommentPanel.Prototype = function() {
     );
   };
 
+  this.saveComment = function(e) {
+    var surface = this.context.controller.getSurface();
+    var commentId = this.props.commentId;
+    var comment = this.refs.commentEditor.getContent();
+    if(commentId) {
+      this.handleUpdate();
+    } else {
+      this.handleCreate();
+    }
+
+    this.handleCancel(e);
+  };
+
+  this.handleCreate = function() {
+    var surface = this.context.controller.getSurface();
+    var comment = this.refs.commentEditor.getContent();
+    var sel = surface.getSelection();
+
+    surface.transaction(function(tx, args) {
+      createAnnotation(tx, {
+        selection: sel,
+        containerId: 'body',
+        annotationType:'comment',
+        annotationData: {
+          content: comment
+        }
+      });
+      return args;
+    }.bind(this));
+  };
+
+  this.handleUpdate = function() {
+    var surface = this.context.controller.getSurface();
+    var comment = this.refs.commentEditor.getContent();
+
+    surface.transaction(function(tx, args) {
+      tx.set([this.props.commentId, 'content'], comment);
+      return args;
+    }.bind(this));
+  };
   
   this.handleDelete = function(e) {
     e.preventDefault();
