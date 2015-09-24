@@ -112,6 +112,7 @@ TopicWriter.Prototype = function() {
     }
 
     var topicCitation = activeAnno("topic_citation");
+    var comment = activeAnno("comment");
 
     if (topicCitation) {
       // Trigger state change
@@ -121,16 +122,19 @@ TopicWriter.Prototype = function() {
         noScroll: true
       });
       return true;
-    }
-
-    var comment = activeAnno("comment");
-
-    if (comment) {
+    } else if (comment) {
       this.setState({
         contextId: "editComment",
         commentId: comment.id,
         noScroll: true
       });
+      return true;
+    } else {
+      if (this.state.contextId !== 'toc') {
+        this.setState({
+          contextId: "toc"
+        });
+      }
       return true;
     }
   };
