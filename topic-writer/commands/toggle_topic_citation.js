@@ -8,6 +8,12 @@ var ToggleTopicCitationCommand = AnnotationCommand.extend({
     annotationType: 'topic_citation'
   },
 
+  executeCreate: function() {
+    return {
+      mode: 'create'
+    };
+  },
+
   getAnnotationData: function() {
     return {
       target: null

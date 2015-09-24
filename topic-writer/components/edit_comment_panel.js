@@ -72,7 +72,7 @@ EditCommentPanel.Prototype = function() {
     var sel = surface.getSelection();
 
     surface.transaction(function(tx, args) {
-      createAnnotation(tx, {
+      args = createAnnotation(tx, {
         selection: sel,
         containerId: 'body',
         annotationType:'comment',
@@ -80,7 +80,7 @@ EditCommentPanel.Prototype = function() {
           content: comment
         }
       });
-      args.selection = sel;
+
       return args;
     }.bind(this));
   };
@@ -97,10 +97,15 @@ EditCommentPanel.Prototype = function() {
   
   this.handleDelete = function(e) {
     e.preventDefault();
+    
     var surface = this.context.controller.getSurface();
-    surface.transaction(function(tx, args) {
-      tx.delete(this.props.commentId);
-    }.bind(this));
+    var commentId = this.props.commentId;
+
+    if (commentId) {
+      surface.transaction(function(tx, args) {
+        tx.delete(commentId);
+      }.bind(this));
+    }
 
     this.handleCancel(e);
   }

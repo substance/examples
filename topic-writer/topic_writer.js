@@ -92,6 +92,10 @@ TopicWriter.Prototype = function() {
       this.setState({
         contextId: 'editComment'
       })
+    } else if (commandName === 'toggleTopicCitation' && info.mode === 'create') {
+      this.setState({
+        contextId: 'editTopicCitation'
+      })
     }
   };
 

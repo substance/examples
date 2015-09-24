@@ -6,6 +6,7 @@ var OO = Substance.OO;
 var Component = Substance.Component;
 var Icon = require("substance/ui/font_awesome_icon");
 var $$ = Component.$$;
+var createAnnotation = require('substance/document/transformations/create_annotation');
 
 var Topic = Component.extend({
   onClick: function() {
@@ -43,12 +44,12 @@ function EditTopicCitationPanel() {
 EditTopicCitationPanel.Prototype = function() {
 
   this.selectTopic = function(topicId) {
-    var surface = this.context.surface;
-
-    surface.transaction(function(tx, args) {
-      tx.set([this.props.topicCitationId, 'target'], topicId);
-      return args;
-    }.bind(this));
+    var topicCitationId = this.props.topicCitationId;
+    if (topicCitationId) {
+      this.handleUpdate(topicId);
+    } else {
+      this.handleCreate(topicId);
+    }
 
     this.rerender();
   };
@@ -72,7 +73,10 @@ EditTopicCitationPanel.Prototype = function() {
         $$('a').addClass('back').attr('href', '#')
           .on('click', this.handleCancel)
           .append($$(Icon, {icon: 'fa-chevron-left'})),
-        $$('div').addClass('label').append("Choose a topic you want to reference")
+        $$('div').addClass('label').append("Choose a topic you want to reference"),
+        $$('a').addClass('remove').attr('href', '#')
+          .on('click', this.handleDelete)
+          .append($$(Icon, {icon: 'fa-trash'}))
       ),
       $$('div').addClass("panel-content").append(
         $$('div').addClass("topics").append(
@@ -97,6 +101,55 @@ EditTopicCitationPanel.Prototype = function() {
     var doc = this.props.doc;
     var citation = doc.get(this.props.topicCitationId);
     return citation.target === topicId;
+  };
+
+  this.handleCreate = function(topicId) {
+    var surface = this.context.controller.getSurface();
+    var sel = surface.getSelection();
+    var topicCitationId;
+
+    surface.transaction(function(tx, args) {
+      args = createAnnotation(tx, {
+        selection: sel,
+        containerId: 'body',
+        annotationType:'topic_citation',
+        annotationData: {
+          target: topicId
+        }
+      });
+
+      topicCitationId = args.result.id;
+
+      return args;
+    }.bind(this));
+
+    this.extendProps({
+      topicCitationId: topicCitationId
+    });
+  };
+
+  this.handleUpdate = function(topicId) {
+    var surface = this.context.controller.getSurface();
+    
+    surface.transaction(function(tx, args) {
+      tx.set([this.props.topicCitationId, 'target'], topicId);
+      return args;
+    }.bind(this));
+  };
+
+  this.handleDelete = function(e) {
+    e.preventDefault();
+
+    var surface = this.context.controller.getSurface();
+    var topicCitationId = this.props.topicCitationId;
+
+    if (topicCitationId) {
+      surface.transaction(function(tx, args) {
+        tx.delete(topicCitationId);
+      }.bind(this));
+    }
+
+    this.handleCancel(e);
   };
 
   this.handleCancel = function(e) {
