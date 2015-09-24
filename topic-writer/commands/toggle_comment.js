@@ -12,7 +12,7 @@ var ToggleCommentCommand = AnnotationCommand.extend({
     return {
       mode: 'create'
     };
-  };
+  },
 
   getAnnotationData: function() {
     return {
