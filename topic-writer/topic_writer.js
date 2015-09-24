@@ -145,9 +145,10 @@ TopicWriter.Prototype = function() {
     var doc = this.getDocument();
 
     function getActiveNodes(state) {
-      // Topic citations
       if (state.topicCitationId) {
         return [ state.topicCitationId ];
+      } else if (state.commentId) {
+        return [ state.commentId ];
       }
       return [];
     }
