@@ -80,6 +80,7 @@ EditCommentPanel.Prototype = function() {
           content: comment
         }
       });
+      args.selection = sel;
       return args;
     }.bind(this));
   };
