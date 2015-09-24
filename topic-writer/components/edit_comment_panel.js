@@ -8,6 +8,7 @@ var Icon = require("substance/ui/font_awesome_icon");
 var Editor = require('substance/ui/editor');
 var CommentToolbar = require('./comment_toolbar');
 var $$ = Component.$$;
+var createAnnotation = require('substance/document/transformations/create_annotation');
 
 var CommentEditor = Editor.extend({
   config: {
@@ -26,11 +27,27 @@ EditCommentPanel.Prototype = function() {
 
   this.saveComment = function(e) {
     var surface = this.context.controller.getSurface();
+    var commentId = this.props.commentId;
     var comment = this.refs.commentEditor.getContent();
-    surface.transaction(function(tx, args) {
-      tx.set([this.props.commentId, 'content'], comment);
-      return args;
-    }.bind(this));
+    if(commentId) {
+      surface.transaction(function(tx, args) {
+        tx.set([this.props.commentId, 'content'], comment);
+        return args;
+      }.bind(this));
+    } else {
+      var sel = surface.getSelection();
+      surface.transaction(function(tx, args) {
+        createAnnotation(tx, {
+          selection: sel,
+          containerId: 'body',
+          annotationType:'comment',
+          annotationData: {
+            content: comment
+          }
+        });
+        return args;
+      }.bind(this));
+    }
 
     this.handleCancel(e);
   };
@@ -38,8 +55,8 @@ EditCommentPanel.Prototype = function() {
 
 
   this.render = function() {
-
-    var comment = this.props.doc.get(this.props.commentId);
+    var commentId = this.props.commentId;
+    var comment = commentId ? this.props.doc.get(commentId) : {content: "<p>What's on your mind?</p>"};
 
     return $$('div').addClass("panel dialog edit-comment-panel-component").append(
       $$('div').addClass("dialog-header").append(
@@ -53,7 +70,7 @@ EditCommentPanel.Prototype = function() {
       ),
       $$('div').addClass("panel-content").append(
         $$('div').addClass("comment-editor").append(
-          $$(CommentEditor, {content: comment.content}).key('commentEditor'),
+          $$(CommentEditor, {content: comment.content}).ref('commentEditor'),
           $$('button').addClass('button action save-comment')
             .on('click', this.saveComment)
             .append('Save comment'),

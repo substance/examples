@@ -93,8 +93,6 @@ TopicWriter.Prototype = function() {
         contextId: 'editComment'
       })
     }
-
-
   };
 
   this.onSelectionChanged = function(sel, surface) {
@@ -135,16 +133,6 @@ TopicWriter.Prototype = function() {
       });
       return true;
     }
-    // var comments = doc.nodeIndex.get('comment');
-    // var comment = comments[Object.keys(comments)[0]];
-    // if (comment) {
-    //   this.setState({
-    //     contextId: "editComment",
-    //     commentId: comment.id,
-    //     noScroll: true
-    //   });
-    //   return true;
-    // }
   };
 
   // Hande Writer state change updates
