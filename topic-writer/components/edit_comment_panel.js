@@ -116,11 +116,11 @@ EditCommentPanel.Prototype = function() {
     }
 
     this.handleCancel(e);
-  }
+  };
 
   this.handleCancel = function(e) {
     e.preventDefault();
-    this.send("switchContext", "toc");
+    this.send('switchContext', 'toc', {restoreSelection: true});
   };
 };
 
