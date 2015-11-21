@@ -1,6 +1,26 @@
-**The README reflects the old API, please look at the code files directly**. We will update this README in the next days.
+# Notepad
 
-## Building a Notepad with Substance
+This example implements a custom Notepad. Please 
+
+- [app.js](app.js) - entry point where the Notepad is mounted
+- [Notepad.js](Note.js) - Notepad component
+- [toolbar.js](toolbar.js) - Custom toolbar implementation
+- [TodoComponent.js](TodoComponent.js) - Implementation of the Todo component, including toggle interaction
+- [TodoCommand.js](TodoCommand.js) - Surface command for toggling todos
+- [TodoTool.js](TodoTool.js) - Tool definition for todo toggle.
+- [MarkCommand.js](MarkCommand.js) - Surface command for toggling marks
+- [MarkTool.js](MarkTool.js) - Tool definition for mark toggle.
+
+
+- [testNote.js](testNoteImporter.js) - Construction of a note and data manipulation
+
+Run and play with the test script:
+
+
+*This examples uses the [Note](../note) and [Converter](../converter) examples.*
+
+
+<!--## Building a Notepad with Substance
 
 Substance lets you configure your very own text editor. Let's walk together through the creation of a simple [Notepad](http://substance.io/demos/notepad) app. It can be used like this when ready.
 
@@ -255,4 +275,4 @@ var MarkTool = AnnotationTool.extend({
   name: "mark"
 });
 ```
-That's it. Now it's on you to dig deeper, ideally by starting your own editor project. Give yourself some time to get familiar with the API's. Building a web-editor is not a trivial task, as there are many things that can go wrong. However, with Substance most of the complexities (such as undo/redo, keyboard and clipboard handling etc.) are taken care of, so you can focus on building user interfaces.
+That's it. Now it's on you to dig deeper, ideally by starting your own editor project. Give yourself some time to get familiar with the API's. Building a web-editor is not a trivial task, as there are many things that can go wrong. However, with Substance most of the complexities (such as undo/redo, keyboard and clipboard handling etc.) are taken care of, so you can focus on building user interfaces. -->
