@@ -1,17 +1,18 @@
-# Substance Demos
+# Substance Examples
 
-Here you can find a number of demo applications based on Substance. Dig into the code to learn how Substance works and use this examples as a starting point for building your own editor.
+Here you can find a number of examples that cover various Substance API's. If you are new to Substance, check them out in the following order:
 
-- [Prose Editor](prose-editor) (Basic integration)
-- [Notepad](notepad) (Custom Note editor)
+1. [note](note) - Implement a custom note document
+2. [converter](converter) - A simple HTML Importer and Exporter for notes
+3. [notepad](notepad) - Simple Notepad editor implementation
+
 
 ## Install
 
 You can start playing around with the code by cloning this repo and starting the dev server.
 
 ```bash
-$ git clone https://github.com/substance/demos.git
-$ cd demos
+$ git clone https://github.com/substance/examples.git
 $ npm install
 $ npm start
 ```

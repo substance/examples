@@ -4,20 +4,17 @@
     <title>Substance Notepad</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic' rel='stylesheet' type='text/css'>
     <link href='app.css' rel='stylesheet' type='text/css'/>
-
-    <!-- App -->
     <script src='app.js'></script>
-
   </head>
   <body>
     <!-- It handles a list of paragraphs, advanced copy/paste scenarios as well as undo/redo. -->
     <div id="editor_container">
-      <p><mark>Substance</mark> is a JavaScript library for web-based content editing. Build simple text editors or full-featured publishing systems. Substance provides you building blocks for your very custom editor.</p>
-      <div class="todo" data-done="0">Water the plants</div>
-      <div class="todo" data-done="1">Fix bug</div>
-      <div class="todo" data-done="1">Do taxes</div>
+      <div data-id="t1" class="todo" data-done="1"><strong>Custom document models</strong>: Define a custom document schema, with your own set of content types.</div>
+      <div data-id="t2" class="todo" data-done="1"><strong>HTML/XML import and export:</strong> Substance interacts well with HTML/XML content. You can import a whole XML document or insert HTML fragments from the clipboard.</div>
+      <div data-id="t3" class="todo" data-done="1"><strong>Custom HTML rendering:</strong> Have full control over the markup of editable content, by implementing components.</div>
+      <div data-id="t4" class="todo" data-done="1"><strong>Server and client-side execution:</strong> Substance runs in the browser and in server-side environments, such as Node.js.</div>
+      <div data-id="t4" class="todo" data-done="0"><strong>Collaborative editing:</strong> Substance documents are manipulated through operations that can be undone, redone and transformed to support concurrent collaborative editing. We will provide the needed server infrastructure soon.</div>
     </div>
 
     <div class="footer small">

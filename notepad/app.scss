@@ -1,68 +1,37 @@
 // Substance Base Styles
-@import 'node_modules/substance/ui/styles/index';
+@import '../node_modules/substance/styles/base/index';
 
-// Substance HTML Editor styles
+// UI Components used
+@import '../node_modules/substance/styles/components/_controller';
+@import '../node_modules/substance/styles/components/_surface';
+@import '../node_modules/substance/styles/components/_panel';
+@import '../node_modules/substance/styles/components/_content-panel';
+@import '../node_modules/substance/styles/components/_context-toggles';
+@import '../node_modules/substance/styles/components/_toc-panel';
+@import '../node_modules/substance/styles/components/_scrollbar';
+@import '../node_modules/substance/styles/components/_toc-panel';
+@import '../node_modules/substance/styles/components/_status-bar';
+@import '../node_modules/substance/styles/components/_text-property';
+@import '../node_modules/substance/styles/components/_toolbar';
+@import '../node_modules/substance/packages/text/_switch-text-type-tool';
 
-@import 'node_modules/substance/ui/styles/editor';
-
-body {
-  background: #f1f1f1;
-  padding: 30px;
-  overflow: hidden;
-}
-
-.footer {
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
-  right: 10px;
-}
-
+// Nodes
+@import '../node_modules/substance/packages/paragraph/_paragraph';
+@import '../node_modules/substance/packages/heading/_heading';
+@import '../node_modules/substance/packages/blockquote/_blockquote';
+@import '../node_modules/substance/packages/codeblock/_codeblock';
+@import '../node_modules/substance/packages/list/_list';
+@import '../node_modules/substance/packages/link/_link';
+@import '../node_modules/substance/packages/embed/_embed';
+@import '../node_modules/substance/packages/table/_table';
+@import '../node_modules/substance/packages/emphasis/_emphasis';
+@import '../node_modules/substance/packages/strong/_strong';
 
 /* Todo checkboxes */
-
 .content-node.todo .done {
   display: inline-block;
   width: 20px;
   cursor: pointer;
-}
-
-
-/* Editor component
-------------------------------------------------------- */
-
-
-.editor-component {
-  position: fixed;
-  top: 10px;
-  bottom: 40px;
-  left: 10px;
-  right: 10px;
-  border: 1px solid #ddd;
-  background: white;
-  
-  color: #222;
-  // position: relative;
-}
-
-.toolbar {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #eee;
-}
-
-.editor-component .container-node {
-  padding: 20px;
-  position: absolute;
-  top: 40px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-
-  overflow: auto;
 }
 
 .annotation.mark {
@@ -78,4 +47,48 @@ body {
 .content-node.todo .done {
   position: absolute;
   left: 0px;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
 }
+
+/* Shared demo styles */
+
+body {
+  background: #f1f1f1;
+  padding: 30px;
+  overflow: hidden;
+}
+
+.footer {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  right: 10px;
+}
+
+/* Editor component
+------------------------------------------------------- */
+
+.sc-notepad {
+  position: fixed;
+  top: 10px;
+  bottom: 40px;
+  left: 10px;
+  right: 10px;
+  border: 1px solid #ddd;
+  background: white;
+  color: #222;
+}
+
+.sc-container-editor {
+  padding: 20px;
+  position: absolute;
+  top: 40px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  overflow: auto;
+}
+

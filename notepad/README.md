@@ -1,3 +1,5 @@
+**The README reflects the old API, please look at the code files directly**. We will update this README in the next days.
+
 ## Building a Notepad with Substance
 
 Substance lets you configure your very own text editor. Let's walk together through the creation of a simple [Notepad](http://substance.io/demos/notepad) app. It can be used like this when ready.
