@@ -14,6 +14,7 @@ var LinkTool = require('substance/packages/link/LinkTool');
 var MarkTool = require('./MarkTool');
 var TodoTool = require('./TodoTool');
 
+
 var Notepad = Controller.extend({
   // Editor configuration
   static: {

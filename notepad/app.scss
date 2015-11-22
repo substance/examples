@@ -27,30 +27,27 @@
 @import '../node_modules/substance/packages/emphasis/_emphasis';
 @import '../node_modules/substance/packages/strong/_strong';
 
-/* Todo checkboxes */
-.content-node.todo .done {
-  display: inline-block;
-  width: 20px;
-  cursor: pointer;
-}
-
-.annotation.mark {
+.sc-mark {
   background: rgba(234, 231, 35, 0.3);
 }
 
-.content-node.todo {
+.sc-todo {
   padding-left: 20px;
   padding-bottom: 20px;
   position: relative;
-}
 
-.content-node.todo .done {
-  position: absolute;
-  left: 0px;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -o-user-select: none;
+  .se-done {
+    display: inline-block;
+    width: 20px;
+    cursor: pointer;
+
+    position: absolute;
+    left: 0px;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+  }
 }
 
 /* Shared demo styles */
@@ -67,9 +64,6 @@ body {
   bottom: 10px;
   right: 10px;
 }
-
-/* Editor component
-------------------------------------------------------- */
 
 .sc-notepad {
   position: fixed;

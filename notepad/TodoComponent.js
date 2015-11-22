@@ -18,7 +18,7 @@ function TodoComponent() {
 TodoComponent.Prototype = function() {
 
   this.getClassNames = function() {
-    return "content-node todo";
+    return "sc-todo";
   };
 
   this.toggleDone = function(e) {
@@ -36,7 +36,7 @@ TodoComponent.Prototype = function() {
   this.render = function() {
     // Checkbox defining wheter a todo is done or not. We don't want the cursor
     // to move inside this area,so we set contenteditable to false
-    var checkbox = $$('span').addClass('done').attr({contenteditable: false}).append(
+    var checkbox = $$('span').addClass('se-done').attr({contenteditable: false}).append(
       $$(Icon, {icon: this.props.node.done ? "fa-check-square-o" : "fa-square-o"})
     );
     checkbox.on('mousedown', this.toggleDone);
@@ -55,7 +55,7 @@ TodoComponent.Prototype = function() {
       ]);
 
     if (this.props.node.done) {
-      el.addClass('done');
+      el.addClass('sm-done');
     }
     return el;
   };

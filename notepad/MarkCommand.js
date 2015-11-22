@@ -2,11 +2,13 @@
 
 var AnnotationCommand = require('substance/ui/AnnotationCommand');
 
-var ToggleMarkCommand = AnnotationCommand.extend({
-  static: {
-    name: 'mark',
-    annotationType: 'mark'
-  }
-});
+function MarkCommand() {
+  MarkCommand.super.apply(this, arguments);
+}
 
-module.exports = ToggleMarkCommand;
+AnnotationCommand.extend(MarkCommand);
+
+MarkCommand.static.name = 'mark';
+MarkCommand.static.annotationType = 'mark';
+
+module.exports = MarkCommand;

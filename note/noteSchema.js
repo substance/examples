@@ -26,7 +26,7 @@ Todo.static.name = 'todo';
 
 Todo.static.defineSchema({
   content: 'text',
-  done: 'bool'
+  done: { type: 'bool', default: false }
 });
 
 /**

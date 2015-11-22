@@ -1,6 +1,5 @@
 'use strict';
 
-var oo = require('substance/util/oo');
 var SurfaceCommand = require('substance/ui/SurfaceCommand');
 
 var TodoCommand = function(surface) {
@@ -8,9 +7,6 @@ var TodoCommand = function(surface) {
 };
 
 TodoCommand.Prototype = function() {
-  this.static = {
-    name: 'todo'
-  };
 
   this.getSelection = function() {
     return this.getSurface().getSelection();
@@ -65,5 +61,8 @@ TodoCommand.Prototype = function() {
   };
 };
 
-oo.inherit(TodoCommand, SurfaceCommand);
+SurfaceCommand.extend(TodoCommand);
+
+TodoCommand.static.name = 'todo';
+
 module.exports = TodoCommand;

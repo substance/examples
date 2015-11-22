@@ -2,11 +2,13 @@
 
 var SurfaceTool = require('substance/ui/SurfaceTool');
 
-var TodoTool = SurfaceTool.extend({
-  static: {
-    name: 'todo',
-    command: 'todo'
-  }
-});
+function TodoTool() {
+  TodoTool.super.apply(this, arguments);
+}
+
+SurfaceTool.extend(TodoTool);
+
+TodoTool.static.name = 'todo';
+TodoTool.static.command = 'todo';
 
 module.exports = TodoTool;

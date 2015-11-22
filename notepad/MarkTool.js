@@ -2,11 +2,13 @@
 
 var AnnotationTool = require('substance/ui/AnnotationTool');
 
-var MarkTool = AnnotationTool.extend({
-  static: {
-    name: 'mark',
-    command: 'mark'
-  }
-});
+function MarkTool() {
+  MarkTool.super.apply(this, arguments);
+}
+
+AnnotationTool.extend(MarkTool);
+
+MarkTool.static.name = 'mark';
+MarkTool.static.command = 'mark';
 
 module.exports = MarkTool;
