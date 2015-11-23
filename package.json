@@ -4,7 +4,7 @@
   "description": "Substance Examples",
   "license": "MIT",
   "dependencies": {
-    "substance": "substance/substance#9e8fac58e9b5597f2f67807b2675f8ee1f98159c",
+    "substance": "substance/substance#a78ec7c184b86badf9f40bff91b505fd34504f64",
     "jquery": "*"
   },
   "devDependencies": {
