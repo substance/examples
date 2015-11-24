@@ -1,6 +1,5 @@
 'use strict';
 
-var oo = require('substance/util/oo');
 var HTMLImporter = require('substance/model/HTMLImporter');
 var noteSchema = require('../note/noteSchema');
 var Note = require('../note/Note');
@@ -35,5 +34,5 @@ NoteImporter.Prototype = function() {
 // Expose converters so we can reuse them in NoteHtmlExporter
 NoteImporter.converters = converters;
 
-oo.inherit(NoteImporter, HTMLImporter);
+HTMLImporter.extend(NoteImporter);
 module.exports = NoteImporter;

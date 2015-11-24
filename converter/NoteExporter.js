@@ -1,6 +1,5 @@
 'use strict';
 
-var oo = require('substance/util/oo');
 var HTMLExporter = require('substance/model/HTMLExporter');
 var converters = require('./NoteImporter').converters;
 
@@ -11,6 +10,6 @@ function NoteExporter() {
   });
 }
 
-NoteExporter.Prototype = function() {};
-oo.inherit(NoteExporter, HTMLExporter);
+HTMLExporter.extend(NoteExporter);
+
 module.exports = NoteExporter;

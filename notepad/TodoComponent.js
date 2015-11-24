@@ -1,6 +1,5 @@
 'use strict';
 
-var oo = require('substance/util/oo');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 var TextProperty = require('substance/ui/TextPropertyComponent');
@@ -73,6 +72,6 @@ TodoComponent.Prototype = function() {
   };
 };
 
-oo.inherit(TodoComponent, Component);
+Component.extend(TodoComponent);
 
 module.exports = TodoComponent;
