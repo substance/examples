@@ -3,14 +3,12 @@
 This example implements a custom Notepad. Please 
 
 - [app.js](app.js) - entry point where the Notepad is mounted
-- [Notepad.js](Note.js) - Notepad component
-- [toolbar.js](toolbar.js) - Custom toolbar implementation
+- [Notepad.js](Notepad.js) - Notepad component
 - [TodoComponent.js](TodoComponent.js) - Implementation of the Todo component, including toggle interaction
 - [TodoCommand.js](TodoCommand.js) - Surface command for toggling todos
 - [TodoTool.js](TodoTool.js) - Tool definition for todo toggle.
 - [MarkCommand.js](MarkCommand.js) - Surface command for toggling marks
 - [MarkTool.js](MarkTool.js) - Tool definition for mark toggle.
-
 
 - [testNote.js](testNoteImporter.js) - Construction of a note and data manipulation
 
