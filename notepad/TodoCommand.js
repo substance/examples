@@ -20,10 +20,10 @@ TodoCommand.Prototype = function() {
     var node = doc.get(path[0]);
     var nodeType = node.type;
 
-    if (nodeType === 'paragraph') {
-      return 'todo';
-    } else {
+    if (nodeType === 'todo') {
       return 'paragraph';
+    } else {
+      return 'todo';
     }
   };
 
