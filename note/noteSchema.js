@@ -42,6 +42,7 @@ schema.addNodes([
   require('substance/packages/heading/Heading'),
   require('substance/packages/codeblock/Codeblock'),
   require('substance/packages/blockquote/Blockquote'),
+  require('substance/packages/image/Image'),
   require('substance/packages/emphasis/Emphasis'),
   require('substance/packages/strong/Strong'),
   require('substance/packages/link/Link'),
