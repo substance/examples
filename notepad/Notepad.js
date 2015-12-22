@@ -25,7 +25,7 @@ Notepad.Prototype = function() {
   this.render = function() {
     var config = this.getConfig();
     return $$('div').addClass('sc-notepad').append(
-      $$(SplitPane, {splitType: 'horizontal', size: '40px'}).append(
+      $$(SplitPane, {splitType: 'horizontal'}).append(
         $$(Toolbar).append(
           $$(Toolbar.Group).append(
             $$(SwitchTextTypeTool, {'title': this.i18n.t('switch_text')}),
