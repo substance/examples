@@ -8,8 +8,7 @@ var through2 = require('through2');
 var path = require('path');
 var rename = require('gulp-rename');
 
-
-var demos = ['prose-editor', 'notepad' ];
+var demos = ['notepad'];
 
 gulp.task('assets', function () {
   demos.forEach(function(demoFolder) {
@@ -27,6 +26,9 @@ gulp.task('sass', function() {
       .pipe(rename('app.css'))
       .pipe(gulp.dest('./dist/'+demoFolder));
   });
+
+  gulp.src('node_modules/font-awesome/fonts/*')
+    .pipe(gulp.dest('./dist/fonts'));
 });
 
 gulp.task('browserify', function() {

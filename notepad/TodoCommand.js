@@ -18,6 +18,9 @@ TodoCommand.Prototype = function() {
     var doc = this.getDocument();
     var path = sel.getPath();
     var node = doc.get(path[0]);
+    // HACK: We should make sure the getCommandState is not called for
+    // an invalid selection.
+    if (!node) return 'paragraph';
     var nodeType = node.type;
 
     if (nodeType === 'todo') {
