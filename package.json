@@ -8,7 +8,7 @@
     "jquery": "*"
   },
   "devDependencies": {
-    "font-awesome": "4.4.0",
+    "font-awesome": "4.5.0",
     "browserify": "^10.2.4",
     "node-sass": "3.x",
     "express": "4.13.1",
