@@ -7,7 +7,7 @@ var Icon = require('substance/ui/FontAwesomeIcon');
 
 // Todo Component
 // -----------------
-// 
+//
 // Acts like a paragraph but displays a checkbox on the left that can be toggled.
 
 function TodoComponent() {
@@ -49,7 +49,7 @@ TodoComponent.Prototype = function() {
         // It takes a doc and a path to a text property as an input.
         $$(TextProperty, {
           doc: this.props.doc,
-          path: [ this.props.node.id, "content"]          
+          path: [this.props.node.id, "content"]
         })
       ]);
 
@@ -63,12 +63,12 @@ TodoComponent.Prototype = function() {
   this.didMount = function() {
     var node = this.props.node;
     this.doc = node.getDocument();
-    this.doc.getEventProxy('path').add([node.id, 'done'], this, this.rerender);
+    this.doc.getEventProxy('path').connect(this, [node.id, 'done'], this.rerender);
   };
 
   // Unbind event handlers
   this.willUnmount = function() {
-    this.doc.getEventProxy('path').remove([this.props.node.id, 'done'], this);
+    this.doc.getEventProxy('path').disconnect(this);
   };
 };
 

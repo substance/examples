@@ -12,7 +12,7 @@ var SwitchTextTypeTool = require('substance/packages/text/SwitchTextTypeTool');
 var StrongTool = require('substance/packages/strong/StrongTool');
 var EmphasisTool = require('substance/packages/emphasis/EmphasisTool');
 var LinkTool = require('substance/packages/link/LinkTool');
-// var ImageTool = require('substance/packages/image/ImageTool');
+var ImageTool = require('substance/packages/image/ImageTool');
 var MarkTool = require('./MarkTool');
 var TodoTool = require('./TodoTool');
 
@@ -33,7 +33,7 @@ Notepad.Prototype = function() {
             $$(RedoTool).append($$(Icon, {icon: 'fa-repeat'})),
             $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),
             $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'})),
-            // $$(ImageTool).append($$(Icon, {icon: 'fa-image'})),
+            $$(ImageTool).append($$(Icon, {icon: 'fa-image'})),
             $$(MarkTool).append($$(Icon, {icon: 'fa-pencil'})),
             $$(LinkTool).append($$(Icon, {icon: 'fa-link'})),
             $$(TodoTool).append($$(Icon, {icon: 'fa-check-square-o'}))

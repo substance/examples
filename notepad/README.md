@@ -1,8 +1,8 @@
 # Notepad
 
-This example implements a custom Notepad. Please 
+This example implements a custom Notepad. Here's a list of all components (=files) involved:
 
-- [app.js](app.js) - entry point where the Notepad is mounted
+- [app.js](app.js) - entry point where the Notepad created and mounted to the DOM
 - [Notepad.js](Notepad.js) - Notepad component
 - [TodoComponent.js](TodoComponent.js) - Implementation of the Todo component, including toggle interaction
 - [TodoCommand.js](TodoCommand.js) - Surface command for toggling todos
@@ -10,164 +10,77 @@ This example implements a custom Notepad. Please
 - [MarkCommand.js](MarkCommand.js) - Surface command for toggling marks
 - [MarkTool.js](MarkTool.js) - Tool definition for mark toggle.
 
-- [testNote.js](testNoteImporter.js) - Construction of a note and data manipulation
-
-Run and play with the test script:
-
-
 *This examples uses the [Note](../note) and [Converter](../converter) examples.*
 
+## Building a Notepad with Substance
 
-<!--## Building a Notepad with Substance
-
-Substance lets you configure your very own text editor. Let's walk together through the creation of a simple [Notepad](http://substance.io/demos/notepad) app. It can be used like this when ready.
-
-```js
-var notepad = $$(Notepad, {
-  content: htmlContent
-});
-Component.mount(notepad, $('#editor_container'));
-```
-
-### Define article class
-
-We will define a `Note` article class, that consists of paragraphs and todo items. Text can be linked, emphasized (`emphasis`, `strong`) and highlighted (`mark`).
-
-The following files define our article class
-
-- [note.js](note.js) - Note article class
-- [mark.js](mark.js) - Mark annotation
-- [todo.js](todo.js) - Todo node
-
-
-We are utilising a number of predefined node types ([Paragraph](https://github.com/substance/substance/blob/master/document/nodes/paragraph.js), [Emphasis](https://github.com/substance/substance/blob/master/document/nodes/emphasis.js), [Strong](https://github.com/substance/substance/blob/master/document/nodes/paragraph.js), [Link](https://github.com/substance/substance/blob/master/document/nodes/link.js)) but also include custom ones ([Todo](todo.js), [Mark](mark.js)).
+Substance lets you build your very own text editor. Let's walk through the creation of a simple [Notepad](http://substance.io/demos/notepad) app. It can be used like this when ready.
 
 ```js
-// From note.js
-var Document = require('substance/document');
-var SubstanceArticle = require('substance/article');
-
-// Custom node implementations
-var Todo = require('./todo');
-var Mark = require('./mark');
-
-var schema = new Document.Schema("substance-note", "1.0.0");
-schema.getDefaultTextType = function() {
-  return "paragraph";
-};
-
-schema.addNodes([
-  Document.Paragraph,
-  Document.Emphasis,
-  Document.Strong,
-  Document.Link,
-  Todo,
-  Mark
-]);
+var doc = noteImporter.importDocument(NOTE_HTML);
+Component.mount(Notepad, {
+  doc: doc
+}, $('#editor_container'));
 ```
 
-Let's have a look at the `Mark` implementation, that defines a custom annotation for highlighting text in a note.
+### Notepad
+
+Let's look at the top level UI component first. We call the class `Notepad` and we implement a render method that renders our editor.
 
 ```js
-// From mark.js
-var Annotation = require('substance/document/annotation');
+// From Notepad.js
+function Notepad() {
+  Controller.apply(this, arguments);
+}
 
-var Mark = Annotation.extend({
-  name: "mark",
-  splitContainerSelections: true
-});
-
-// HTML tag used to represent a mark annotation
-Mark.static.tagName = "mark";
-
-// Called during import from HTML. If matched `fromHtml` is called. 
-// We don't need to implement it, since it's defined on the Annotation class.
-Mark.static.matchElement = function($el) {
-  return $el.is("mark");
-};
-```
-
-In the HTML exchange format mark annotations will look like this.
-
-```html
-<p>Some <mark>marked</mark> text</p>
-```
-
-We also define a `Todo` class that inherits from the Substance `TextNode`.
-
-```js
-// From todo.js
-var TextNode = require('substance/document/text_node');
-var Todo = TextNode.extend({
-  name: "todo",
-  properties: {
-    done: "bool",
-    content: "string"
-  }
-});
-```
-
-We will encode our Todo items in HTML for exchange.
-
-```html
-<div class="todo" data-done="1">Fix bug</div>
-```
-
-In order to make this work we need to define mappings between HTML and the in-memory representation. This is pretty straight forward. We use jQuery for interacting with the DOM, this allows us to execute the same code on the server using [cheerio](https://github.com/cheeriojs/cheerio). Here's the `fromHtml` code that maps a DOM element to a Todo object.
-
-```js
-// From todo.js
-Todo.static.fromHtml = function($el, converter) {
-  var id = converter.defaultId($el, 'todo');
-  var todo = {
-    id: id,
-    content: '',
-    done: $el.attr('data-done') === "1"
+Notepad.Prototype = function() {
+  this.render = function() {
+    var config = this.getConfig();
+    return $$('div').addClass('sc-notepad').append(
+      $$(SplitPane, {splitType: 'horizontal'}).append(
+        $$(Toolbar).append(
+          $$(Toolbar.Group).append(
+            $$(SwitchTextTypeTool, {'title': this.i18n.t('switch_text')}),
+            $$(UndoTool).append($$(Icon, {icon: 'fa-undo'})),
+            $$(RedoTool).append($$(Icon, {icon: 'fa-repeat'})),
+            $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),
+            $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'})),
+            $$(MarkTool).append($$(Icon, {icon: 'fa-pencil'})),
+            $$(LinkTool).append($$(Icon, {icon: 'fa-link'})),
+            $$(TodoTool).append($$(Icon, {icon: 'fa-check-square-o'}))
+          )
+        ),
+        $$(ContainerEditor, {
+          doc: this.props.doc,
+          containerId: 'body',
+          name: 'bodyEditor',
+          commands: config.bodyEditor.commands,
+          textTypes: config.bodyEditor.textTypes
+        }).ref('bodyEditor')
+      )
+    );
   };
-  // Stores the plain text in the content property but also creates
-  // annotation objects in the document instance.
-  todo.content = converter.annotatedText($el, [id, 'content']);
-  return todo;
 };
+
+Controller.extend(Notepad);
 ```
 
-### Define UI components
+The [full implementation](Notepad.js) also includes an extensive configuration object. For all custom node types we also need to provide UI components.
 
-The following custom UI components are needed for our Notepad editor.
-
-- [notepad.js](notepad.js) - `Editor` implementation 
-- [toolbar.js](todo_tool.js) - Toolbar `Component`
-- [todo_component.js](todo_component.js) - Todo `Component` displayed in the editor flow
-
-Let's look at the top level component. We call it `Notepad` and inherit from `Editor`.
-
-```js
-// From notepad.js
-var Notepad = Editor.extend({
-  config: {
-    article: Note,
-    toolbar: Toolbar,
-    tools: tools,
-    components: {
-      "paragraph": require('substance/ui/nodes/paragraph_component'),
-      "link": require('substance/ui/nodes/link_component'),
-      "todo": require('./todo_component')
-    }
-  }
-});
-```
-
-In the configuration object we pass the `Note` article class that we just defined. We will also define a custom `TodoComponent` that is rendered in within the editing surface.
+### Todo Component
 
 ```js
 // From todo_component.js
-...
+function TodoComponent() {
+  Component.apply(this, arguments);
+}
+
 TodoComponent.Prototype = function() {
   ...
   this.render = function() {
     // Checkbox defining wheter a todo is done or not. We don't want the cursor
     // to move inside this area,so we set contenteditable to false
-    var checkbox = $$('span').addClass('done').attr({contenteditable: false}).append(
+    var checkbox = $$('span').addClass('se-done').attr({contenteditable: false}).append(
       $$(Icon, {icon: this.props.node.done ? "fa-check-square-o" : "fa-square-o"})
     );
     checkbox.on('mousedown', this.toggleDone);
@@ -179,98 +92,86 @@ TodoComponent.Prototype = function() {
         checkbox,
         // TextProperty is used to render annotated content.
         // It takes a doc and a path to a text property as an input.
-        $$(TextProperty).addProps({
+        $$(TextProperty, {
           doc: this.props.doc,
-          path: [ this.props.node.id, "content"]
+          path: [ this.props.node.id, "content"]          
         })
       ]);
 
     if (this.props.node.done) {
-      el.addClass('done');
+      el.addClass('sm-done');
     }
     return el;
   };
+  ...
+
 };
+
+Component.extend(TodoComponent);
 ```
 
-Finally we design our custom toolbar, where we pick only the tools we need. We have complete freedom on how we organise them. We could wrap them in a container for instance to create groups of tools. Attached is a very simple implementation.
+#### Define commands
+
+Tools encapsulate document manipulation code according to specific user tasks. The [MarkCommand](MarkCommand.js) is a just a simple AnnotationCommand much like strong and emphasis. The [TodoCommand](TodoCommand) implements toggling between todo and paragraph elements and needs some custom logic.
 
 ```js
-// From toolbar.js
-...
-var Toolbar = Component.extend({
-  render: function() {
-    return $$('div').addClass('toolbar').append([
-      $$(ToolComponent, {tool: 'undo', 'title': 'Undo'}).append($$(Icon, {icon: 'fa-undo'})),
-      $$(ToolComponent, {tool: 'redo', 'title': 'Redo'}).append($$(Icon, {icon: 'fa-repeat'})),
-      $$(ToolComponent, {tool: 'emphasis', 'title': 'Emphasis'}).append($$(Icon, {icon: 'fa-italic'})),
-      $$(ToolComponent, {tool: 'strong', title: 'Strong'}).append($$(Icon, {icon: 'fa-bold'})),
-      $$(ToolComponent, {tool: 'mark', 'title': 'Mark'}).append($$(Icon, {icon: "fa-pencil"})),
-      $$(LinkToolComponent, {
-        tool: 'link',
-        'title': 'Link',
-        children: [$$(Icon).addProps({icon: "fa-link"})]
-      }).addClass('tool'),
-      $$(ToolComponent, {tool: 'todo', 'title': 'Create Todo'}).append($$(Icon, {icon: "fa-check-square-o"}))
-    ]);
-  }
-});
+var TodoCommand = function(surface) {
+  SurfaceCommand.call(this, surface);
+};
+
+TodoCommand.Prototype = function() {
+  ...
+  this.getCommandState = function() {
+    var surface = this.getSurface();
+    var sel = this.getSelection();
+    var disabled = !surface.isEnabled() || sel.isNull() || !sel.isPropertySelection();
+    var targetType = this.getTargetType();
+
+    return {
+      targetType: targetType,
+      active: targetType !== 'todo',
+      disabled: disabled
+    };
+  };
+
+  this.execute = function() {
+    var sel = this.getSelection();
+    if (!sel.isPropertySelection()) return;
+    var surface = this.getSurface();
+    var targetType = this.getTargetType();
+
+    if (targetType) {
+      // A Surface transaction performs a sequence of document operations
+      // and also considers the active selection.    
+      surface.transaction(function(tx, args) {
+        args.data = {
+          type: targetType
+        };
+        return surface.switchType(tx, args);
+      });
+      return {status: 'ok'};
+    }
+  };
+};
+SurfaceCommand.extend(TodoCommand);
+TodoCommand.static.name = 'todo';
 ```
+
+Commands need to implement `getCommandState` which can be used by tools to render according to the command state. E.g. when active is true, the tool button is highlighted.
 
 #### Define Tools
 
-Tools encapulate document manipulation code according to specific user tasks. They function as a data model for Tool Components. For instance the TodoTool implements toggling between todo and paragraph elements.
-
-Our Nodepad editor implements the following custom tools:
-
-- [mark_tool.js](mark_tool.js) - Toggle mark annotations
-- [todo_tool.js](todo_tool.js) - Toggle todos
-
+Tools are bound to commands and are their visual counterpart. Their implementation is usually simple, unless they involve UI logic.
 
 ```js
-// From todo_tool.js
-var TodoTool = Tool.extend({
-  name: "todo",
-  
-  // Update toolstate according to current selection
-  update: function(surface, sel) {
-    ...
-    if (nodeType === 'paragraph') {
-      targetType = 'todo';
-    } else {
-      targetType = 'paragraph';
-      active = true;
-    }
-    this.setToolState({
-      surface: surface,
-      sel: sel,
-      targetType,
-      active: active,
-      disabled: false
-    });
-  },
-  
-  performAction: function() {
-    ...
-    // A Surface transaction performs a sequence of document operations
-    // and also considers the active selection.    
-    surface.transaction(function(tx, args) {
-      args.data = {
-        type: state.targetType
-      };
-      // switch text type 
-      return editor.switchType(tx, args);
-    });
-  }
+// From TodoTool.js
+var SurfaceTool = require('substance/ui/SurfaceTool');
+function TodoTool() {
+  TodoTool.super.apply(this, arguments);
+}
+SurfaceTool.extend(TodoTool);
+TodoTool.static.name = 'todo';
+TodoTool.static.command = 'todo';
 ```
 
-The Mark tool is just an annotation tool like strong and emphasis, so we can inherit the whole functionality.
-
-```js
-// From mark_tool.js
-var AnnotationTool = require('substance/surface/annotation_tool');
-var MarkTool = AnnotationTool.extend({
-  name: "mark"
-});
-```
-That's it. Now it's on you to dig deeper, ideally by starting your own editor project. Give yourself some time to get familiar with the API's. Building a web-editor is not a trivial task, as there are many things that can go wrong. However, with Substance most of the complexities (such as undo/redo, keyboard and clipboard handling etc.) are taken care of, so you can focus on building user interfaces. -->
+That's it. Feel free to play with the code. A nice way to learn Substance is to define a custom node type (model + converter + UI components) and add it to the notepad implementation. See the [Substance API docs](http://substance.io/docs) to learn about individual interfaces.
