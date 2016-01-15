@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname)));
 app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome/fonts')));
 
 app.listen(port, function() {
-  console.log("Lens running on port " + port);
+  console.log("Substance Examples running on port " + port);
   console.log("http://127.0.0.1:"+port+"/");
 });
 
