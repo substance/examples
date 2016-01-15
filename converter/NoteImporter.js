@@ -20,14 +20,13 @@ function NoteImporter() {
   NoteImporter.super.call(this, {
     schema: noteSchema,
     converters: converters,
-    DocumentClass: Note,
-    containerId: 'body'
+    DocumentClass: Note
   });
 }
 
 NoteImporter.Prototype = function() {
-  this.convertDocument = function(elements) {
-    this.convertContainer(elements, this.config.containerId);
+  this.convertDocument = function(els) {
+    this.convertContainer(els, 'body');
   };
 };
 
