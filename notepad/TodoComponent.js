@@ -67,7 +67,7 @@ TodoComponent.Prototype = function() {
   };
 
   // Unbind event handlers
-  this.willUnmount = function() {
+  this.dispose = function() {
     this.doc.getEventProxy('path').disconnect(this);
   };
 };
