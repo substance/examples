@@ -23,9 +23,7 @@ TwoEditors.Prototype = function() {
         }).append(
         $$(Editor, {doc: this.props.doc}).ref('left'),
         $$(GhostEditor, {
-          doc: this.props.doc,
-          containerId: 'body',
-          name: 'bodyEditor'
+          doc: this.props.doc
         }).ref('right')
       )
     );
@@ -34,7 +32,7 @@ TwoEditors.Prototype = function() {
 
   this.didMount = function() {
     var ghostEditor = this.refs.right;
-    var ghost = new Ghost(ghostEditor);
+    var ghost = new Ghost(ghostEditor.refs.surface);
     ghost.start();
   };
 
