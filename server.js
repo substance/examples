@@ -8,6 +8,10 @@ var server = require('substance/util/server');
 server.serveStyles(app, '/notepad/app.css', path.join(__dirname, 'notepad', 'app.scss'));
 server.serveJS(app, '/notepad/app.js', path.join(__dirname, 'notepad', 'app.js'));
 
+// For each example we need those two lines
+server.serveStyles(app, '/ghostwriter/app.css', path.join(__dirname, 'ghostwriter', 'app.scss'));
+server.serveJS(app, '/ghostwriter/app.js', path.join(__dirname, 'ghostwriter', 'app.js'));
+
 // Serve static files
 app.use(express.static(path.join(__dirname)));
 app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome/fonts')));

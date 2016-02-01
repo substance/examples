@@ -5,7 +5,8 @@
   "license": "MIT",
   "dependencies": {
     "substance": "substance/substance#1727f9f3ea4efa437184ab07583688a9191e1fad",
-    "jquery": "*"
+    "jquery": "*",
+    "lodash": "3.10.1"
   },
   "devDependencies": {
     "font-awesome": "4.5.0",
