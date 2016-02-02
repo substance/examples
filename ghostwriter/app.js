@@ -30,12 +30,6 @@ TwoEditors.Prototype = function() {
     return el;
   };
 
-  this.didMount = function() {
-    var ghostEditor = this.refs.right;
-    var ghost = new Ghost(ghostEditor.refs.surface);
-    ghost.start();
-  };
-
 };
 
 Component.extend(TwoEditors);
