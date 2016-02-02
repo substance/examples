@@ -13,13 +13,15 @@ function GhostEditor() {
 GhostEditor.Prototype = function() {
 
   this.render = function() {
-    return $$('div').append(
-      $$(ContainerEditor, {
-        name: 'bodyEditor',
-        containerId: 'body',
-        editing: 'readonly'
-      }).ref('surface')
-    );
+    return $$('div')
+      .addClass('sc-ghost-editor')
+      .append(
+        $$(ContainerEditor, {
+          name: 'bodyEditor',
+          containerId: 'body',
+          editing: 'readonly'
+        }).ref('surface')
+      );
   };
 
 };
