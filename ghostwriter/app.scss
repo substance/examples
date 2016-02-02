@@ -14,7 +14,9 @@ $fa-font-path:  "../fonts" !default;
 }
 
 .sc-ghost-editor {
-  padding-top: 62px;
-  padding-left: 30px;
-  background: #EEE;
+  .se-pane.body {
+    padding-top: 20px;
+    padding-left: 20px;
+    background: #EEE;
+  }
 }
