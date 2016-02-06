@@ -6,10 +6,20 @@ $fa-font-path:  "../fonts" !default;
 @import '../node_modules/substance/styles/components/_all';
 @import '../node_modules/substance/packages/_all';
 
-.sc-editor {
-  .se-pane.body {
-    padding: 20px;
-  }
+body {
+  overflow: hidden;
+}
+
+.sc-two-editors {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+.sc-editor .se-content {
+  padding: 20px;
 }
 
 .sc-editor.left-editor {

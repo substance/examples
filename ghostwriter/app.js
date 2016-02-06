@@ -20,7 +20,7 @@ TwoEditors.Prototype = function() {
           splitType: 'vertical',
           sizeA: '50%'
         }).append(
-        $$(Editor, {doc: this.props.doc}).ref('left'),
+        $$(Editor, {doc: this.props.doc}).ref('left').addClass('sm-left-editor'),
         $$(GhostEditor, {
           doc: this.props.doc
         }).ref('right')

@@ -6,6 +6,7 @@ var $$ = Component.$$;
 var Controller = require('substance/ui/Controller');
 var ContainerEditor = require('substance/ui/ContainerEditor');
 var SplitPane = require('substance/ui/SplitPane');
+var ScrollPane = require('substance/ui/ScrollPane');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var Toolbar = require('substance/ui/Toolbar');
 var UndoTool = require('substance/ui/UndoTool');
@@ -35,13 +36,15 @@ Editor.Prototype = function() {
             $$(LinkTool).append($$(Icon, {icon: 'fa-link'}))
           )
         ),
-        $$(ContainerEditor, {
-          doc: this.props.doc,
-          containerId: 'body',
-          name: 'bodyEditor',
-          commands: config.bodyEditor.commands,
-          textTypes: config.bodyEditor.textTypes
-        }).ref('bodyEditor')
+        $$(ScrollPane, {scrollbarType: 'substance', scrollbarPosition: 'right'}).append(
+          $$(ContainerEditor, {
+            doc: this.props.doc,
+            containerId: 'body',
+            name: 'bodyEditor',
+            commands: config.bodyEditor.commands,
+            textTypes: config.bodyEditor.textTypes
+          }).ref('bodyEditor')
+        ).ref('contentPanel')
       )
     );
   };

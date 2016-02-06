@@ -4,6 +4,7 @@ var Component = require('substance/ui/Component');
 var Controller = require('substance/ui/Controller');
 var Toolbar = require('substance/ui/Toolbar');
 var SplitPane = require('substance/ui/SplitPane');
+var ScrollPane = require('substance/ui/ScrollPane');
 var ContainerEditor = require('substance/ui/ContainerEditor');
 var Editor = require('../simple/Editor');
 var Ghost = require('./Ghost');
@@ -37,7 +38,7 @@ GhostEditor.Prototype = function() {
     el.append(
       $$(SplitPane, {splitType: 'horizontal'}).append(
         toolbar,
-        editor
+        $$(ScrollPane, {scrollbarType: 'substance', scrollbarPosition: 'right'}).ref('contentPanel').append(editor)
       )
     );
     return el;
