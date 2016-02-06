@@ -1,0 +1,17 @@
+$fa-font-path:  "../fonts" !default;
+@import '../node_modules/font-awesome/scss/font-awesome';
+@import '../node_modules/substance/styles/base/index';
+
+// Substance modules
+@import '../node_modules/substance/styles/components/_all';
+@import '../node_modules/substance/packages/_all';
+
+.sc-editor {
+  .se-pane.body {
+    padding: 20px;
+  }
+}
+
+.sc-editor.left-editor {
+  border-right: 1px solid #ccc;
+}
