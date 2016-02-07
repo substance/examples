@@ -28,13 +28,12 @@ TwoEditors.Prototype = function() {
     );
     return el;
   };
-
 };
 
 Component.extend(TwoEditors);
 
 window.onload = function() {
-  var doc = exampleDoc;
+  var doc = exampleDoc();
   TwoEditors.static.mount({
     doc: doc
   }, 'body');
