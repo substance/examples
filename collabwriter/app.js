@@ -2,7 +2,7 @@
 
 var exampleDoc = require('../simple/exampleDoc');
 var MessageQueue = require('substance/util/MessageQueue');
-var WebSocketServer = require('./WebSocketServer');
+var WebSocketServer = require('substance/util/WebSocketServer');
 var CollabSession = require('substance/model/CollabSession');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var StubHub = require('substance/util/StubHub');
