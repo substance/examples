@@ -23,7 +23,7 @@ TwoEditors.Prototype = function() {
           sizeA: '50%'
         }).append(
         $$(Editor, {documentSession: this.props.session1}).ref('left').addClass('left-editor'),
-        $$(Editor, {documentSession: this.props.session2}).ref('right')
+        $$(Editor, {documentSession: this.props.session2}).ref('right').addClass('right-editor')
       )
     );
     return el;
@@ -41,13 +41,13 @@ window.onload = function() {
   var doc1 = exampleDoc();
   var doc2 = exampleDoc();
   var hubDoc = exampleDoc();
-  
+
   var hub = new StubHub(hubDoc, messageQueue);
 
   // Create two CollabSessions for the same doc
   var session1 = new CollabSession(doc1, {messageQueue: messageQueue});
   var session2 = new CollabSession(doc2, {messageQueue: messageQueue});
-  
+
   TwoEditors.static.mount({
     session1: session1,
     session2: session2
