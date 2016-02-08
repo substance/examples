@@ -2,6 +2,7 @@
 
 var exampleDoc = require('../simple/exampleDoc');
 var MessageQueue = require('substance/util/MessageQueue');
+var WebSocketServer = require('./WebSocketServer');
 var CollabSession = require('substance/model/CollabSession');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var StubHub = require('substance/util/StubHub');
@@ -67,15 +68,14 @@ function TwoEditors() {
   this.messageQueue = new MessageQueue();
   this.messageQueue.start();
 
-
-
   // Two edited docs, one doc instance on the hub all with the same contents,
   // now we start synchronizing them.
   this.doc1 = exampleDoc();
   this.doc2 = exampleDoc();
   this.hubDoc = exampleDoc();
   
-  this.hub = new StubHub(this.hubDoc, this.messageQueue);
+  this.wss = new WebSocketServer(this.messageQueue);
+  this.hub = new StubHub(this.hubDoc, this.wss);
 
   // Create two CollabSessions for the same doc
   this.session1 = new CollabSession(this.doc1, {messageQueue: this.messageQueue});
@@ -126,9 +126,10 @@ TwoEditors.Prototype = function() {
             sizeA: '50%'
           }).append(
           $$(Editor, {documentSession: this.session1}).ref('left').addClass('left-editor'),
-          $$(Editor, {documentSession: this.session2}).ref('right')
+          $$(Editor, {documentSession: this.session2}).ref('right').addClass('right-editor')
         ),
         statusEl
+
       )
     );
     return el;
