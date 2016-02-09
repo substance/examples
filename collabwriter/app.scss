@@ -34,15 +34,15 @@ body {
   line-height: 30px;
   background: #eee;
 
-  a {
-    color: inherit;
-  }
-
   .se-left {
     float: left;
   }
   .se-right {
     float: right;
+  }
+
+  button {
+    display: inline-block
   }
 }
 

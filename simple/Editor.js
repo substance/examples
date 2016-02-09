@@ -24,17 +24,22 @@ Editor.Prototype = function() {
   // Custom Render method for your editor
   this.render = function() {
     var config = this.getConfig();
+
+    var tools = [
+      $$(SwitchTextTypeTool, {'title': this.i18n.t('switch_text')}),
+      $$(UndoTool).append($$(Icon, {icon: 'fa-undo'})),
+      $$(RedoTool).append($$(Icon, {icon: 'fa-repeat'})),
+      $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),
+      $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'})),
+      $$(LinkTool).append($$(Icon, {icon: 'fa-link'}))
+    ];
+    if (this.props.tools) {
+      tools = tools.concat(this.props.tools);
+    }
     return $$('div').addClass('sc-editor').append(
       $$(SplitPane, {splitType: 'horizontal'}).append(
         $$(Toolbar).append(
-          $$(Toolbar.Group).append(
-            $$(SwitchTextTypeTool, {'title': this.i18n.t('switch_text')}),
-            $$(UndoTool).append($$(Icon, {icon: 'fa-undo'})),
-            $$(RedoTool).append($$(Icon, {icon: 'fa-repeat'})),
-            $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),
-            $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'})),
-            $$(LinkTool).append($$(Icon, {icon: 'fa-link'}))
-          )
+          $$(Toolbar.Group).append(tools)
         ),
         $$(ScrollPane, {scrollbarType: 'substance', scrollbarPosition: 'right'}).append(
           $$(ContainerEditor, {
