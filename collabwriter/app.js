@@ -5,6 +5,7 @@ var exampleChangeset = require('../simple/exampleChangeset');
 var Article = require('../simple/Article');
 var MessageQueue = require('substance/util/MessageQueue');
 var WebSocketServer = require('substance/util/WebSocketServer');
+var WebSocket = require('substance/util/WebSocket');
 var CollabSession = require('substance/model/CollabSession');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var StubHub = require('substance/util/StubHub');
@@ -33,14 +34,23 @@ function TwoEditors() {
   this.doc2 = new Article();
 
   this.wss = new WebSocketServer(this.messageQueue);
+  this.ws1 = new WebSocket(this.messageQueue, 'user1');
+  this.ws2 = new WebSocket(this.messageQueue, 'user2');
+
+  var docId = 'doc-15';
   this.store = new TestStore({
     'doc-15': exampleChangeset()
   });
 
   this.hub = new StubHub(this.wss, this.store);
-  this.session1 = new CollabSession(this.doc1, {messageQueue: this.messageQueue});
-  this.session2 = new CollabSession(this.doc2, {messageQueue: this.messageQueue});
-
+  this.session1 = new CollabSession(this.doc1, this.ws1, {
+    docId: 'doc-15',
+    docVersion: 0
+  });
+  this.session2 = new CollabSession(this.doc2, this.ws2, {
+    docId: 'doc-15',
+    docVersion: 0
+  });
   this.handleActions({
     'toggleDebug': this._toggleDebug,
     'processNextMessage': this._processNextMessage,
@@ -70,17 +80,18 @@ TwoEditors.Prototype = function() {
       documentSession: this.session1
     }).ref('left').addClass('left-editor');
 
-    leftEditor.outlet('tools').append(
-      $$(CommitTool, { session: this.session1 })
-    );
-
     var rightEditor = $$(Editor, {
       documentSession: this.session2
     }).ref('right').addClass('right-editor');
 
-    rightEditor.outlet('tools').append(
-      $$(CommitTool, { session: this.session2 })
-    );
+    if (this._debug) {
+      leftEditor.outlet('tools').append(
+        $$(CommitTool, { session: this.session1 })
+      );
+      rightEditor.outlet('tools').append(
+        $$(CommitTool, { session: this.session2 })
+      );
+    }
 
     el.append(
       $$(SplitPane, {splitType: 'horizontal', sizeB: 'inherit'}).append(
@@ -108,9 +119,10 @@ TwoEditors.Prototype = function() {
       this.session2.start();
     }
     this._debug = !this._debug;
-    this.refs.status.extendProps({
-      debug: this._debug
-    });
+    this.rerender();
+    // this.refs.status.extendProps({
+    //   debug: this._debug
+    // });
   };
 
   this._processNextMessage = function() {
@@ -202,13 +214,14 @@ function CommitTool() {
 CommitTool.Prototype = function() {
 
   this.didMount = function() {
-    this.props.session.getDocument().connect(this, {
+    this.doc = this.props.session.getDocument();
+    this.doc.connect(this, {
       'document:changed': this.afterDocumentChange
     }, { priority: -10 });
   };
 
   this.dispose = function() {
-    this.props.messageQueue.disconnect(this);
+    this.doc.disconnect(this);
   };
 
   this.render = function() {
