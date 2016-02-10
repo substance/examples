@@ -1,12 +1,14 @@
 /*jshint latedef:nofunc */
 'use strict';
 
-var exampleDoc = require('../simple/exampleDoc');
+var exampleChangeset = require('../simple/exampleChangeset');
+var Article = require('../simple/Article');
 var MessageQueue = require('substance/util/MessageQueue');
 var WebSocketServer = require('substance/util/WebSocketServer');
 var CollabSession = require('substance/model/CollabSession');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var StubHub = require('substance/util/StubHub');
+var TestStore = require('substance/util/TestStore');
 var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
 var Editor = require('../simple/Editor');
@@ -27,18 +29,16 @@ function TwoEditors() {
 
   // Two edited docs, one doc instance on the hub all with the same contents,
   // now we start synchronizing them.
-  this.doc1 = exampleDoc();
-  this.doc2 = exampleDoc();
-  this.hubDoc = exampleDoc();
+  this.doc1 = new Article();
+  this.doc2 = new Article();
 
   this.wss = new WebSocketServer(this.messageQueue);
-  this.hub = new StubHub(this.hubDoc, this.wss);
-
-  // Create two CollabSessions for the same doc
-  this.session1 = new CollabSession(this.doc1, {
-    messageQueue: this.messageQueue,
-    autorun: false
+  this.store = new TestStore({
+    'doc-15': exampleChangeset()
   });
+
+  this.hub = new StubHub(this.wss, this.store);
+  this.session1 = new CollabSession(this.doc1, {messageQueue: this.messageQueue});
   this.session2 = new CollabSession(this.doc2, {messageQueue: this.messageQueue});
 
   this.handleActions({
