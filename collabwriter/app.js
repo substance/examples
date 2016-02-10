@@ -1,8 +1,7 @@
 /*jshint latedef:nofunc */
 'use strict';
 
-var exampleChangeset = require('../simple/exampleChangeset');
-var Article = require('../simple/Article');
+var poem = require('substance/test/fixtures/collab/poem');
 var MessageQueue = require('substance/util/MessageQueue');
 var WebSocketServer = require('substance/util/WebSocketServer');
 var WebSocket = require('substance/util/WebSocket');
@@ -12,7 +11,8 @@ var StubHub = require('substance/util/StubHub');
 var TestStore = require('substance/util/TestStore');
 var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
-var Editor = require('../simple/Editor');
+var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
+var Article = require('substance/packages/prose-editor/ProseArticle');
 var $$ = Component.$$;
 
 window.onload = function() {
@@ -25,12 +25,15 @@ window.onload = function() {
 function TwoEditors() {
   TwoEditors.super.apply(this, arguments);
 
+  var fixture = require('substance/test/fixtures/collab/two-paragraphs');
+  // var fixture = poem;
+
   // Two edited docs, one doc instance on the hub all with the same contents,
   // now we start synchronizing them.
   this.doc1 = new Article();
   this.doc2 = new Article();
   this.store = new TestStore({
-    'doc-15': exampleChangeset()
+    'test': fixture.createChangeset()
   });
 
   this.messageQueue = new MessageQueue();
@@ -40,11 +43,11 @@ function TwoEditors() {
 
   this.hub = new StubHub(this.wss, this.store);
   this.session1 = new CollabSession(this.doc1, this.ws1, {
-    docId: 'doc-15',
+    docId: 'test',
     docVersion: 0
   });
   this.session2 = new CollabSession(this.doc2, this.ws2, {
-    docId: 'doc-15',
+    docId: 'test',
     docVersion: 0
   });
 
@@ -88,11 +91,11 @@ TwoEditors.Prototype = function() {
       debug: this._debug
     }).ref('statusEl').ref('status');
 
-    var leftEditor = $$(Editor, {
+    var leftEditor = $$(ProseEditor, {
       documentSession: this.session1
     }).ref('left').addClass('left-editor');
 
-    var rightEditor = $$(Editor, {
+    var rightEditor = $$(ProseEditor, {
       documentSession: this.session2
     }).ref('right').addClass('right-editor');
 
@@ -211,7 +214,8 @@ Status.Prototype = function() {
   };
 
   this._dumpMessageQueue = function() {
-    console.log(this.props.messageQueue.messages);
+    // console.log(this.props.messageQueue.messages);
+    console.log(JSON.stringify(this.props.messageQueue.messages, null, 2));
   };
 
 };

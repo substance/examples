@@ -3,7 +3,7 @@
 var exampleDoc = require('../simple/exampleDoc');
 var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
-var Editor = require('../simple/Editor');
+var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
 var GhostEditor = require('./GhostEditor');
 var $$ = Component.$$;
 
@@ -20,7 +20,7 @@ TwoEditors.Prototype = function() {
           splitType: 'vertical',
           sizeA: '50%'
         }).append(
-        $$(Editor, {doc: this.props.doc}).ref('left').addClass('sm-left-editor'),
+        $$(ProseEditor, {doc: this.props.doc}).ref('left').addClass('sm-left-editor'),
         $$(GhostEditor, {
           doc: this.props.doc
         }).ref('right')
