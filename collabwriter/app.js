@@ -77,6 +77,7 @@ function TwoEditors() {
     // flush initial handshake messages
     this.messageQueue.flush();
   } else {
+    this.messageQueue.flush();
     this.messageQueue.start();
   }
 }
