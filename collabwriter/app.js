@@ -25,22 +25,18 @@ window.onload = function() {
 function TwoEditors() {
   TwoEditors.super.apply(this, arguments);
 
-  this.messageQueue = new MessageQueue();
-  this.messageQueue.start();
-
   // Two edited docs, one doc instance on the hub all with the same contents,
   // now we start synchronizing them.
   this.doc1 = new Article();
   this.doc2 = new Article();
-
-  this.wss = new WebSocketServer(this.messageQueue);
-  this.ws1 = new WebSocket(this.messageQueue, 'user1');
-  this.ws2 = new WebSocket(this.messageQueue, 'user2');
-
-  var docId = 'doc-15';
   this.store = new TestStore({
     'doc-15': exampleChangeset()
   });
+
+  this.messageQueue = new MessageQueue();
+  this.wss = new WebSocketServer(this.messageQueue, 'hub');
+  this.ws1 = new WebSocket(this.messageQueue, 'user1', 'hub');
+  this.ws2 = new WebSocket(this.messageQueue, 'user2', 'hub');
 
   this.hub = new StubHub(this.wss, this.store);
   this.session1 = new CollabSession(this.doc1, this.ws1, {
@@ -51,18 +47,34 @@ function TwoEditors() {
     docId: 'doc-15',
     docVersion: 0
   });
+
+  this._debug = this.props.debug;
+
   this.handleActions({
     'toggleDebug': this._toggleDebug,
     'processNextMessage': this._processNextMessage,
     'commit': this._onCommit
   });
 
-  this._debug = this.props.debug;
+  // let WebSocket react on message queue
+  this.wss.connect();
+
+  // Note: when we connect a client's socket,
+  // the server will confirm the connection, which triggers
+  // CollabSession._onConnected automatically, which then
+  // start to talk the CollabHub prototocol
+  // i.e., starting to send ['open', docId, version]
+  this.ws1.connect();
+  // also estabslish the connection for the second user
+  this.ws2.connect();
 
   if (this._debug) {
-    this.messageQueue.stop();
     this.session1.stop();
     this.session2.stop();
+    // flush initial handshake messages
+    this.messageQueue.flush();
+  } else {
+    this.messageQueue.start();
   }
 }
 
@@ -120,9 +132,6 @@ TwoEditors.Prototype = function() {
     }
     this._debug = !this._debug;
     this.rerender();
-    // this.refs.status.extendProps({
-    //   debug: this._debug
-    // });
   };
 
   this._processNextMessage = function() {
@@ -202,7 +211,7 @@ Status.Prototype = function() {
   };
 
   this._dumpMessageQueue = function() {
-    console.log(JSON.stringify(this.props.messageQueue.messages));
+    console.log(this.props.messageQueue.messages);
   };
 
 };
