@@ -14,7 +14,7 @@ This example implements a custom Notepad. Here's a list of all components (=file
 
 ## Building a Notepad with Substance
 
-Substance lets you build your very own text editor. Let's walk through the creation of a simple [Notepad](http://substance.io/demos/notepad) app. It can be used like this when ready.
+Substance lets you build your very own text editor. Let's walk through the creation of a simple [Notepad](http://substance.io/) app. It can be used like this when ready.
 
 ```js
 var doc = noteImporter.importDocument(NOTE_HTML);
@@ -112,7 +112,7 @@ Component.extend(TodoComponent);
 
 #### Define commands
 
-Tools encapsulate document manipulation code according to specific user tasks. The [MarkCommand](MarkCommand.js) is a just a simple AnnotationCommand much like strong and emphasis. The [TodoCommand](TodoCommand) implements toggling between todo and paragraph elements and needs some custom logic.
+Tools encapsulate document manipulation code according to specific user tasks. The [MarkCommand](MarkCommand.js) is a just a simple AnnotationCommand much like strong and emphasis. The [TodoCommand](TodoCommand.js) implements toggling between todo and paragraph elements and needs some custom logic.
 
 ```js
 var TodoCommand = function(surface) {

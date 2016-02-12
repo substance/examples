@@ -4,7 +4,7 @@ This example implements a custom Note article type.
 
 - [noteSchema.js](noteSchema.js) - schema definition to model notes
 - [Note.js](Note.js) - Article class implementation
-- [testNote.js](testNoteImporter.js) - Construction of a note and data manipulation
+- [testNote.js](testNote.js) - Construction of a note and data manipulation
 
 Run and play with the test script:
 
@@ -18,7 +18,13 @@ node testNote.js
 
 In this example we define a `Note` article class, that consists of paragraphs and todo items. Text can be linked, emphasized (`emphasis`, `strong`) and highlighted (`mark`).
 
-We are utilizing a number of predefined node types in our schema  ([Paragraph](https://github.com/substance/substance/blob/master/document/nodes/paragraph.js), [Emphasis](https://github.com/substance/substance/blob/master/document/nodes/emphasis.js), [Strong](https://github.com/substance/substance/blob/master/document/nodes/paragraph.js), [Link](https://github.com/substance/substance/blob/master/document/nodes/link.js)) but also include custom ones ([Todo](todo.js), [Mark](mark.js)).
+We are utilizing a number of predefined node types in our schema  (
+[Paragraph](https://github.com/substance/substance/blob/master/packages/paragraph),
+[Emphasis](https://github.com/substance/substance/blob/master/packages/emphasis),
+[Strong](https://github.com/substance/substance/blob/master/packages/strong),
+[Link](https://github.com/substance/substance/blob/master/packages/link))
+but also include custom ones ([Todo](noteSchema.js),
+[Mark](noteSchema.js)).
 
 ```js
 // From noteSchema.js
