@@ -158,9 +158,7 @@ function Status() {
 Status.Prototype = function() {
 
   this.didMount = function() {
-    this.props.messageQueue.connect(this, {
-      'messages:updated': this._onMessagesUpdated
-    });
+    this.props.messageQueue.on('messages:updated', this._onMessagesUpdated, this);
   };
 
   this.dispose = function() {
@@ -229,13 +227,12 @@ CommitTool.Prototype = function() {
 
   this.didMount = function() {
     this.doc = this.props.session.getDocument();
-    this.doc.connect(this, {
-      'document:changed': this.afterDocumentChange
-    }, { priority: -10 });
+    this.doc.on('document:changed',
+      this.afterDocumentChange, this, { priority: -10 });
   };
 
   this.dispose = function() {
-    this.doc.disconnect(this);
+    this.doc.off(this);
   };
 
   this.render = function() {
