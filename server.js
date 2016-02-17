@@ -17,6 +17,9 @@ config.examples.forEach(function(folder) {
   server.serveJS(app, '/'+folder+'/app.js', path.join(__dirname, folder, 'app.js'));
 });
 
+server.serveStyles(app, '/tags/app.css', path.join(__dirname, 'tags', 'app.scss'));
+server.serveJS(app, '/tags/app.js', path.join(__dirname, 'tags', 'app.js'));
+
 // Serve static files
 app.use(express.static(path.join(__dirname)));
 app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome/fonts')));
