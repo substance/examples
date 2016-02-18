@@ -128,7 +128,7 @@ EditTagsPrompt.Prototype = function() {
 
 
     el.append([
-      $$('div').addClass('se-prompt-title').append(this.i18n.t('Tags')),
+      $$('div').addClass('se-prompt-title').append(this.i18n.t('tags.title')),
       tagsWidget,
       $$('input').attr({type: 'text', placeholder: 'Add tag'})
                  .ref('tags')
