@@ -47,7 +47,7 @@ function TwoEditors() {
     session: {
       sessionToken: 'user1token',
       user: {
-        'id': 'user_1',
+        'id': 'user1',
         'name': 'User 1'
       }
     }
@@ -59,7 +59,7 @@ function TwoEditors() {
     session: {
       sessionToken: 'user2token',
       user: {
-        'id': 'user_2',
+        'id': 'user2',
         'name': 'User 2'
       }
     }
@@ -70,18 +70,6 @@ function TwoEditors() {
   console.log('wss', this.wss);
 
   this.hub = new TestCollabHub(this.wss, this.store);
-
-  this.session1 = new TestCollabSession(this.doc1, {
-    hubClient: this.hubClient1,
-    docId: 'test',
-    docVersion: 0
-  });
-
-  this.session2 = new TestCollabSession(this.doc2, {
-    hubClient: this.hubClient1,
-    docId: 'test',
-    docVersion: 0
-  });
 
   this._debug = this.props.debug;
 
@@ -103,14 +91,31 @@ function TwoEditors() {
   // also estabslish the connection for the second user
   this.ws2.connect();
 
+  // Flush initial connection handshake messages
+  this.messageQueue.flush();
+
+  // CollabSession expects a connected and authenticated ws (available via hubClient)
+  this.session1 = new TestCollabSession(this.doc1, {
+    hubClient: this.hubClient1,
+    docId: 'test',
+    docVersion: 0
+  });
+  this.session2 = new TestCollabSession(this.doc2, {
+    hubClient: this.hubClient2,
+    docId: 'test',
+    docVersion: 0
+  });
+
   if (this._debug) {
     this.session1.stop();
     this.session2.stop();
     // flush initial handshake messages
-    this.messageQueue.flush();
+    // this.messageQueue.flush();
   } else {
+    
     this.messageQueue.flush();
-    this.messageQueue.start();
+    debugger;
+    // this.messageQueue.start();
   }
 }
 
