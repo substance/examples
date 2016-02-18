@@ -3,26 +3,10 @@
 var $ = window.$ = require('substance/util/jquery');
 var Component = require('substance/ui/Component');
 var Icon = require('substance/ui/FontAwesomeIcon');
-var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
 var TagsTool = require('./tags/TagsTool');
-var example = require('substance/test/fixtures/collab/poem');
+var TagsEditor = require('./tagsEditor');
+var Article = require('./article');
 var $$ = Component.$$;
-
-var config = {
-  i18n: {
-    'tags.title': 'Tags'
-  },
-  controller: {
-    components: {
-      'tags': require('./tags/TagsComponent')
-    }
-  },
-  bodyEditor: {
-    commands: [
-      require('./tags/TagsCommand')
-    ]
-  }
-};
 
 function App() {
   App.super.apply(this, arguments);
@@ -33,10 +17,10 @@ App.Prototype = function() {
   this.render = function() {
     var el = $$('div').addClass('app');
 
-    var editor = $$(ProseEditor, {
-      doc: this.props.doc,
-      config: config
+    var editor = $$(TagsEditor, {
+      doc: this.props.doc
     });
+
     editor.outlet('tools').append(
       $$(TagsTool).append($$(Icon, {icon: 'fa-tags'}))
     );
@@ -50,9 +34,13 @@ App.Prototype = function() {
 Component.extend(App);
 
 $(function() {
-  var doc = example.createArticle();
+  var doc = new Article();
+  doc.loadSample();
+  //var doc = Article.create();
+  //Article.sample(doc);
   // For debugging in the console
   window.doc = doc;
+
   Component.mount(App, {
     doc: doc
   }, 'body');
