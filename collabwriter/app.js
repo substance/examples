@@ -1,14 +1,16 @@
 /*jshint latedef:nofunc */
 'use strict';
 
-var poem = require('substance/test/fixtures/collab/poem');
-var MessageQueue = require('substance/util/MessageQueue');
-var WebSocketServer = require('substance/util/WebSocketServer');
-var WebSocket = require('substance/util/WebSocket');
-var CollabSession = require('substance/model/StubCollabSession');
+// var poem = require('substance/test/fixtures/collab/poem');
+var MessageQueue = require('substance/test/collab/MessageQueue');
+var TestWebSocketServer = require('substance/test/collab/TestWebSocketServer');
+var TestCollabSession = require('substance/test/collab/TestCollabSession');
+var TestHubClient = require('substance/test/collab/TestHubClient');
 var Icon = require('substance/ui/FontAwesomeIcon');
-var StubHub = require('substance/util/StubHub');
-var TestStore = require('substance/util/TestStore');
+var TestCollabHub = require('substance/test/collab/TestCollabHub');
+var TestStore = require('substance/test/collab/TestStore');
+var TestWebSocket = require('substance/test/collab/TestWebSocket');
+
 var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
@@ -35,18 +37,48 @@ function TwoEditors() {
   this.store = new TestStore({
     'test': fixture.createChangeset()
   });
-
+  
   this.messageQueue = new MessageQueue();
-  this.wss = new WebSocketServer(this.messageQueue, 'hub');
-  this.ws1 = new WebSocket(this.messageQueue, 'user1', 'hub');
-  this.ws2 = new WebSocket(this.messageQueue, 'user2', 'hub');
+  this.ws1 = new TestWebSocket(this.messageQueue, 'user1', 'hub');
+  this.ws2 = new TestWebSocket(this.messageQueue, 'user2', 'hub');
 
-  this.hub = new StubHub(this.wss, this.store);
-  this.session1 = new CollabSession(this.doc1, this.ws1, {
+  this.hubClient1 = new TestHubClient({
+    ws: this.ws1,
+    session: {
+      sessionToken: 'user1token',
+      user: {
+        'id': 'user_1',
+        'name': 'User 1'
+      }
+    }
+  });
+
+  this.hubClient2 = new TestHubClient({
+    messageQueue: this.messageQueue,
+    ws: this.ws2,
+    session: {
+      sessionToken: 'user2token',
+      user: {
+        'id': 'user_2',
+        'name': 'User 2'
+      }
+    }
+  });
+
+  this.wss = new TestWebSocketServer(this.messageQueue, 'hub');
+
+  console.log('wss', this.wss);
+
+  this.hub = new TestCollabHub(this.wss, this.store);
+
+  this.session1 = new TestCollabSession(this.doc1, {
+    hubClient: this.hubClient1,
     docId: 'test',
     docVersion: 0
   });
-  this.session2 = new CollabSession(this.doc2, this.ws2, {
+
+  this.session2 = new TestCollabSession(this.doc2, {
+    hubClient: this.hubClient1,
     docId: 'test',
     docVersion: 0
   });
@@ -83,7 +115,6 @@ function TwoEditors() {
 }
 
 TwoEditors.Prototype = function() {
-
 
   this.render = function() {
     var el = $$('div').addClass('sc-two-editors');
