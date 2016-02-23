@@ -37,7 +37,7 @@ function TwoEditors() {
   this.store = new TestStore({
     'test': fixture.createChangeset()
   });
-  
+
   this.messageQueue = new MessageQueue();
   this.ws1 = new TestWebSocket(this.messageQueue, 'user1', 'hub');
   this.ws2 = new TestWebSocket(this.messageQueue, 'user2', 'hub');
@@ -110,7 +110,7 @@ function TwoEditors() {
     this.session1.stop();
     this.session2.stop();
     // flush initial handshake messages
-    // this.messageQueue.flush();
+    this.messageQueue.flush();
   } else {
     this.messageQueue.flush();
     this.messageQueue.start();
@@ -247,8 +247,7 @@ Status.Prototype = function() {
   };
 
   this._dumpMessageQueue = function() {
-    // console.log(this.props.messageQueue.messages);
-    console.log(JSON.stringify(this.props.messageQueue.messages, null, 2));
+    console.log(JSON.stringify(this.props.messageQueue._log, null, 2));
   };
 
 };
