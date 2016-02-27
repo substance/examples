@@ -24,6 +24,6 @@ Tale.Prototype = function() {
 };
 
 ProseArticle.extend(Tale);
-Tale.schema = TagsSchema;
+Tale.schema = TaleSchema;
 
 module.exports = Tale;
