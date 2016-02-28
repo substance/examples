@@ -9,7 +9,7 @@ var makeFixture = function(tx) {
     source: 'http://www.gutenberg.org/files/2591/2591-h/2591-h.htm',
     email: 'help2015@pglaf.org',
     publishedAt: '2016-02-28T10:49:57.317Z',
-    pages: '7',
+    pages: 7,
     century: 'XIX',
     genre: ['Fairy tales', 'Folklore'],
     category: 'author\'s tale',
