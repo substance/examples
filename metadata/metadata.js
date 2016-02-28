@@ -19,7 +19,7 @@ Metadata.static.defineSchema({
   pages: { type: "number", optional: true },
   century: { type: "string", optional: true },
   genre: { type: "array", default: [] },
-  type: { type: "string", optional: true },
+  category: { type: "string", optional: true },
   abstract: { type: "string", default: "" }
 });
 

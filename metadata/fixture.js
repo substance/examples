@@ -2,6 +2,21 @@ var makeFixture = function(tx) {
   var body = tx.get('body');
 
   tx.create({
+    id: 'metadata',
+    type: 'metadata',
+    author: 'The Brothers Grimm',
+    published: false,
+    source: 'http://www.gutenberg.org/files/2591/2591-h/2591-h.htm',
+    email: 'help2015@pglaf.org',
+    publishedAt: '2016-02-28T10:49:57.317Z',
+    pages: '7',
+    century: 'XIX',
+    genre: ['Fairy tales', 'Folklore'],
+    category: 'author\'s tale',
+    abstract: '"The Golden Bird" is a Brothers Grimm fairy tale, number 57, about the pursuit of a golden bird by a king\'s three sons. \rA French version, collected by Paul Sébillot in Littérature orale de la Haute-Bretagne, is called Le Merle d\'or (The Golden Blackbird). Andrew Lang included that variant in The Green Fairy Book (1892). \rIt is Aarne-Thompson folktale type 550, "The Golden Bird", a Supernatural Helper. Other tales of this type include The Bird \'Grip\', The Greek Princess and the Young Gardener, Tsarevitch Ivan, the Fire Bird and the Gray Wolf, How Ian Direach got the Blue Falcon, and The Nunda, Eater of People.'
+  });
+
+  tx.create({
     id: 'h1',
     type: 'heading',
     level: 1,
@@ -96,7 +111,7 @@ var makeFixture = function(tx) {
   tx.create({
     id: 'p13',
     type: 'paragraph',
-    content: "'If you will only listen,' said the fox, 'it can be done. When you come to the king, and he asks for the beautiful princess, you must say, "Here she is!" Then he will be very joyful; and you will mount the golden horse that they are to give you, and put out your hand to take leave of them; but shake hands with the princess last. Then lift her quickly on to the horse behind you; clap your spurs to his side, and gallop away as fast as you can.'"
+    content: "'If you will only listen,' said the fox, 'it can be done. When you come to the king, and he asks for the beautiful princess, you must say, \"Here she is!\" Then he will be very joyful; and you will mount the golden horse that they are to give you, and put out your hand to take leave of them; but shake hands with the princess last. Then lift her quickly on to the horse behind you; clap your spurs to his side, and gallop away as fast as you can.'"
   });
   body.show('p13');
 
