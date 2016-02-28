@@ -2,8 +2,10 @@
 
 var $ = window.$ = require('substance/util/jquery');
 var Component = require('substance/ui/Component');
-var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
+var Icon = require('substance/ui/FontAwesomeIcon');
+var TaleEditor = require('./TaleEditor');
 var Tale = require('./tale');
+var MetaDataTool = require('./MetaDataTool');
 var $$ = Component.$$;
 
 function App() {
@@ -15,9 +17,13 @@ App.Prototype = function() {
   this.render = function() {
     var el = $$('div').addClass('app');
 
-    var editor = $$(ProseEditor, {
+    var editor = $$(TaleEditor, {
       doc: this.props.doc
     });
+
+    editor.outlet('tools').append(
+      $$(MetaDataTool).append($$(Icon, {icon: 'fa-book'}))
+    );
 
     el.append(editor);
 
