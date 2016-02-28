@@ -13,3 +13,14 @@ body {
 .sc-editor .sc-surface.body {
   padding: 40px;
 }
+
+.se-modal {
+	padding: 15px;
+	background: rgba(255, 255, 255, 0.7);
+	position: fixed;
+	left: 0px;
+	top: 40px;
+	z-index: 50000;
+	right: 0px;
+	bottom: 0px;
+}
