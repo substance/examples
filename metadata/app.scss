@@ -23,6 +23,7 @@ body {
 	z-index: 50000;
 	right: 0px;
 	bottom: 0px;
+  overflow: scroll;
 }
 
 .se-form {
@@ -33,25 +34,41 @@ body {
 }
 
 .sc-field {
-	margin: 0px 10px;
+	margin: 15px 10px;
+
+  input {
+    margin: 0;
+    width: 100%;
+    font-size: 14px;
+    display: block;
+    border: 1px solid #ddd;
+    min-width: auto;
+    padding: 0 10px;
+  }
+
+  .help {
+    font-style: italic;
+    margin-top: 4px;
+  }
 }
 
-.sc-field input {
-  margin: 15px 0;
-  width: 100%;
-  font-size: 14px;
-  display: block;
-  border: 1px solid #ddd;
-  min-width: auto;
-  padding: 0 10px;
-}
+.sc-field-date {
+  margin: 20px 10px;
 
-.sc-field-date select {
-	margin-right: 5px;
+  select {
+  	margin-right: 5px;
+  }
+
+  .help {
+    float: right;
+    margin: 0px;
+  }
 }
 
 .sc-field-checkbox, .sc-field-checkboxes, .sc-field-radio {
-	margin: 15px 10px;
+	margin: 20px 10px;
+  position:relative;
+  
   label {
     display: block;
     font-size: 14px;
@@ -67,5 +84,27 @@ body {
     top: 2px;
     float: left;
     font-size: 20px;
-	}   
+	}
+
+  .help {
+    float: right;
+    margin: 0px;
+    position: absolute;
+    right: 0px;
+    top: 10px;
+  }
+}
+
+.sc-field-select {
+  margin: 20px 10px;
+
+  .help {
+    float: right;
+    margin: 0px;
+  }
+}
+
+.sc-field-prose {
+	position: relative;
+	height: 200px;
 }

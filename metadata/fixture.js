@@ -13,7 +13,7 @@ var makeFixture = function(tx) {
     century: 'XIX',
     genre: ['Fairy tales', 'Folklore'],
     category: 'author\'s tale',
-    abstract: '"The Golden Bird" is a Brothers Grimm fairy tale, number 57, about the pursuit of a golden bird by a king\'s three sons. \rA French version, collected by Paul Sébillot in Littérature orale de la Haute-Bretagne, is called Le Merle d\'or (The Golden Blackbird). Andrew Lang included that variant in The Green Fairy Book (1892). \rIt is Aarne-Thompson folktale type 550, "The Golden Bird", a Supernatural Helper. Other tales of this type include The Bird \'Grip\', The Greek Princess and the Young Gardener, Tsarevitch Ivan, the Fire Bird and the Gray Wolf, How Ian Direach got the Blue Falcon, and The Nunda, Eater of People.'
+    abstract: '"<p>The Golden Bird" is a Brothers Grimm fairy tale, number 57, about the pursuit of a golden bird by a king\'s three sons. \rA French version, collected by Paul Sébillot in Littérature orale de la Haute-Bretagne, is called Le Merle d\'or (The Golden Blackbird). Andrew Lang included that variant in The Green Fairy Book (1892). \rIt is Aarne-Thompson folktale type 550, "The Golden Bird", a Supernatural Helper. Other tales of this type include The Bird \'Grip\', The Greek Princess and the Young Gardener, Tsarevitch Ivan, the Fire Bird and the Gray Wolf, How Ian Direach got the Blue Falcon, and The Nunda, Eater of People.</p>'
   });
 
   tx.create({

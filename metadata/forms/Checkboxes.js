@@ -51,7 +51,11 @@ Checkboxes.Prototype = function() {
       checkboxes.append(label);
 
     });
-    el.append(checkboxes);    
+
+    el.append(checkboxes);  
+
+    if(config.placeholder) el.append($$('div').addClass('help').append(config.placeholder));
+  
     return el;
   };
 };

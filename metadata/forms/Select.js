@@ -31,6 +31,8 @@ Select.Prototype = function() {
 
     el.append(select);
     
+    if(config.placeholder) el.append($$('div').addClass('help').append(config.placeholder));
+
     return el;
   };
 };

@@ -22,6 +22,8 @@ Text.Prototype = function() {
       .on('change', this.commit);
     
     el.append(input);
+
+    if(config.placeholder && value !== "") el.append($$('div').addClass('help').append(config.placeholder));
     
     return el;
   };

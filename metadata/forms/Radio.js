@@ -51,7 +51,10 @@ Radio.Prototype = function() {
       radios.append(label);
 
     });
-    el.append(radios);    
+    el.append(radios); 
+    
+    if(config.placeholder) el.append($$('div').addClass('help').append(config.placeholder));   
+    
     return el;
   };
 };

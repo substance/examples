@@ -72,6 +72,8 @@ Date.Prototype = function() {
 
     el.append([days, months, years]);
     
+    if(config.placeholder) el.append($$('div').addClass('help').append(config.placeholder));
+
     return el;
   };
 };
