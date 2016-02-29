@@ -11,16 +11,16 @@ DocumentNode.extend(Metadata);
 Metadata.static.name = "metadata";
 
 Metadata.static.defineSchema({
-  author: { type: "string", default: "" },
-  published: { type: "boolean", default: false },
-  source: { type: "string", default: "" },
-  email: { type: "string", default: "" },
-  publishedAt: { type: "string", optional: true },
-  pages: { type: "number", optional: true },
-  century: { type: "string", optional: true },
-  genre: { type: "array", default: [] },
-  category: { type: "string", optional: true },
-  abstract: { type: "string", default: "" }
+  author: { type: "string", default: "", field: { type: "text", dataType: "text", placeholder: "Enter author's name" }},
+  published: { type: "boolean", default: false, field: { type: "checkbox", placeholder: "Published" }},
+  source: { type: "string", default: "", field: { type: "text", dataType: "url", placeholder: "Enter source url" }},
+  email: { type: "string", default: "", field: { type: "text", dataType: "email", placeholder: "Enter publisher e-mail" }},
+  publishedAt: { type: "string", optional: true, field: { type: "date" }},
+  pages: { type: "number", optional: true, field: { type: "text", dataType: "number" }},
+  century: { type: "string", optional: true, field: { type: "select", options: ['XVII', 'XVIII', 'XIX', 'XX', 'XXI'] }},
+  genre: { type: "array", default: [], field: { type: "checkboxes", options: ['Fairy tales', 'Folklore'] }},
+  category: { type: "string", optional: true, field: { type: "radio", options: ['folktale', 'author\'s tale'] }},
+  abstract: { type: "string", default: "", field: { type: "textarea", placeholder: "Enter tale abstract" }}
 });
 
 module.exports = Metadata;

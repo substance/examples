@@ -1,6 +1,7 @@
 'use strict';
 
 var extend = require('lodash/extend');
+var Form = require('./forms/Form');
 var ControllerTool = require('substance/ui/ControllerTool');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
@@ -19,15 +20,35 @@ MetaDataTool.Prototype = function() {
     ctrl.off(this);
   };
 
+  this.getDocumentSession = function() {
+    var ctrl = this.getController();
+    return ctrl.getDocumentSession();
+  };
+
 	this.onCommandExecuted = function(info, commandName) {
     if (commandName === this.constructor.static.command) {
-      this.toggleModal();
+      this.toggleModal(info);
     }
+  };
+  this.shouldRerender = function(newProps, newState) {
+    if(!newState.showModal && !newState.hideModal) {
+      newState.showModal = true;
+      return false;
+    }
+    return true;
   };
 
 	this.toggleModal = function() {
-    var newState = extend({}, this.state, {showModal: !this.state.showModal});
-    this.setState(newState);
+    var modalState = !this.state.showModal;
+    var hideModal = modalState ? false : true;
+    //console.log(modalState, hideModal)
+    this.extendState({showModal: modalState, hideModal: hideModal});
+  };
+
+  this.getMetadata = function() {
+  	var doc = this.getDocument();
+  	var metadata = doc.get('metadata');
+  	return metadata;
   };
 
   this.render = function() {
@@ -50,8 +71,11 @@ MetaDataTool.Prototype = function() {
     button.append(this.props.children);
     el.append(button);
 
-    if (this.state.showModal) {
+    if (this.state.showModal && !this.state.hideModal) {
+    	var metadata = this.getMetadata();
+      var form = $$(Form, {node: metadata, tool: this});
       var modal = $$('div').addClass('se-modal');
+      modal.append(form);
       el.append(modal);
     }
     return el;

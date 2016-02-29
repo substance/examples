@@ -12,6 +12,7 @@ module.exports = {
     'inline-property',
     'input',
     'macros',
+    'metadata',
     'nested',
     'tables',
   ]

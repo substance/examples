@@ -9,8 +9,7 @@ function MetaData() {
 MetaData.Prototype = function() {
   this.getCommandState = function() {
     return {
-      disabled: false,
-      active: false
+      showModal: false
     };
   };
   this.execute = function() {

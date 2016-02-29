@@ -24,3 +24,48 @@ body {
 	right: 0px;
 	bottom: 0px;
 }
+
+.se-form {
+	max-width: 600px;
+	margin: 10px auto;
+	border: 1px #ddd solid;
+	background: #fff;
+}
+
+.sc-field {
+	margin: 0px 10px;
+}
+
+.sc-field input {
+  margin: 15px 0;
+  width: 100%;
+  font-size: 14px;
+  display: block;
+  border: 1px solid #ddd;
+  min-width: auto;
+  padding: 0 10px;
+}
+
+.sc-field-date select {
+	margin-right: 5px;
+}
+
+.sc-field-checkbox, .sc-field-checkboxes, .sc-field-radio {
+	margin: 15px 10px;
+  label {
+    display: block;
+    font-size: 14px;
+    margin: 10px 0;
+	}
+	input {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin:0;
+    vertical-align: bottom;
+    position: relative;
+    top: 2px;
+    float: left;
+    font-size: 20px;
+	}   
+}
