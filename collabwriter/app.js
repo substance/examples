@@ -49,11 +49,11 @@ function TwoEditors() {
   this.ws1 = new TestWebSocket(this.messageQueue, 'user1', 'hub');
   this.ws2 = new TestWebSocket(this.messageQueue, 'user2', 'hub');
   
-  this.hubClient1 = new TestCollabClient({
+  this.collabClient1 = new TestCollabClient({
     ws: this.ws1
   });
 
-  this.hubClient2 = new TestCollabClient({
+  this.collabClient2 = new TestCollabClient({
     ws: this.ws2
   });
 
@@ -91,13 +91,13 @@ function TwoEditors() {
 
   // CollabSession expects a connected and authenticated ws (available via hubClient)
   this.session1 = new TestCollabSession(this.doc1, {
-    hubClient: this.hubClient1,
+    collabClient: this.collabClient1,
     docId: 'test-doc',
     docVersion: 0
   });
   
   this.session2 = new TestCollabSession(this.doc2, {
-    hubClient: this.hubClient2,
+    collabClient: this.collabClient2,
     docId: 'test-doc',
     docVersion: 0
   });
