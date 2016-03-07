@@ -4,7 +4,7 @@
 var MessageQueue = require('substance/test/collab/MessageQueue');
 var TestWebSocketServer = require('substance/test/collab/TestWebSocketServer');
 var TestCollabSession = require('substance/test/collab/TestCollabSession');
-var TestHubClient = require('substance/test/collab/TestHubClient');
+var TestCollabClient = require('substance/test/collab/TestCollabClient');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var twoParagraphs = require('substance/test/fixtures/collab/two-paragraphs');
 var TestCollabServer = require('substance/test/collab/TestCollabServer');
@@ -48,28 +48,13 @@ function TwoEditors() {
   this.messageQueue = new MessageQueue();
   this.ws1 = new TestWebSocket(this.messageQueue, 'user1', 'hub');
   this.ws2 = new TestWebSocket(this.messageQueue, 'user2', 'hub');
-
-  this.hubClient1 = new TestHubClient({
-    ws: this.ws1,
-    session: {
-      sessionToken: 'user1token',
-      user: {
-        'id': 'user1',
-        'name': 'User 1'
-      }
-    }
+  
+  this.hubClient1 = new TestCollabClient({
+    ws: this.ws1
   });
 
-  this.hubClient2 = new TestHubClient({
-    messageQueue: this.messageQueue,
-    ws: this.ws2,
-    session: {
-      sessionToken: 'user2token',
-      user: {
-        'id': 'user2',
-        'name': 'User 2'
-      }
-    }
+  this.hubClient2 = new TestCollabClient({
+    ws: this.ws2
   });
 
   this.wss = new TestWebSocketServer(this.messageQueue, 'hub');
