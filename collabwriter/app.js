@@ -1,15 +1,16 @@
 /*jshint latedef:nofunc */
 'use strict';
 
-// var poem = require('substance/test/fixtures/collab/poem');
 var MessageQueue = require('substance/test/collab/MessageQueue');
 var TestWebSocketServer = require('substance/test/collab/TestWebSocketServer');
 var TestCollabSession = require('substance/test/collab/TestCollabSession');
 var TestHubClient = require('substance/test/collab/TestHubClient');
 var Icon = require('substance/ui/FontAwesomeIcon');
-var TestCollabHub = require('substance/test/collab/TestCollabHub');
-var TestStore = require('substance/test/collab/TestStore');
+var twoParagraphs = require('substance/test/fixtures/collab/two-paragraphs');
+var TestCollabServer = require('substance/test/collab/TestCollabServer');
+var MemoryBackend = require('substance/collab/MemoryBackend');
 var TestWebSocket = require('substance/test/collab/TestWebSocket');
+var backendSeed = require('substance/test/fixtures/collab/backendSeed');
 
 var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
@@ -27,16 +28,22 @@ window.onload = function() {
 function TwoEditors() {
   TwoEditors.super.apply(this, arguments);
 
-  var fixture = require('substance/test/fixtures/collab/two-paragraphs');
-  // var fixture = poem;
-
   // Two edited docs, one doc instance on the hub all with the same contents,
   // now we start synchronizing them.
   this.doc1 = new Article();
   this.doc2 = new Article();
-  this.store = new TestStore({
-    'test': fixture.createChangeset()
+
+  this.backend = new MemoryBackend({
+    schemas: {
+      'prose-article': {
+        name: 'prose-article',
+        version: '1.0.0',
+        documentFactory: twoParagraphs
+      }
+    }
   });
+
+  this.backend.seed(backendSeed);
 
   this.messageQueue = new MessageQueue();
   this.ws1 = new TestWebSocket(this.messageQueue, 'user1', 'hub');
@@ -69,7 +76,10 @@ function TwoEditors() {
 
   console.log('wss', this.wss);
 
-  this.hub = new TestCollabHub(this.wss, this.store);
+  this.collabServer = new TestCollabServer({
+    wss: this.wss,
+    backend: this.backend
+  });
 
   this._debug = this.props.debug;
 
@@ -97,12 +107,13 @@ function TwoEditors() {
   // CollabSession expects a connected and authenticated ws (available via hubClient)
   this.session1 = new TestCollabSession(this.doc1, {
     hubClient: this.hubClient1,
-    docId: 'test',
+    docId: 'test-doc',
     docVersion: 0
   });
+  
   this.session2 = new TestCollabSession(this.doc2, {
     hubClient: this.hubClient2,
-    docId: 'test',
+    docId: 'test-doc',
     docVersion: 0
   });
 
@@ -249,7 +260,6 @@ Status.Prototype = function() {
   this._dumpMessageQueue = function() {
     console.log(JSON.stringify(this.props.messageQueue._log, null, 2));
   };
-
 };
 
 function CommitTool() {
