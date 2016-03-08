@@ -1,6 +1,6 @@
 'use strict';
 
-var exampleDoc = require('../simple/exampleDoc');
+var exampleDoc = require('substance/test/fixtures/collab/poem');
 var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
@@ -33,7 +33,7 @@ TwoEditors.Prototype = function() {
 Component.extend(TwoEditors);
 
 window.onload = function() {
-  var doc = exampleDoc();
+  var doc = exampleDoc.createArticle();
   TwoEditors.static.mount({
     doc: doc
   }, 'body');
