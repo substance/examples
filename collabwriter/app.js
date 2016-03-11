@@ -8,9 +8,14 @@ var TestCollabClient = require('substance/test/collab/TestCollabClient');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var twoParagraphs = require('substance/test/fixtures/collab/two-paragraphs');
 var TestCollabServer = require('substance/test/collab/TestCollabServer');
-var MemoryBackend = require('substance/collab/MemoryBackend');
+
+var DocumentStore = require('substance/collab/DocumentStore');
+var ChangeStore = require('substance/collab/ChangeStore');
+var documentStoreSeed = require('substance/test/fixtures/collab/documentStoreSeed');
+var changeStoreSeed = require('substance/test/fixtures/collab/changeStoreSeed');
+
+var DocumentEngine = require('substance/collab/DocumentEngine');
 var TestWebSocket = require('substance/test/collab/TestWebSocket');
-var backendSeed = require('substance/test/fixtures/collab/backendSeed');
 
 var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
@@ -33,7 +38,12 @@ function TwoEditors() {
   this.doc1 = new Article();
   this.doc2 = new Article();
 
-  this.backend = new MemoryBackend({
+  this.documentStore = new DocumentStore().seed(documentStoreSeed);
+  this.changeStore = new ChangeStore().seed(changeStoreSeed);
+
+  this.documentEngine = new DocumentEngine({
+    documentStore: this.documentStore,
+    changeStore: this.changeStore,
     schemas: {
       'prose-article': {
         name: 'prose-article',
@@ -42,8 +52,6 @@ function TwoEditors() {
       }
     }
   });
-
-  this.backend.seed(backendSeed);
 
   this.messageQueue = new MessageQueue();
   this.ws1 = new TestWebSocket(this.messageQueue, 'user1', 'hub');
@@ -58,13 +66,13 @@ function TwoEditors() {
   });
 
   this.wss = new TestWebSocketServer(this.messageQueue, 'hub');
-
   console.log('wss', this.wss);
 
   this.collabServer = new TestCollabServer({
-    wss: this.wss,
-    backend: this.backend
+    documentEngine: this.documentEngine
   });
+  // Connect the collabServer
+  this.collabServer.bind(this.wss);
 
   this._debug = this.props.debug;
 
