@@ -35,8 +35,8 @@ function TwoEditors() {
 
   // Two edited docs, one doc instance on the hub all with the same contents,
   // now we start synchronizing them.
-  this.doc1 = new Article();
-  this.doc2 = new Article();
+  this.doc1 = twoParagraphs.createArticle();
+  this.doc2 = twoParagraphs.createArticle();
 
   this.documentStore = new DocumentStore().seed(documentStoreSeed);
   this.changeStore = new ChangeStore().seed(changeStoreSeed);
@@ -101,13 +101,13 @@ function TwoEditors() {
   this.session1 = new TestCollabSession(this.doc1, {
     collabClient: this.collabClient1,
     docId: 'test-doc',
-    docVersion: 0
+    docVersion: 1
   });
   
   this.session2 = new TestCollabSession(this.doc2, {
     collabClient: this.collabClient2,
     docId: 'test-doc',
-    docVersion: 0
+    docVersion: 1
   });
 
   if (this._debug) {
