@@ -20,6 +20,13 @@ $fa-font-path:  "../fonts" !default;
     width: 20px;
     cursor: pointer;
 
+    // This is really important because otherwise the DOM selection also covers
+    // the previous line when you double click the first word of a todo item.
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    
     position: absolute;
     left: 0px;
   }
