@@ -56,7 +56,7 @@ function TwoEditors() {
   this.messageQueue = new MessageQueue();
   this.ws1 = new TestWebSocket(this.messageQueue, 'user1', 'hub');
   this.ws2 = new TestWebSocket(this.messageQueue, 'user2', 'hub');
-  
+
   this.collabClient1 = new TestCollabClient({
     ws: this.ws1
   });
@@ -103,7 +103,7 @@ function TwoEditors() {
     docId: 'test-doc',
     docVersion: 1
   });
-  
+
   this.session2 = new TestCollabSession(this.doc2, {
     collabClient: this.collabClient2,
     docId: 'test-doc',

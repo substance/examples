@@ -4,9 +4,9 @@
   "description": "Substance Examples",
   "license": "MIT",
   "dependencies": {
-    "substance": "substance/substance#5dc6b5b690627c10466879806b8eb28a43888111",
+    "substance": "substance/substance#facet-editor-spike",
     "jquery": "*",
-    "lodash": "3.10.1"
+    "lodash": "4.x"
   },
   "devDependencies": {
     "font-awesome": "4.5.0",
