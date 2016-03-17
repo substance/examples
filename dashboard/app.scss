@@ -1,0 +1,59 @@
+$fa-font-path:  "../fonts" !default;
+@import '../node_modules/font-awesome/scss/font-awesome';
+@import '../node_modules/substance/styles/base/index';
+
+// Substance modules
+@import '../node_modules/substance/styles/components/_all';
+@import '../node_modules/substance/packages/_all';
+
+body {
+  overflow: hidden;
+}
+
+.sc-app {
+  .se-editor-panel {
+    padding: 20px;
+  }
+}
+
+
+.sc-dashboard {
+  padding: 20px;
+
+  .se-entry {
+    width: 100%;
+    margin-top: 20px;
+    border-top: 2px solid #eee;
+    padding-top: 10px;
+  }
+
+  .se-label {
+    font-size: small;
+  }
+
+  table {
+    width: 100%;
+
+    col.se-title-col {
+      width: 75%;
+    }
+  }
+}
+
+.sc-editor {
+
+  .se-cover {
+
+    padding: 40px 20px;
+
+    .se-title-editor {
+      font-size: xx-large;
+    }
+
+    .se-abstract-editor {
+      margin-top: 40px;
+      font-style: italic;
+    }
+
+  }
+}
