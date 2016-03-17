@@ -118,7 +118,7 @@ App.Prototype = function() {
       }).ref('leftContent');
     leftPanel.append(
       $$(SplitPane, {splitType: 'horizontal'}).ref('leftSplitPane').append(
-         $$('h1').append('Dashboard'),
+         $$('h1').append('Dashboard').addClass('se-panel-title'),
          leftPanelContent
       )
     );
@@ -136,7 +136,7 @@ App.Prototype = function() {
     }
     rightPanel.append(
       $$(SplitPane, {splitType: 'horizontal'}).ref('rightSplitPane').append(
-         $$('h1').append('Editor'),
+         $$('h1').addClass('se-panel-title').append('Editor'),
          rightPanelContent
       )
     );

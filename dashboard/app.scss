@@ -11,9 +11,22 @@ body {
 }
 
 .sc-app {
-  .se-editor-panel {
+
+  .se-left-panel {
     padding: 20px;
+    border-right: 40px solid #999;
+    margin-left: 20px;
   }
+
+  .se-right-panel {
+    padding: 20px;
+    margin-left: 20px;
+  }
+
+  .se-panel-title {
+    margin-top: 30px;
+  }
+
 }
 
 
