@@ -5,10 +5,9 @@ var sass = require('gulp-sass');
 var browserify = require('browserify');
 var uglify = require('gulp-uglify');
 var through2 = require('through2');
-var path = require('path');
 var rename = require('gulp-rename');
 
-var demos = ['notepad'];
+var demos = ['notepad', 'collabwriter', 'ghostwriter'];
 
 gulp.task('assets', function () {
   demos.forEach(function(demoFolder) {
@@ -46,7 +45,7 @@ gulp.task('browserify', function() {
             console.log(error.stack);
             this.emit('end');
         })
-        .pipe(uglify().on('error', function(err){console.log(err)}))
+        .pipe(uglify().on('error', function(err){console.log(err); }))
         .pipe(gulp.dest('./dist/'+demoFolder));
     });
 
