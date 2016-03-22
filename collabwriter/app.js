@@ -4,7 +4,9 @@
 var MessageQueue = require('substance/test/collab/MessageQueue');
 var TestWebSocketServer = require('substance/test/collab/TestWebSocketServer');
 var TestCollabSession = require('substance/test/collab/TestCollabSession');
-var TestCollabClient = require('substance/test/collab/TestCollabClient');
+var CollabClient = require('substance/collab/CollabClient');
+var TestWebSocketConnection = require('substance/test/collab/TestWebSocketConnection');
+
 var Icon = require('substance/ui/FontAwesomeIcon');
 var twoParagraphs = require('substance/test/fixtures/collab/two-paragraphs');
 var TestCollabServer = require('substance/test/collab/TestCollabServer');
@@ -13,14 +15,12 @@ var DocumentStore = require('substance/collab/DocumentStore');
 var ChangeStore = require('substance/collab/ChangeStore');
 var documentStoreSeed = require('substance/test/fixtures/collab/documentStoreSeed');
 var changeStoreSeed = require('substance/test/fixtures/collab/changeStoreSeed');
-
 var DocumentEngine = require('substance/collab/DocumentEngine');
-var TestWebSocket = require('substance/test/collab/TestWebSocket');
 
 var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
-var Article = require('substance/packages/prose-editor/ProseArticle');
+
 var $$ = Component.$$;
 
 window.onload = function() {
@@ -54,25 +54,42 @@ function TwoEditors() {
   });
 
   this.messageQueue = new MessageQueue();
-  this.ws1 = new TestWebSocket(this.messageQueue, 'user1', 'hub');
-  this.ws2 = new TestWebSocket(this.messageQueue, 'user2', 'hub');
-  
-  this.collabClient1 = new TestCollabClient({
-    ws: this.ws1
+
+  this.wss = new TestWebSocketServer({
+    messageQueue: this.messageQueue,
+    serverId: 'hub'
   });
 
-  this.collabClient2 = new TestCollabClient({
-    ws: this.ws2
-  });
-
-  this.wss = new TestWebSocketServer(this.messageQueue, 'hub');
   console.log('wss', this.wss);
 
   this.collabServer = new TestCollabServer({
     documentEngine: this.documentEngine
   });
+
   // Connect the collabServer
   this.collabServer.bind(this.wss);
+
+  // Once the server we can open connections
+  this.conn1 = new TestWebSocketConnection({
+    messageQueue: this.messageQueue,
+    clientId: 'user1',
+    serverId: 'hub',
+    // manualConnect
+  });
+
+  this.conn2 = new TestWebSocketConnection({
+    messageQueue: this.messageQueue,
+    clientId: 'user2',
+    serverId: 'hub'
+  });
+
+  this.collabClient1 = new CollabClient({
+    connection: this.conn1
+  });
+
+  this.collabClient2 = new CollabClient({
+    connection: this.conn2
+  });
 
   this._debug = this.props.debug;
 
@@ -81,21 +98,6 @@ function TwoEditors() {
     'processNextMessage': this._processNextMessage,
     'commit': this._onCommit
   });
-
-  // let WebSocket react on message queue
-  this.wss.connect();
-
-  // Note: when we connect a client's socket,
-  // the server will confirm the connection, which triggers
-  // CollabSession._onConnected automatically, which then
-  // start to talk the CollabHub prototocol
-  // i.e., starting to send ['open', docId, version]
-  this.ws1.connect();
-  // also estabslish the connection for the second user
-  this.ws2.connect();
-
-  // Flush initial connection handshake messages
-  this.messageQueue.flush();
 
   // CollabSession expects a connected and authenticated ws (available via hubClient)
   this.session1 = new TestCollabSession(this.doc1, {
@@ -279,7 +281,7 @@ CommitTool.Prototype = function() {
         $$('button')
           .append($$(Icon, {icon: 'fa-send'}))
           .on('click', this.onClick)
-    );
+      );
     if (this.state.disabled) {
       el.addClass('sm-disabled');
     }
