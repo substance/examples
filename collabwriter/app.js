@@ -104,12 +104,17 @@ function TwoEditors() {
     docId: 'test-doc',
     docVersion: 1
   });
+  // For debugging
+  this.session1.__NAME = 'session1';
   
   this.session2 = new TestCollabSession(this.doc2, {
     collabClient: this.collabClient2,
     docId: 'test-doc',
     docVersion: 1
   });
+  // For debugging
+  this.session2.__NAME = 'session2';
+
 
   if (this._debug) {
     this.session1.stop();
