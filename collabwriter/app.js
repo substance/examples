@@ -73,8 +73,7 @@ function TwoEditors() {
   this.conn1 = new TestWebSocketConnection({
     messageQueue: this.messageQueue,
     clientId: 'user1',
-    serverId: 'hub',
-    // manualConnect
+    serverId: 'hub'
   });
 
   this.conn2 = new TestWebSocketConnection({
@@ -94,7 +93,7 @@ function TwoEditors() {
   this._debug = this.props.debug;
 
   this.handleActions({
-    'toggleDebug': this._toggleDebug,
+    'toggleNetwork': this._toggleNetwork,
     'processNextMessage': this._processNextMessage,
     'commit': this._onCommit
   });
@@ -129,7 +128,8 @@ TwoEditors.Prototype = function() {
     var el = $$('div').addClass('sc-two-editors');
     var statusEl = $$(Status, {
       messageQueue: this.messageQueue,
-      debug: this._debug
+      debug: this._debug,
+      disabledNetwork: this._disabledNetwork
     }).ref('statusEl').ref('status');
 
     var leftEditor = $$(ProseEditor, {
@@ -164,17 +164,14 @@ TwoEditors.Prototype = function() {
     return el;
   };
 
-  this._toggleDebug = function() {
-    if (!this._debug) {
-      this.messageQueue.stop();
-      this.session1.stop();
-      this.session2.stop();
+  // We just disconnect collaborator 1
+  this._toggleNetwork = function() {
+    if (!this._disabledNetwork) {
+      this.conn1.disconnect();
     } else {
-      this.messageQueue.start();
-      this.session1.start();
-      this.session2.start();
+      this.conn1.connect();
     }
-    this._debug = !this._debug;
+    this._disabledNetwork = !this._disabledNetwork;
     this.rerender();
   };
 
@@ -202,7 +199,7 @@ Status.Prototype = function() {
   };
 
   this.dispose = function() {
-    this.props.messageQueue.disconnect(this);
+    this.props.messageQueue.off(this);
   };
 
   this.render = function() {
@@ -221,8 +218,8 @@ Status.Prototype = function() {
         ),
         $$('div').addClass('se-right').append(
           $$('button').addClass('se-debug')
-            .append($$(Icon, {icon: 'fa-toggle-off'}), ' Network')
-            .on('click', this._toggleDebug)
+            .append($$(Icon, {icon: this.props.disabledNetwork ? 'fa-toggle-off' : 'fa-toggle-on'}), ' Network')
+            .on('click', this._toggleNetwork)
         )
       );
     } else {
@@ -232,8 +229,8 @@ Status.Prototype = function() {
         ),
         $$('div').addClass('se-right').append(
           $$('button').addClass('se-debug')
-            .append($$(Icon, {icon: 'fa-toggle-on'}), ' Network')
-            .on('click', this._toggleDebug)
+            .append($$(Icon, {icon: this.props.disabledNetwork ? 'fa-toggle-off' : 'fa-toggle-on'}), ' Network')
+            .on('click', this._toggleNetwork)
         )
       );
     }
@@ -244,8 +241,8 @@ Status.Prototype = function() {
     this.rerender();
   };
 
-  this._toggleDebug = function() {
-    this.send('toggleDebug');
+  this._toggleNetwork = function() {
+    this.send('toggleNetwork');
   };
 
   this._processNextMessage = function() {
