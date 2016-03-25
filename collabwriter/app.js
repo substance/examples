@@ -101,24 +101,24 @@ function TwoEditors() {
   // CollabSession expects a connected and authenticated ws (available via hubClient)
   this.session1 = new TestCollabSession(this.doc1, {
     collabClient: this.collabClient1,
-    docId: 'test-doc',
-    docVersion: 1
+    documentId: 'test-doc',
+    version: 1
   });
   // For debugging
   this.session1.__NAME = 'session1';
   
   this.session2 = new TestCollabSession(this.doc2, {
     collabClient: this.collabClient2,
-    docId: 'test-doc',
-    docVersion: 1
+    documentId: 'test-doc',
+    version: 1
   });
   // For debugging
   this.session2.__NAME = 'session2';
 
 
   if (this._debug) {
-    this.session1.stop();
-    this.session2.stop();
+    this.session1.stopAutoCommit();
+    this.session2.stopAutoCommit();
     // flush initial handshake messages
     this.messageQueue.flush();
   } else {
