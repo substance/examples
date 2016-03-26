@@ -102,7 +102,8 @@ function TwoEditors() {
   this.session1 = new TestCollabSession(this.doc1, {
     collabClient: this.collabClient1,
     documentId: 'test-doc',
-    version: 1
+    version: 1,
+    logging: true
   });
   // For debugging
   this.session1.__NAME = 'session1';
@@ -110,7 +111,8 @@ function TwoEditors() {
   this.session2 = new TestCollabSession(this.doc2, {
     collabClient: this.collabClient2,
     documentId: 'test-doc',
-    version: 1
+    version: 1,
+    logging: true
   });
   // For debugging
   this.session2.__NAME = 'session2';
@@ -154,6 +156,14 @@ TwoEditors.Prototype = function() {
       );
     }
 
+    leftEditor.outlet('tools').append(
+      $$(SessionDumpTool, { session: this.session1 })
+    );
+
+    rightEditor.outlet('tools').append(
+      $$(SessionDumpTool, { session: this.session2 })
+    );
+
     el.append(
       $$(SplitPane, {splitType: 'horizontal', sizeB: 'inherit'}).append(
         $$(SplitPane, {
@@ -192,6 +202,8 @@ TwoEditors.Prototype = function() {
 };
 
 Component.extend(TwoEditors);
+
+
 
 function Status() {
   Status.super.apply(this, arguments);
@@ -259,6 +271,8 @@ Status.Prototype = function() {
   };
 };
 
+Component.extend(Status);
+
 function CommitTool() {
   CommitTool.super.apply(this, arguments);
 }
@@ -312,4 +326,34 @@ CommitTool.Prototype = function() {
 
 Component.extend(CommitTool);
 
-Component.extend(Status);
+function SessionDumpTool() {
+  SessionDumpTool.super.apply(this, arguments);
+}
+
+SessionDumpTool.Prototype = function() {
+
+  this.render = function() {
+    var el = $$('div')
+      .attr('title', 'Commit')
+      .addClass('se-tool')
+      .append(
+        $$('button')
+          .append($$(Icon, {icon: 'fa-tasks'}))
+          .on('click', this.onClick)
+      );
+    return el;
+  };
+
+  this.getInitialState = function() {
+    return {
+      disabled: !this.props.session.nextCommit
+    };
+  };
+
+  this.onClick = function() {
+    console.log(this.props.session.dumpIncomingMessages());
+  };
+
+};
+
+Component.extend(SessionDumpTool);
