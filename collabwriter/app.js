@@ -20,7 +20,6 @@ var DocumentEngine = require('substance/collab/DocumentEngine');
 var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
-
 var $$ = Component.$$;
 
 window.onload = function() {
@@ -93,27 +92,31 @@ function TwoEditors() {
   this._debug = this.props.debug;
 
   this.handleActions({
-    'toggleNetwork': this._toggleNetwork,
-    'processNextMessage': this._processNextMessage,
-    'commit': this._onCommit
+    'processNextMessage': this._processNextMessage
   });
 
-  // CollabSession expects a connected and authenticated ws (available via hubClient)
+  // CollabSession expects a connected and authenticated collabClient
   this.session1 = new TestCollabSession(this.doc1, {
     collabClient: this.collabClient1,
-    docId: 'test-doc',
-    docVersion: 1
+    documentId: 'test-doc',
+    version: 1,
+    logging: true,
+    autoSync: true
   });
+  // For debugging
+  this.session1.__NAME = 'session1';
   
   this.session2 = new TestCollabSession(this.doc2, {
     collabClient: this.collabClient2,
-    docId: 'test-doc',
-    docVersion: 1
+    documentId: 'test-doc',
+    version: 1,
+    logging: true,
+    autoSync: true
   });
+  // For debugging
+  this.session2.__NAME = 'session2';
 
   if (this._debug) {
-    this.session1.stop();
-    this.session2.stop();
     // flush initial handshake messages
     this.messageQueue.flush();
   } else {
@@ -140,14 +143,15 @@ TwoEditors.Prototype = function() {
       documentSession: this.session2
     }).ref('right').addClass('right-editor');
 
-    if (this._debug) {
-      leftEditor.outlet('tools').append(
-        $$(CommitTool, { session: this.session1 })
-      );
-      rightEditor.outlet('tools').append(
-        $$(CommitTool, { session: this.session2 })
-      );
-    }
+    leftEditor.outlet('tools').append(
+      $$(SessionDumpTool, { session: this.session1 }),
+      $$(ToggleConnectionTool, { session: this.session1 })
+    );
+
+    rightEditor.outlet('tools').append(
+      $$(SessionDumpTool, { session: this.session2 }),
+      $$(ToggleConnectionTool, { session: this.session2 })
+    );
 
     el.append(
       $$(SplitPane, {splitType: 'horizontal', sizeB: 'inherit'}).append(
@@ -164,26 +168,9 @@ TwoEditors.Prototype = function() {
     return el;
   };
 
-  // We just disconnect collaborator 1
-  this._toggleNetwork = function() {
-    if (!this._disabledNetwork) {
-      this.conn1.disconnect();
-    } else {
-      this.conn1.connect();
-    }
-    this._disabledNetwork = !this._disabledNetwork;
-    this.rerender();
-  };
-
   this._processNextMessage = function() {
     this.messageQueue.tick();
   };
-
-  this._onCommit = function(evt) {
-    console.log('Commit');
-    evt.stopPropagation();
-  };
-
 };
 
 Component.extend(TwoEditors);
@@ -210,27 +197,20 @@ Status.Prototype = function() {
         $$('div').addClass('se-left').append(
           this.props.messageQueue.messages.length+' messages in the air ',
           $$('button').addClass('se-next-message')
-            .append($$(Icon, {icon: 'fa-step-forward'})).on('click', this._processNextMessage),
+            .append($$(Icon, {
+              icon: 'fa-step-forward'
+            }))
+            .on('click', this._processNextMessage),
           $$('button').addClass('se-dump-messages')
             .append($$(Icon, {icon: 'fa-tasks'}))
             .attr({ title: 'Dump MessageQueue'})
             .on('click', this._dumpMessageQueue)
-        ),
-        $$('div').addClass('se-right').append(
-          $$('button').addClass('se-debug')
-            .append($$(Icon, {icon: this.props.disabledNetwork ? 'fa-toggle-off' : 'fa-toggle-on'}), ' Network')
-            .on('click', this._toggleNetwork)
         )
       );
     } else {
       statusEl.append(
         $$('div').addClass('se-left').append(
           this.props.messageQueue.messages.length+' messages in the air '
-        ),
-        $$('div').addClass('se-right').append(
-          $$('button').addClass('se-debug')
-            .append($$(Icon, {icon: this.props.disabledNetwork ? 'fa-toggle-off' : 'fa-toggle-on'}), ' Network')
-            .on('click', this._toggleNetwork)
         )
       );
     }
@@ -254,57 +234,90 @@ Status.Prototype = function() {
   };
 };
 
-function CommitTool() {
-  CommitTool.super.apply(this, arguments);
+Component.extend(Status);
+
+function SessionDumpTool() {
+  SessionDumpTool.super.apply(this, arguments);
 }
 
-CommitTool.Prototype = function() {
-
-  this.didMount = function() {
-    this.doc = this.props.session.getDocument();
-    this.doc.on('document:changed',
-      this.afterDocumentChange, this, { priority: -10 });
-  };
-
-  this.dispose = function() {
-    this.doc.off(this);
-  };
+SessionDumpTool.Prototype = function() {
 
   this.render = function() {
     var el = $$('div')
-      .attr('title', 'Commit')
+      .attr('title', 'Dump Session message log')
       .addClass('se-tool')
       .append(
         $$('button')
-          .append($$(Icon, {icon: 'fa-send'}))
+          .append($$(Icon, {icon: 'fa-tasks'}))
           .on('click', this.onClick)
       );
-    if (this.state.disabled) {
-      el.addClass('sm-disabled');
-    }
     return el;
+  };
+
+  this.onClick = function() {
+    console.log(this.props.session.dumpIncomingMessages());
+  };
+};
+
+Component.extend(SessionDumpTool);
+
+
+function ToggleConnectionTool() {
+  ToggleConnectionTool.super.apply(this, arguments);
+}
+
+ToggleConnectionTool.Prototype = function() {
+
+  this.didMount = function() {
+    this.session = this.props.session;
+    this.session.on('connected', this._onConnected, this);
+    this.session.on('disconnected', this._onDisconnected, this);
+  };
+
+  this._onConnected = function() {
+    this.setState({
+      connected: true
+    });
+  };
+
+  this._onDisconnected = function() {
+    this.setState({
+      connected: false
+    });
+  };
+
+  this.dispose = function() {
+    this.session.off(this);
   };
 
   this.getInitialState = function() {
     return {
-      disabled: !this.props.session.nextCommit
+      connected: true
     };
   };
 
-  this.afterDocumentChange = function() {
-    var newState = {};
-    newState.visible = !!this.props._runner;
-    newState.disabled = !this.props.session.nextCommit;
-    this.setState(newState);
+  this.render = function() {
+    var el = $$('div')
+      .attr('title', this.state.connected ? 'Disconnect': 'Connect (aka sync)')
+      .addClass('se-tool')
+      .append(
+        $$('button').addClass('se-debug')
+          .append($$(Icon, {
+            icon: this.state.connected ? 'fa-toggle-on' : 'fa-toggle-off'
+          }), ' Connected')
+          .on('click', this.onClick)
+      );
+    return el;
   };
 
   this.onClick = function() {
-    this.props.session.commit();
-    this.afterDocumentChange();
+    var connected = this.state.connected;
+    if (connected) {
+      this.props.session.disconnect();
+    } else {
+      this.props.session.sync();
+    }
   };
-
 };
 
-Component.extend(CommitTool);
-
-Component.extend(Status);
+Component.extend(ToggleConnectionTool);
