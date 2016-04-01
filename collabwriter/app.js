@@ -20,7 +20,6 @@ var DocumentEngine = require('substance/collab/DocumentEngine');
 var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
-var $$ = Component.$$;
 
 window.onload = function() {
   var debug = (window.location.hash === '#debug');
@@ -105,7 +104,7 @@ function TwoEditors() {
   });
   // For debugging
   this.session1.__NAME = 'session1';
-  
+
   this.session2 = new TestCollabSession(this.doc2, {
     collabClient: this.collabClient2,
     documentId: 'test-doc',
@@ -127,7 +126,7 @@ function TwoEditors() {
 
 TwoEditors.Prototype = function() {
 
-  this.render = function() {
+  this.render = function($$) {
     var el = $$('div').addClass('sc-two-editors');
     var statusEl = $$(Status, {
       messageQueue: this.messageQueue,
@@ -189,7 +188,7 @@ Status.Prototype = function() {
     this.props.messageQueue.off(this);
   };
 
-  this.render = function() {
+  this.render = function($$) {
     var statusEl = $$('div').addClass('se-status');
 
     if (this.props.debug) {
@@ -242,7 +241,7 @@ function SessionDumpTool() {
 
 SessionDumpTool.Prototype = function() {
 
-  this.render = function() {
+  this.render = function($$) {
     var el = $$('div')
       .attr('title', 'Dump Session message log')
       .addClass('se-tool')
@@ -296,7 +295,7 @@ ToggleConnectionTool.Prototype = function() {
     };
   };
 
-  this.render = function() {
+  this.render = function($$) {
     var el = $$('div')
       .attr('title', this.state.connected ? 'Disconnect': 'Connect (aka sync)')
       .addClass('se-tool')
