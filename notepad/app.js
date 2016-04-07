@@ -7,13 +7,14 @@ var NoteImporter = require('../converter/NoteImporter');
 var importer = new NoteImporter();
 
 $(function() {
-  var htmlContent = $('#editor_container').html();
-  $('#editor_container').empty();
+  var $container = $('#editor_container');
+  var htmlContent = $container.html();
+  $container.empty();
   var doc = importer.importDocument(htmlContent);
-  
+
   // For debugging in the console
   window.doc = doc;
   Component.mount(Notepad, {
     doc: doc
-  }, $('#editor_container'));
+  }, $container[0]);
 });

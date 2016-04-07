@@ -1,7 +1,6 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 var TextProperty = require('substance/ui/TextPropertyComponent');
 var Icon = require('substance/ui/FontAwesomeIcon');
 
@@ -32,7 +31,7 @@ TodoComponent.Prototype = function() {
     });
   };
 
-  this.render = function() {
+  this.render = function($$) {
     // Checkbox defining wheter a todo is done or not. We don't want the cursor
     // to move inside this area,so we set contenteditable to false
     var checkbox = $$('span').addClass('se-done').attr({contenteditable: false}).append(

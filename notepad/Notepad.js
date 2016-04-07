@@ -1,6 +1,6 @@
-var Component = require('substance/ui/Component');
-var $$ = Component.$$;
+'use strict';
 
+var Component = require('substance/ui/Component');
 var Controller = require('substance/ui/Controller');
 var ContainerEditor = require('substance/ui/ContainerEditor');
 var SplitPane = require('substance/ui/SplitPane');
@@ -21,7 +21,7 @@ function Notepad() {
 
 Notepad.Prototype = function() {
   // Custom Render method for your editor
-  this.render = function() {
+  this.render = function($$) {
     var config = this.getConfig();
     return $$('div').addClass('sc-notepad').append(
       $$(SplitPane, {splitType: 'horizontal'}).append(
