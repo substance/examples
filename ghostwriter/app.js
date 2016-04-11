@@ -5,7 +5,6 @@ var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
 var GhostEditor = require('./GhostEditor');
-var $$ = Component.$$;
 
 function TwoEditors() {
   TwoEditors.super.apply(this, arguments);
@@ -13,7 +12,7 @@ function TwoEditors() {
 
 TwoEditors.Prototype = function() {
 
-  this.render = function() {
+  this.render = function($$) {
     var el = $$('div').addClass('sc-two-editors');
     el.append(
       $$(SplitPane, {

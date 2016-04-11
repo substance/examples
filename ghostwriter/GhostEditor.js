@@ -1,6 +1,5 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
 var Controller = require('substance/ui/Controller');
 var Toolbar = require('substance/ui/Toolbar');
 var SplitPane = require('substance/ui/SplitPane');
@@ -8,7 +7,6 @@ var ScrollPane = require('substance/ui/ScrollPane');
 var ContainerEditor = require('substance/ui/ContainerEditor');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
 var Ghost = require('./Ghost');
-var $$ = Component.$$;
 
 function GhostEditor() {
   Controller.apply(this, arguments);
@@ -16,7 +14,7 @@ function GhostEditor() {
 
 GhostEditor.Prototype = function() {
 
-  this.render = function() {
+  this.render = function($$) {
     var el = $$('div')
       .addClass('sc-ghost-editor');
 
