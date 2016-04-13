@@ -1,19 +1,20 @@
 'use strict';
 
-var $ = window.$ = require('substance/util/jquery');
+var DocumentSession = require('substance/model/DocumentSession');
 var Component = require('substance/ui/Component');
 var Notepad = require('./Notepad');
 var NoteImporter = require('../converter/NoteImporter');
 var importer = new NoteImporter();
 
-$(function() {
-  var htmlContent = $('#editor_container').html();
-  $('#editor_container').empty();
+window.onload = function() {
+  var containerEl = window.document.querySelector('#editor_container');
+  var htmlContent = containerEl.innerHTML;
+  containerEl.innerHTML = "";
   var doc = importer.importDocument(htmlContent);
-  
+  var documentSession = new DocumentSession(doc);
   // For debugging in the console
   window.doc = doc;
   Component.mount(Notepad, {
-    doc: doc
-  }, $('#editor_container'));
-});
+    documentSession: documentSession
+  }, containerEl);
+};
