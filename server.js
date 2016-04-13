@@ -17,6 +17,9 @@ server.serveJS(app, '/collabwriter/app.js', path.join(__dirname, 'collabwriter',
 server.serveStyles(app, '/prose/app.css', path.join(__dirname, 'prose', 'app.scss'));
 server.serveJS(app, '/prose/app.js', path.join(__dirname, 'prose', 'app.js'));
 
+server.serveStyles(app, '/isolated-nodes/app.css', path.join(__dirname, 'isolated-nodes', 'app.scss'));
+server.serveJS(app, '/isolated-nodes/app.js', path.join(__dirname, 'isolated-nodes', 'app.js'));
+
 // Serve static files
 app.use(express.static(path.join(__dirname)));
 app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome/fonts')));
