@@ -1,6 +1,5 @@
 'use strict';
 
-var $ = window.$ = require('substance/util/jquery');
 var Component = require('substance/ui/Component');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
@@ -9,7 +8,6 @@ var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
 var InsertImageTool = require('substance/packages/image/ImageTool');
 
 var example = require('substance/test/fixtures/collab/poem');
-var $$ = Component.$$;
 
 var config = ProseEditor.static.mergeConfig(ProseEditor.static.config, {
   controller: {
@@ -32,7 +30,7 @@ function App() {
 
 App.Prototype = function() {
 
-  this.render = function() {
+  this.render = function($$) {
     var el = $$('div').addClass('app');
 
     var editor = $$(ProseEditor, {
@@ -52,11 +50,9 @@ App.Prototype = function() {
 
 Component.extend(App);
 
-$(function() {
+window.onload = function() {
   var doc = example.createArticle();
   // For debugging in the console
   window.doc = doc;
-  Component.mount(App, {
-    doc: doc
-  }, 'body');
-});
+  Component.mount(App, { doc: doc }, 'body');
+};

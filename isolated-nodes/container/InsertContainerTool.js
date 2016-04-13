@@ -1,9 +1,7 @@
 'use strict';
 
 var SurfaceTool = require('substance/ui/SurfaceTool');
-var Component = require('substance/ui/Component');
 var Icon = require('substance/ui/FontAwesomeIcon');
-var $$ = Component.$$;
 
 function InsertContainerTool() {
   InsertContainerTool.super.apply(this, arguments);
@@ -11,10 +9,10 @@ function InsertContainerTool() {
 
 InsertContainerTool.Prototype = function() {
 
-  var _super = Object.getPrototypeOf(this);
+  var _super = InsertContainerTool.super.prototype;
 
-  this.renderButton = function() {
-    var button = _super.renderButton.call(this);
+  this.renderButton = function($$) {
+    var button = _super.renderButton.apply(this, arguments);
     button.append($$(Icon, {icon: 'fa-file-text-o'} ));
     return button;
   };

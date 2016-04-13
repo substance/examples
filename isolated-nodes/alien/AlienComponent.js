@@ -1,7 +1,6 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 
 function AlienComponent() {
   AlienComponent.super.apply(this, arguments);
@@ -9,7 +8,7 @@ function AlienComponent() {
 
 AlienComponent.Prototype = function() {
 
-  this.render = function() {
+  this.render = function($$) {
     var el = $$('div').addClass('sc-alien');
     el.append(
       $$('img').attr('height', 100).attr('src', 'alien/alien.svg')

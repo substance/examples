@@ -1,8 +1,6 @@
 'use strict';
 
 var SurfaceTool = require('substance/ui/SurfaceTool');
-var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 
 function InsertAlienTool() {
   InsertAlienTool.super.apply(this, arguments);
@@ -10,10 +8,10 @@ function InsertAlienTool() {
 
 InsertAlienTool.Prototype = function() {
 
-  var _super = Object.getPrototypeOf(this);
+  var _super = InsertAlienTool.super.prototype;
 
-  this.renderButton = function() {
-    var button = _super.renderButton.call(this);
+  this.renderButton = function($$) {
+    var button = _super.renderButton.apply(this, arguments);
     button.append($$('img').attr({
       src: 'alien/alien.svg',
       height: 12

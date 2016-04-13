@@ -92,8 +92,7 @@ function App() {
 
 App.Prototype = function() {
 
-  this.render = function() {
-    var $$ = Component.$$;
+  this.render = function($$) {
     var el = $$('div').addClass('app');
 
     var editor = $$(ProseEditor, {

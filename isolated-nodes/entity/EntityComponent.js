@@ -2,7 +2,6 @@
 
 var Component = require('substance/ui/Component');
 var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
-var $$ = Component.$$;
 
 function EntityComponent() {
   EntityComponent.super.apply(this, arguments);
@@ -10,7 +9,7 @@ function EntityComponent() {
 
 EntityComponent.Prototype = function() {
 
-  this.render = function() {
+  this.render = function($$) {
     var el = $$('div').addClass('sc-entity').attr('data-id', this.props.node.id);
     el.attr('contenteditable', false);
 
