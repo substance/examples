@@ -50,12 +50,12 @@ TodoComponent.Prototype = function() {
 
     // Checkbox defining wheter a todo is done or not. We don't want the cursor
     // to move inside this area,so we set contenteditable to false
-    var checkbox = $$('span').addClass('se-done')
+    var checkbox = $$('button').addClass('se-done')
       .attr({contenteditable: false})
       .append(
         $$(Icon, {icon: this.props.node.done ? "fa-check-square-o" : "fa-square-o"})
       )
-      .on('mousedown', this.toggleDone);
+      .on('click', this.toggleDone);
 
     el.append(
       checkbox,
