@@ -10,23 +10,27 @@ function EntityComponent() {
 EntityComponent.Prototype = function() {
 
   this.render = function($$) {
-    var el = $$('div').addClass('sc-entity').attr('data-id', this.props.node.id);
-    el.attr('contenteditable', false);
+    var el = $$('div').addClass('sc-entity')
+    el.attr({
+      'data-id': this.props.node.id,
+      contenteditable: false
+    });
 
+    var documentSession = this.context.documentSession;
     var enabled = !!this.props.enabled;
 
     var nameEl = $$('div').ref('name').addClass('se-name');
     nameEl.append($$('div').ref('name.label').addClass('se-label').append('Name:'));
     nameEl.append($$(TextPropertyEditor, {
+      path: [this.props.node.id, 'name'],
       enabled: enabled,
-      path: [this.props.node.id, 'name']
     }).ref('nameEditor'));
 
     var descriptionEl = $$('div').ref('description').addClass('se-description');
     descriptionEl.append($$('div').ref('description.label').addClass('se-label').append('Description:'));
     descriptionEl.append($$(TextPropertyEditor, {
-      enabled: enabled,
-      path: [this.props.node.id, 'description']
+      path: [this.props.node.id, 'description'],
+      enabled: enabled
     }).ref('descriptionEditor'));
 
     el.append(nameEl);
