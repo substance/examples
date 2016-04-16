@@ -37,19 +37,19 @@ App.Prototype = function() {
   };
 
   this.onMessage = function(msg) {
-    console.log('App.onMessage', msg);
+    // console.log('App.onMessage', msg);
     var receiver = msg.to;
     switch(receiver) {
       case 'server':
-        console.log('Sending message to hub');
+        // console.log('Sending message to hub');
         this.hub.postMessage([msg]);
         break;
       case 'user1':
-        console.log('Sending message to user1');
+        // console.log('Sending message to user1');
         this.refs.user1.getNativeElement().contentWindow.postMessage(JSON.stringify(msg), '*');
         break;
       case 'user2':
-        console.log('Sending message to user2');
+        // console.log('Sending message to user2');
         this.refs.user2.getNativeElement().contentWindow.postMessage(JSON.stringify(msg), '*');
         break;
     }
@@ -62,5 +62,5 @@ window.onload = function() {
   var app = new App();
   setTimeout(function() {
     app.mount(window.document.body);
-  }, 1000);
+  }, 250);
 };

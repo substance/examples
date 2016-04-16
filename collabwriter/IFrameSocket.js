@@ -35,7 +35,7 @@ IFrameSocket.Prototype = function() {
   };
 
   this.send = function(data) {
-    console.log('IFrameSocket.send', data);
+    // console.log('IFrameSocket.send', data);
     var msg = {
       from: this.clientId,
       to: this.serverId,

@@ -24,7 +24,7 @@ WebWorkerServerSocket.Prototype = function() {
   };
 
   this.send = function(data) {
-    console.log('WebWorkerServerSocket.send', data);
+    // console.log('WebWorkerServerSocket.send', data);
     var msg = {
       from: this.serverId,
       to: this.clientId,

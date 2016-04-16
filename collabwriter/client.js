@@ -9,6 +9,11 @@ var IFrameSocketConnection = require('./IFrameSocketConnection');
 var CollabClient = require('substance/collab/CollabClient');
 var TestCollabSession = require('substance/test/collab/TestCollabSession');
 var twoParagraphs = require('substance/test/fixtures/collab/two-paragraphs');
+var Surface = require('substance/ui/Surface');
+// this flag prevents competing updates of DOM selections
+// which is only necessary in this example, where we host two
+// clients in one DOM
+Surface.MULTIPLE_APPS_ON_PAGE = true;
 
 function Client() {
   Client.super.apply(this, arguments);
