@@ -11,7 +11,7 @@ DocumentNode.extend(AlienNode);
 AlienNode.static.name = 'alien';
 
 AlienNode.static.defineSchema({
-  mood: 'string'
+  mood: { type: 'string', default: 'normal' }
 });
 
 module.exports = AlienNode;

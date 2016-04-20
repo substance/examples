@@ -25,44 +25,26 @@ schema.addNode(AlienNode);
 schema.addNode(EntityNode);
 
 var body = doc.get('body');
-var p1 = doc.create({
-  id: '_p1',
-  type: 'paragraph',
-  content: 'Lorem ipsum'
-});
-var c1 = doc.create({
-  type: 'container',
-  id: 'ns1',
-  nodes: [p1.id]
-});
-body.show(c1.id, 3);
 
-var p2 = doc.create({
-  id: '_p2',
-  type: 'paragraph',
-  content: 'Lorem ipsum'
+var a1 = doc.create({
+  type: 'alien',
+  id: 'alien1'
 });
-var c2 = doc.create({
-  type: 'container',
-  id: 'ns2',
-  nodes: [p2.id]
-});
-c1.show(c2.id, 1);
+body.show(a1.id, 2);
 
-var p3 = doc.create({
-  id: '_p3',
-  type: 'paragraph',
-  content: 'Lorem ipsum'
+var a2 = doc.create({
+  type: 'alien',
+  id: 'alien2'
 });
-body.show(p3.id, 4);
+body.show(a2.id, 4);
 
-var e1 = doc.create({
-  type: 'entity',
-  id: 'e1',
-  name: 'Foo',
-  description: 'Bar'
-});
-body.show(e1.id, 5);
+// var e1 = doc.create({
+//   type: 'entity',
+//   id: 'e1',
+//   name: 'Foo',
+//   description: 'Bar'
+// });
+// body.show(e1.id, 5);
 
 var config = ProseEditor.static.mergeConfig(ProseEditor.static.config, {
   controller: {
