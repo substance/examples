@@ -1,7 +1,8 @@
 'use strict';
 
-var Component = require('substance/ui/Component');
+var BlockNodeComponent = require('substance/ui/BlockNodeComponent');
 var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
+var Grid = require('substance/ui/Grid');
 
 function EntityComponent() {
   EntityComponent.super.apply(this, arguments);
@@ -10,49 +11,46 @@ function EntityComponent() {
 EntityComponent.Prototype = function() {
 
   this.render = function($$) {
-    var el = $$('div').addClass('sc-entity')
-    el.attr({
-      'data-id': this.props.node.id,
-      contenteditable: false
+    var el = $$('div').addClass('sc-entity');
+
+    el.append(
+      $$('div').addClass('se-title').append('Entity')
+    );
+
+    var grid = $$(Grid, {
+      columns: [2, 10]
     });
+    grid.append(
+      $$(Grid.Row).append(
+        // TODO: Improve Grid API. The internal layout implementation needs to be known to the user
+        $$(Grid.Cell).ref('nameLabel').append('Name:'),
+        $$(Grid.Cell).append(
+          $$(TextPropertyEditor, {
+            path: [this.props.node.id, 'name'],
+            disabled: this.props.disabled
+          }).ref('nameEditor')
+        )
+      )
+    );
+    grid.append(
+      $$(Grid.Row).append(
+        $$(Grid.Cell).ref('descriptionLabel').append('Description:'),
+        $$(Grid.Cell).append(
+          $$(TextPropertyEditor, {
+            path: [this.props.node.id, 'description'],
+            disabled: this.props.disabled
+          }).ref('descriptionEditor')
+        )
+      )
+    );
 
-    var documentSession = this.context.documentSession;
-    var enabled = !!this.props.enabled;
-
-    var nameEl = $$('div').ref('name').addClass('se-name');
-    nameEl.append($$('div').ref('name.label').addClass('se-label').append('Name:'));
-    nameEl.append($$(TextPropertyEditor, {
-      path: [this.props.node.id, 'name'],
-      enabled: enabled,
-    }).ref('nameEditor'));
-
-    var descriptionEl = $$('div').ref('description').addClass('se-description');
-    descriptionEl.append($$('div').ref('description.label').addClass('se-label').append('Description:'));
-    descriptionEl.append($$(TextPropertyEditor, {
-      path: [this.props.node.id, 'description'],
-      enabled: enabled
-    }).ref('descriptionEditor'));
-
-    el.append(nameEl);
-    el.append(descriptionEl);
+    el.append($$('div').addClass('se-editor').append(grid));
 
     return el;
   };
 
-  this.enable = function() {
-    this.refs.nameEditor.enable();
-    this.refs.descriptionEditor.enable();
-  };
-
-  this.disable = function() {
-    this.refs.nameEditor.disable();
-    this.refs.descriptionEditor.disable();
-  };
-
 };
 
-Component.extend(EntityComponent);
-
-EntityComponent.static.isPropertyEditor = true;
+BlockNodeComponent.extend(EntityComponent);
 
 module.exports = EntityComponent;

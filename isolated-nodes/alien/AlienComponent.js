@@ -9,7 +9,7 @@ function AlienComponent() {
 AlienComponent.Prototype = function() {
 
   this.didMount = function() {
-    this.props.node.on('mood:changed', this.onChange, this);
+    this.props.node.on('mood:changed', this.rerender, this);
   };
 
   this.dispose = function() {
@@ -24,11 +24,15 @@ AlienComponent.Prototype = function() {
     if (this.props.node.mood) {
       el.addClass('sm-' + this.props.node.mood);
     }
-
-    var overlay = $$('div').addClass('se-overlay')
-      .append($$('button').append('Click Here').on('click', this.onClick));
-    el.append(overlay);
-
+    // only render the over when not disabled
+    if (!this.props.disabled) {
+      var overlay = $$('div').addClass('se-overlay').append(
+        $$('div').addClass('se-controls').append(
+          $$('button').append('Click Here').on('click', this.onClick)
+        )
+      );
+      el.append(overlay);
+    }
     return el;
   };
 
@@ -52,10 +56,6 @@ AlienComponent.Prototype = function() {
     surface.transaction(function(tx) {
       tx.set([node.id, 'mood'], mood);
     });
-    this.rerender();
-  };
-
-  this.onChange = function() {
     this.rerender();
   };
 

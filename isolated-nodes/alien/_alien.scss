@@ -1,11 +1,27 @@
-
 .sc-alien {
+  display: inline-block;
   position: relative;
 
   .se-overlay {
     position: absolute;
     top: 0; bottom: 0; left: 0; right: 0;
+
+    // show only on hover
     visibility: hidden;
+
+    // center content
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .se-controls {
+      background-color:rgba(0,0,0,0.5);
+      color: white;
+    }
+  }
+
+  &:hover > .se-overlay {
+    visibility: visible;
   }
 
   &.sm-angry img {
@@ -23,19 +39,4 @@
   &.sm-sick img {
     background-color: green
   }
-}
-
-
-/*
-  TODO: we need to discuss: for isolated node components with
-    an overlay UI, and which should be useable in ContainerEditor,
-    we need a mechanism to make the overlay UI only visible when the
-    isolated node is focused.
-    The following does this in a hard-coded way
-*/
-.sc-container-editor > .sc-isolated-node > .sc-alien {
-  display: inline-block;
-}
-.sc-container-editor > .sc-isolated-node.sm-focused > .sc-alien:hover > .se-overlay {
-  visibility: visible;
 }

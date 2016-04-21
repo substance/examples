@@ -32,19 +32,19 @@ var a1 = doc.create({
 });
 body.show(a1.id, 2);
 
-var a2 = doc.create({
-  type: 'alien',
-  id: 'alien2'
-});
-body.show(a2.id, 4);
-
-// var e1 = doc.create({
-//   type: 'entity',
-//   id: 'e1',
-//   name: 'Foo',
-//   description: 'Bar'
+// var a2 = doc.create({
+//   type: 'alien',
+//   id: 'alien2'
 // });
-// body.show(e1.id, 5);
+// body.show(a2.id, 4);
+
+var e1 = doc.create({
+  type: 'entity',
+  id: 'e1',
+  name: 'Foo',
+  description: 'Bar'
+});
+body.show(e1.id, 4);
 
 var config = ProseEditor.static.mergeConfig(ProseEditor.static.config, {
   controller: {
