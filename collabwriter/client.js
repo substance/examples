@@ -157,6 +157,7 @@ window.onload = function() {
     throw new Error('Could not get user id.');
   }
   var clientId = match[1];
+  window.clientId = clientId;
 
   var doc = twoParagraphs.createArticle();
   Client.static.mount({

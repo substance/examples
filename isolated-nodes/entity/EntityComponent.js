@@ -14,7 +14,7 @@ EntityComponent.Prototype = function() {
     var el = $$('div').addClass('sc-entity');
 
     el.append(
-      $$('div').addClass('se-title').append('Entity')
+      $$('div').ref('title').addClass('se-title').append('Entity')
     );
 
     var grid = $$(Grid, {
@@ -22,7 +22,6 @@ EntityComponent.Prototype = function() {
     });
     grid.append(
       $$(Grid.Row).append(
-        // TODO: Improve Grid API. The internal layout implementation needs to be known to the user
         $$(Grid.Cell).ref('nameLabel').append('Name:'),
         $$(Grid.Cell).append(
           $$(TextPropertyEditor, {
@@ -44,7 +43,7 @@ EntityComponent.Prototype = function() {
       )
     );
 
-    el.append($$('div').addClass('se-editor').append(grid));
+    el.append($$('div').ref('foo').addClass('se-editor').append(grid));
 
     return el;
   };
