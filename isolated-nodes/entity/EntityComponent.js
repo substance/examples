@@ -11,6 +11,10 @@ function EntityComponent() {
 EntityComponent.Prototype = function() {
 
   this.render = function($$) {
+    if ($$.capturing) {
+      console.log('EntityComponent.render(): rendering with props', this.props);
+    }
+
     var el = $$('div').addClass('sc-entity');
 
     el.append(
@@ -18,7 +22,7 @@ EntityComponent.Prototype = function() {
     );
 
     var grid = $$(Grid, {
-      columns: [2, 10]
+      columns: [4, 8]
     });
     grid.append(
       $$(Grid.Row).append(

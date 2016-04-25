@@ -1,6 +1,5 @@
 'use strict';
 
-var map = require('lodash/map');
 var EventEmitter = require('substance/util/EventEmitter');
 var WebWorkerServerSocket = require('./WebWorkerServerSocket');
 
@@ -28,9 +27,8 @@ WebWorkerServer.Prototype = function() {
   };
 
   this.onMessage = function(msg) {
-    console.log('WebWorkerServer received msg', msg);
+    // console.log('WebWorkerServer received msg', msg);
     var from = msg.from;
-    var to = msg.to;
     if (msg.data === '__connect__') {
       this.handleConnectionRequest(from);
     } else if (msg.data === '__disconnect__') {
