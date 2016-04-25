@@ -18,11 +18,15 @@ var ContainerComponent = require('./container/ContainerComponent');
 var InsertContainerCommand = require('./container/InsertContainerCommand');
 var InsertContainerTool = require('./container/InsertContainerTool');
 
+var InputNode = require('./input/InputNode');
+var InputComponent = require('./input/InputComponent');
+
 var example = require('substance/test/fixtures/collab/poem');
 var doc = example.createArticle();
 var schema = doc.getSchema();
 schema.addNode(AlienNode);
 schema.addNode(EntityNode);
+schema.addNode(InputNode);
 
 var body = doc.get('body');
 
@@ -30,7 +34,7 @@ var a1 = doc.create({
   type: 'alien',
   id: 'alien1'
 });
-body.show(a1.id, 2);
+body.show(a1.id, 4);
 
 // var a2 = doc.create({
 //   type: 'alien',
@@ -44,14 +48,22 @@ var e1 = doc.create({
   name: 'Foo',
   description: 'Bar'
 });
-body.show(e1.id, 4);
+body.show(e1.id, 5);
+
+var i1 = doc.create({
+  type: 'input',
+  id: 'i1',
+  content: 'Lorem ipsum...'
+});
+body.show(i1.id, 2);
 
 var config = ProseEditor.static.mergeConfig(ProseEditor.static.config, {
   controller: {
     components: {
       'alien': AlienComponent,
       'entity': EntityComponent,
-      'container': ContainerComponent
+      'container': ContainerComponent,
+      'input': InputComponent
     }
   },
   bodyEditor: {
