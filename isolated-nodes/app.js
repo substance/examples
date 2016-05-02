@@ -21,12 +21,18 @@ var InsertContainerTool = require('./container/InsertContainerTool');
 var InputNode = require('./input/InputNode');
 var InputComponent = require('./input/InputComponent');
 
+var InlineEntityNode = require('./inline-entity/InlineEntityNode');
+var InlineEntityComponent = require('./inline-entity/InlineEntityComponent');
+
 var example = require('substance/test/fixtures/collab/poem');
 var doc = example.createArticle();
 var schema = doc.getSchema();
 schema.addNode(AlienNode);
 schema.addNode(EntityNode);
 schema.addNode(InputNode);
+schema.addNode(InlineEntityNode);
+
+var insertInlineNode = require('substance/model/transform/insertInlineNode');
 
 var body = doc.get('body');
 
@@ -57,13 +63,24 @@ var i1 = doc.create({
 });
 body.show(i1.id, 2);
 
+insertInlineNode(doc, {
+  selection: doc.createSelection(['p1', 'content'], 28),
+  node: {
+    type: 'inline-entity',
+    id : 'ie1',
+    name: 'Bla',
+    description: 'Blupp'
+  }
+});
+
 var config = ProseEditor.static.mergeConfig(ProseEditor.static.config, {
   controller: {
     components: {
       'alien': AlienComponent,
       'entity': EntityComponent,
       'container': ContainerComponent,
-      'input': InputComponent
+      'input': InputComponent,
+      'inline-entity': InlineEntityComponent
     }
   },
   bodyEditor: {

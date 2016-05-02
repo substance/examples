@@ -9,6 +9,7 @@ $fa-font-path:  "../fonts" !default;
 @import './alien/_alien';
 @import './entity/_entity';
 @import './input/_input';
+@import './inline-entity/_inline-entity';
 
 body {
   overflow: hidden;
