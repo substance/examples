@@ -17,7 +17,7 @@ AlienComponent.Prototype = function() {
   };
 
   this.render = function($$) {
-    var el = $$('div').addClass('sc-alien');
+    var el = $$('div').addClass('sc-alien sg-hide-selection');
     el.append(
       $$('img').attr('height', 100).attr('src', 'alien/alien.svg')
     );
@@ -28,7 +28,7 @@ AlienComponent.Prototype = function() {
     if (!this.props.disabled) {
       var overlay = $$('div').addClass('se-overlay').append(
         $$('div').addClass('se-controls').append(
-          $$('button').append('Click Here').on('click', this.onClick)
+          $$('button').append('Click Here').on('mousedown', this.onMousedown)
         )
       );
       el.append(overlay);
@@ -42,7 +42,7 @@ AlienComponent.Prototype = function() {
 
   var _moods = ['normal', 'angry', 'excited', 'sad', 'sick'];
 
-  this.onClick = function(event) {
+  this.onMousedown = function(event) {
     event.preventDefault();
     event.stopPropagation();
 
