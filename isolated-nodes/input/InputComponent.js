@@ -8,30 +8,29 @@ function InputComponent() {
 
 InputComponent.Prototype = function() {
 
+  var _super = InputComponent.super.prototype;
+
   this.render = function($$) {
-    var el = $$('input').addClass('sc-input')
-      .val(this.props.node.content)
-      .on('mousedown', this.onMousedown)
-      .on('keydown', this.onKeydown);
+    var el = $$('div').addClass('sc-input');
+    var input = $$('input').ref('input')
+      .val(this.props.node.content);
     if (this.props.disabled) {
-      el.attr('disabled', true);
+      el.addClass('sm-disabled');
+      input.attr('disabled', true);
+    } else {
+      el.addClass('sm-active');
     }
+    el.append(input);
     return el;
   };
 
-  this.didUpdate = function() {
-    if (!this.props.disabled) {
-      // this.el.focus();
-    }
-  };
-
-  this.onMousedown = function(event) {
-    event.stopPropagation();
-  };
-
-  this.onKeydown = function(event) {
-    console.log('AAAAAA');
-    event.stopPropagation();
+  this.didUpdate = function(oldProps, oldState) {
+    console.log('InputComponent.didUpdate', oldProps, oldState);
+    var input = this.refs.input;
+    var inputEl = input.getNativeElement();
+    var val = inputEl.value;
+    inputEl.focus();
+    inputEl.setSelectionRange(val.length, val.length);
   };
 
 };
