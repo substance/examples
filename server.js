@@ -22,6 +22,11 @@ server.serveJS(app, '/prose/app.js', path.join(__dirname, 'prose', 'app.js'));
 server.serveStyles(app, '/isolated-nodes/app.css', path.join(__dirname, 'isolated-nodes', 'app.scss'));
 server.serveJS(app, '/isolated-nodes/app.js', path.join(__dirname, 'isolated-nodes', 'app.js'));
 
+// For each example we need those two lines
+server.serveStyles(app, '/tools/app.css', path.join(__dirname, 'tools', 'app.scss'));
+server.serveJS(app, '/tools/app.js', path.join(__dirname, 'tools', 'app.js'));
+
+
 // Serve static files
 app.use(express.static(path.join(__dirname)));
 app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome/fonts')));
