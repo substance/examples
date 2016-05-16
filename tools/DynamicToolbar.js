@@ -1,13 +1,16 @@
 'use strict';
 
 var Toolbar = require('substance/ui/Toolbar');
+var Icon = require('substance/ui/FontAwesomeIcon');
+var clone = require('lodash/lang/clone');
 var UndoTool = require('substance/ui/UndoTool');
 var RedoTool = require('substance/ui/RedoTool');
-var Icon = require('substance/ui/FontAwesomeIcon');
+
 var SwitchTextTypeTool = require('substance/packages/text/SwitchTextTypeTool');
 var StrongTool = require('substance/packages/strong/StrongTool');
 var EmphasisTool = require('substance/packages/emphasis/EmphasisTool');
-// var LinkTool = require('substance/packages/link/LinkTool');
+var LinkTool = require('substance/packages/link/LinkTool');
+var EditLinkTool = require('substance/packages/link/EditLinkTool');
 
 function DynamicToolbar() {
   Toolbar.apply(this, arguments);
@@ -23,21 +26,31 @@ DynamicToolbar.Prototype = function() {
   };
 
   this.render = function($$) {
-    var el = $$("div").addClass("sc-toolbar");
+    var el = $$("div").addClass('sc-toolbar');
     var toolState = this.props.toolState;
 
-    if (!toolState) return el;
+    console.log('current toolState', toolState);
+    if (!toolState || Object.keys(toolState).length === 0) {
+      console.warn('toolState not ready yet');
+      return el;
+    }
 
+    // TODO: Remove clone hack once 
     var tools = [
-      $$(SwitchTextTypeTool, toolState['switch-text-type']),
-      $$(UndoTool, toolState.undo).append($$(Icon, {icon: 'fa-undo'})),
-      $$(RedoTool, toolState.redo).append($$(Icon, {icon: 'fa-repeat'})),
-      $$(StrongTool, toolState.strong).append($$(Icon, {icon: 'fa-bold'})),
-      $$(EmphasisTool, toolState.emphasis).append($$(Icon, {icon: 'fa-italic'}))
+      $$(SwitchTextTypeTool, clone(toolState['switch-text-type'])),
+      $$(UndoTool, clone(toolState.undo)).append($$(Icon, {icon: 'fa-undo'})),
+      $$(RedoTool, clone(toolState.redo)).append($$(Icon, {icon: 'fa-repeat'})),
+      $$(StrongTool, clone(toolState.strong)).append($$(Icon, {icon: 'fa-bold'})),
+      $$(EmphasisTool, clone(toolState.emphasis)).append($$(Icon, {icon: 'fa-italic'})),
+      $$(LinkTool, clone(toolState.link)).append($$(Icon, {icon: 'fa-link'}))
     ];
 
-    // if (toolState['link'].context === 'edit') {
-    // }
+    // TODO: Activate link url editing
+    if (toolState['link'].mode === 'edit') {
+      tools.push(
+        $$(EditLinkTool, clone(toolState.link))
+      );
+    }
 
     el.append(
       $$(Toolbar.Group).append(
