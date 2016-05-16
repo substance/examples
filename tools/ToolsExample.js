@@ -12,14 +12,14 @@ function ToolsExample() {
 
 ToolsExample.Prototype = function() {
 
-  // var _super = ToolsDemo.super.prototype;
-
   this.render = function($$) {
     var config = this.getConfig();
 
     return $$('div').addClass('sc-editor').append(
       $$(SplitPane, {splitType: 'horizontal'}).append(
-        $$(DynamicToolbar),
+        $$(DynamicToolbar, {
+          toolState: this.toolManager.toolState
+        }),
         $$(ScrollPane, {
           scrollbarType: 'substance',
           scrollbarPosition: 'right'
@@ -27,10 +27,10 @@ ToolsExample.Prototype = function() {
           $$(ContainerEditor, {
             documentSession: this.documentSession,
             containerId: 'body',
-            name: 'bodyEditor',
-            commands: config.bodyEditor.commands,
-            textTypes: config.bodyEditor.textTypes
-          }).ref('bodyEditor')
+            name: 'body',
+            commands: config.surfaces.body.commands,
+            textTypes: config.surfaces.body.textTypes
+          }).ref('body')
         ).ref('contentPanel')
       )
     );
@@ -40,9 +40,7 @@ ToolsExample.Prototype = function() {
 Controller.extend(ToolsExample);
 
 ToolsExample.static.config = {
-  // Controller specific configuration (required!)
   controller: {
-    // Component registry
     components: {
       'paragraph': require('substance/packages/paragraph/ParagraphComponent'),
       'heading': require('substance/packages/heading/HeadingComponent'),
@@ -50,29 +48,29 @@ ToolsExample.static.config = {
       'codeblock': require('substance/packages/codeblock/CodeblockComponent'),
       'blockquote': require('substance/packages/blockquote/BlockquoteComponent')
     },
-    // Controller commands
     commands: [
       require('substance/ui/UndoCommand'),
       require('substance/ui/RedoCommand'),
       require('substance/ui/SaveCommand')
     ]
   },
-  // Custom configuration (required!)
-  bodyEditor: {
-    commands: [
-      require('substance/packages/text/SwitchTextTypeCommand'),
-      require('substance/packages/strong/StrongCommand'),
-      require('substance/packages/emphasis/EmphasisCommand'),
-      require('substance/packages/link/LinkCommand'),
-    ],
-    textTypes: [
-      {name: 'paragraph', data: {type: 'paragraph'}},
-      {name: 'heading1',  data: {type: 'heading', level: 1}},
-      {name: 'heading2',  data: {type: 'heading', level: 2}},
-      {name: 'heading3',  data: {type: 'heading', level: 3}},
-      {name: 'codeblock', data: {type: 'codeblock'}},
-      {name: 'blockquote', data: {type: 'blockquote'}}
-    ]
+  surfaces: {
+    body: {
+      commands: [
+        require('substance/packages/text/SwitchTextTypeCommand'),
+        require('substance/packages/strong/StrongCommand'),
+        require('substance/packages/emphasis/EmphasisCommand'),
+        require('substance/packages/link/LinkCommand'),
+      ],
+      textTypes: [
+        {name: 'paragraph', data: {type: 'paragraph'}},
+        {name: 'heading1',  data: {type: 'heading', level: 1}},
+        {name: 'heading2',  data: {type: 'heading', level: 2}},
+        {name: 'heading3',  data: {type: 'heading', level: 3}},
+        {name: 'codeblock', data: {type: 'codeblock'}},
+        {name: 'blockquote', data: {type: 'blockquote'}}
+      ]      
+    }
   }
 };
 
