@@ -5,6 +5,7 @@ var ContainerEditor = require('substance/ui/ContainerEditor');
 var SplitPane = require('substance/ui/SplitPane');
 var ScrollPane = require('substance/ui/ScrollPane');
 var DynamicToolbar = require('./DynamicToolbar');
+var OverlayTools = require('./OverlayTools');
 
 function ToolsExample() {
   ToolsExample.super.apply(this, arguments);
@@ -28,9 +29,21 @@ ToolsExample.Prototype = function() {
             documentSession: this.documentSession,
             containerId: 'body',
             name: 'body',
+            overlay: [
+              $$(OverlayTools, {
+                toolState: this.toolManager.toolState
+              })            
+            ],
             commands: config.surfaces.body.commands,
             textTypes: config.surfaces.body.textTypes
           }).ref('body')
+            /*
+            TODO: this produces an error, inspect
+            .outlet('overlay').append(
+            // $$(OverlayTools, {
+            //   toolState: this.toolManager.toolState
+            // })
+            )*/
         ).ref('contentPanel')
       )
     );
