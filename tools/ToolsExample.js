@@ -4,8 +4,8 @@ var Controller = require('substance/ui/Controller');
 var ContainerEditor = require('substance/ui/ContainerEditor');
 var SplitPane = require('substance/ui/SplitPane');
 var ScrollPane = require('substance/ui/ScrollPane');
-var DynamicToolbar = require('./DynamicToolbar');
-var OverlayTools = require('./OverlayTools');
+var Toolbar = require('substance/ui/Toolbar');
+var ExampleToolbar = require('./ExampleToolbar');
 
 function ToolsExample() {
   ToolsExample.super.apply(this, arguments);
@@ -18,8 +18,8 @@ ToolsExample.Prototype = function() {
 
     return $$('div').addClass('sc-editor').append(
       $$(SplitPane, {splitType: 'horizontal'}).append(
-        $$(DynamicToolbar, {
-          toolState: this.toolManager.toolState
+        $$(Toolbar, {
+          content: ExampleToolbar
         }),
         $$(ScrollPane, {
           scrollbarType: 'substance',
@@ -28,22 +28,11 @@ ToolsExample.Prototype = function() {
           $$(ContainerEditor, {
             documentSession: this.documentSession,
             containerId: 'body',
+            overlay: config.surfaces.body.overlay,
             name: 'body',
-            overlay: [
-              $$(OverlayTools, {
-                toolState: this.toolManager.toolState
-              })            
-            ],
             commands: config.surfaces.body.commands,
             textTypes: config.surfaces.body.textTypes
           }).ref('body')
-            /*
-            TODO: this produces an error, inspect
-            .outlet('overlay').append(
-            // $$(OverlayTools, {
-            //   toolState: this.toolManager.toolState
-            // })
-            )*/
         ).ref('contentPanel')
       )
     );
@@ -52,29 +41,31 @@ ToolsExample.Prototype = function() {
 
 Controller.extend(ToolsExample);
 
+
 ToolsExample.static.config = {
-  controller: {
-    components: {
-      'paragraph': require('substance/packages/paragraph/ParagraphComponent'),
-      'heading': require('substance/packages/heading/HeadingComponent'),
-      'link': require('substance/packages/link/LinkComponent'),
-      'codeblock': require('substance/packages/codeblock/CodeblockComponent'),
-      'blockquote': require('substance/packages/blockquote/BlockquoteComponent')
-    },
-    commands: [
-      require('substance/ui/UndoCommand'),
-      require('substance/ui/RedoCommand'),
-      require('substance/ui/SaveCommand')
-    ]
+  components: {
+    'paragraph': require('substance/packages/paragraph/ParagraphComponent'),
+    'heading': require('substance/packages/heading/HeadingComponent'),
+    'link': require('substance/packages/link/LinkComponent'),
+    'codeblock': require('substance/packages/codeblock/CodeblockComponent'),
+    'blockquote': require('substance/packages/blockquote/BlockquoteComponent')
   },
+  commands: [
+    // ControllerCommands
+    require('substance/ui/UndoCommand'),
+    require('substance/ui/RedoCommand'),
+    require('substance/ui/SaveCommand'),
+
+    // SurfaceCommands
+    require('substance/packages/text/SwitchTextTypeCommand'),
+    require('substance/packages/strong/StrongCommand'),
+    require('substance/packages/emphasis/EmphasisCommand'),
+    require('substance/packages/link/LinkCommand'),
+  ],
   surfaces: {
     body: {
-      commands: [
-        require('substance/packages/text/SwitchTextTypeCommand'),
-        require('substance/packages/strong/StrongCommand'),
-        require('substance/packages/emphasis/EmphasisCommand'),
-        require('substance/packages/link/LinkCommand'),
-      ],
+      overlay: require('./BodyTools'),
+      commands: ['switch-text-type', 'strong', 'emphasis', 'link'],
       textTypes: [
         {name: 'paragraph', data: {type: 'paragraph'}},
         {name: 'heading1',  data: {type: 'heading', level: 1}},
