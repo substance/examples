@@ -22,8 +22,6 @@ ToolsExample.Prototype = function() {
           content: ExampleToolbar
         }),
         $$(ScrollPane, {
-          scrollbarType: 'substance',
-          scrollbarPosition: 'right',
           overlay: config.surfaces.body.overlay,
         }).append(
           $$(ContainerEditor, {

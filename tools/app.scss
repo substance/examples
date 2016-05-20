@@ -10,6 +10,11 @@ body {
   overflow: hidden;
 }
 
+
 .sc-editor .sc-scroll-pane .se-content {
   padding: 20px;
+}
+
+.sc-example-toolbar {
+  border-bottom: 1px solid $border-color;
 }
