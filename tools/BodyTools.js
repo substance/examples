@@ -1,6 +1,8 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
+var EditLinkTool = require('substance/packages/link/EditLinkTool');
+var clone = require('lodash/lang/clone');
 
 function BodyTools() {
   Component.apply(this, arguments);
@@ -9,13 +11,12 @@ function BodyTools() {
 BodyTools.Prototype = function() {
 
   this.render = function($$) {
-    var el = $$('div').addClass('sc-overlay-tools');
+    var el = $$('div').addClass('sc-body-tools');
     var commandStates = this.props.commandStates;
 
-    // TODO: Activate link url editing
     if (commandStates['link'].mode === 'edit') {
-      el.push(
-        $$(EditLinkTool, clone(toolState.link))
+      el.append(
+        $$(EditLinkTool, clone(commandStates.link))
       );
     }
     return el;
@@ -23,6 +24,5 @@ BodyTools.Prototype = function() {
 };
 
 Component.extend(BodyTools);
-
 
 module.exports = BodyTools;

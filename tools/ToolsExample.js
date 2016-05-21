@@ -22,13 +22,11 @@ ToolsExample.Prototype = function() {
           content: ExampleToolbar
         }),
         $$(ScrollPane, {
-          scrollbarType: 'substance',
-          scrollbarPosition: 'right'
+          overlay: config.surfaces.body.overlay,
         }).append(
           $$(ContainerEditor, {
             documentSession: this.documentSession,
             containerId: 'body',
-            overlay: config.surfaces.body.overlay,
             name: 'body',
             commands: config.surfaces.body.commands,
             textTypes: config.surfaces.body.textTypes
@@ -40,7 +38,6 @@ ToolsExample.Prototype = function() {
 };
 
 Controller.extend(ToolsExample);
-
 
 ToolsExample.static.config = {
   components: {
