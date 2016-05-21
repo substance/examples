@@ -21,32 +21,13 @@ schema.addNode(InlineEntityNode);
 var insertInlineNode = require('substance/model/transform/insertInlineNode');
 var body = doc.get('body');
 
-var a1 = doc.create({
-  type: 'alien',
-  id: 'alien1'
-});
-body.show(a1.id, 4);
-
-// var a2 = doc.create({
-//   type: 'alien',
-//   id: 'alien2'
-// });
-// body.show(a2.id, 4);
-
 var e1 = doc.create({
   type: 'entity',
   id: 'e1',
   name: 'Foo',
   description: 'Bar'
 });
-body.show(e1.id, 5);
-
-var i1 = doc.create({
-  type: 'input',
-  id: 'i1',
-  content: 'Lorem ipsum...'
-});
-body.show(i1.id, 2);
+body.show(e1.id, 2);
 
 insertInlineNode(doc, {
   selection: doc.createSelection(['p1', 'content'], 28),
