@@ -3,24 +3,21 @@
 var Component = require('substance/ui/Component');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
-// var InsertTableTool = require('substance/packages/table/InsertTableTool');
 
 var InsertImageTool = require('substance/packages/image/ImageTool');
 
 var example = require('substance/test/fixtures/collab/poem');
 
 var config = ProseEditor.static.mergeConfig(ProseEditor.static.config, {
-  controller: {
-    components: {
-      // 'table': require('substance/packages/table/TableComponent')
-      'image': require('substance/packages/image/ImageComponent')
-    }
+  components: {
+    'image': require('substance/packages/image/ImageComponent')
   },
-  bodyEditor: {
-    commands: [
-      // require('substance/packages/table/InsertTableCommand')
-      require('substance/packages/image/ImageCommand')
-    ]
+  surfaces: {
+    bodyEditor: {
+      commands: [
+        require('substance/packages/image/ImageCommand')
+      ]
+    }
   }
 });
 
