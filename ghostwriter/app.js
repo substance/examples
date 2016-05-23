@@ -4,6 +4,8 @@ var exampleDoc = require('substance/test/fixtures/collab/poem');
 var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
+var ProseEditorPackage = require('substance/packages/prose-editor/ProseEditorPackage');
+
 var GhostEditor = require('./GhostEditor');
 
 function TwoEditors() {
@@ -19,9 +21,13 @@ TwoEditors.Prototype = function() {
           splitType: 'vertical',
           sizeA: '50%'
         }).append(
-        $$(ProseEditor, {doc: this.props.doc}).ref('left').addClass('sm-left-editor'),
+        $$(ProseEditor, {
+          doc: this.props.doc,
+          config: ProseEditorPackage
+        }).ref('left').addClass('sm-left-editor'),
         $$(GhostEditor, {
-          doc: this.props.doc
+          doc: this.props.doc,
+          config: ProseEditorPackage
         }).ref('right')
       )
     );

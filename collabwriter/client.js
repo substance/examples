@@ -10,6 +10,8 @@ var CollabClient = require('substance/collab/CollabClient');
 var TestCollabSession = require('substance/test/collab/TestCollabSession');
 var twoParagraphs = require('substance/test/fixtures/collab/two-paragraphs');
 var Surface = require('substance/ui/Surface');
+var ProseEditorPackage = require('substance/packages/prose-editor/ProseEditorPackage');
+
 // this flag prevents competing updates of DOM selections
 // which is only necessary in this example, where we host two
 // clients in one DOM
@@ -45,6 +47,7 @@ Client.Prototype = function() {
     var el = $$('div').addClass('client');
 
     var editor = $$(ProseEditor, {
+      config: ProseEditorPackage,
       documentSession: this.session
     }).ref('editor');
 

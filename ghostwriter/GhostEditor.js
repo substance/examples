@@ -5,7 +5,8 @@ var Toolbar = require('substance/ui/Toolbar');
 var SplitPane = require('substance/ui/SplitPane');
 var ScrollPane = require('substance/ui/ScrollPane');
 var ContainerEditor = require('substance/ui/ContainerEditor');
-var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
+var ProseEditorTools = require('substance/packages/prose-editor/ProseEditorTools');
+
 var Ghost = require('./Ghost');
 
 function GhostEditor() {
@@ -18,7 +19,9 @@ GhostEditor.Prototype = function() {
     var el = $$('div')
       .addClass('sc-ghost-editor');
 
-    var toolbar = $$(Toolbar).append(
+    var toolbar = $$(Toolbar, {
+      content: ProseEditorTools
+    }).append(
       $$(Toolbar.Group).append(
         $$('button')
           .ref('startButton')
@@ -61,6 +64,5 @@ GhostEditor.Prototype = function() {
 
 Controller.extend(GhostEditor);
 
-GhostEditor.static.config = ProseEditor.static.config;
 
 module.exports = GhostEditor;
