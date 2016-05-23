@@ -22,6 +22,22 @@ A static distribution of the demos can be created by running the bundle command.
 $ npm run bundle
 ```
 
+## Examples
+
+Our examples are based on Substance users' questions. The goal of this repository is to cover every Substance feature and demonstrate it based on simple code snippets.
+
+### How can I change the icon of a tool?
+
+The easiest way to do this is to extend the tool component and overwrite the `renderIcon` method.
+
+### How can I implement my own node type?
+
+There are different kinds of node types. See a, b, c.
+
+### How to create a modal dialog?
+
+TODO
+
 ## Questions
 
 Please create an issue in the [Substance repository](https://github.com/substance/substance/issues).
