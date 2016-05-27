@@ -10,10 +10,10 @@ module.exports = {
     // Base package with default rich text nodes
     config.import(ProseEditorPackage);
     // Custom packages
-    config.import(ImagePackage, {icon: 'fa-image'});
+    config.import(ImagePackage);
 
     // Activate save tool
     config.addCommand(SaveCommand);
-    config.addTool(SaveTool, {icon: 'fa-save'});
+    config.addTool(SaveTool);
   }
 };
