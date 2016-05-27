@@ -5,38 +5,47 @@ var Component = require('substance/ui/Component');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
 var IsolatedNodesConfig = require('./IsolatedNodesConfig');
 
-var AlienNode = require('./alien/AlienNode');
-var EntityNode = require('./entity/EntityNode');
-var InputNode = require('./input/InputNode');
-var InlineEntityNode = require('./inline-entity/InlineEntityNode');
+var AlienComponent = require('./alien/AlienComponent');
+var InsertAlienCommand = require('./alien/InsertAlienCommand');
+var InsertAlienTool = require('./alien/InsertAlienTool');
 
-var example = require('substance/test/fixtures/collab/poem');
-var doc = example.createArticle();
-var schema = doc.getSchema();
-schema.addNode(AlienNode);
-schema.addNode(EntityNode);
-schema.addNode(InputNode);
-schema.addNode(InlineEntityNode);
+var EntityComponent = require('./entity/EntityComponent');
+var InsertEntityCommand = require('./entity/InsertEntityCommand');
+var InsertEntityTool = require('./entity/InsertEntityTool');
 
-var insertInlineNode = require('substance/model/transform/insertInlineNode');
-var body = doc.get('body');
+var ContainerComponent = require('./container/ContainerComponent');
+var InsertContainerCommand = require('./container/InsertContainerCommand');
+var InsertContainerTool = require('./container/InsertContainerTool');
 
-var e1 = doc.create({
-  type: 'entity',
-  id: 'e1',
-  name: 'Foo',
-  description: 'Bar'
-});
-body.show(e1.id, 2);
+var InputComponent = require('./input/InputComponent');
 
-insertInlineNode(doc, {
-  selection: doc.createSelection(['p1', 'content'], 28),
-  node: {
-    type: 'inline-entity',
-    id : 'ie1',
-    name: 'Bla',
-    description: 'Blupp'
-  }
+var InlineEntityComponent = require('./inline-entity/InlineEntityComponent');
+
+var fixture = require('./fixture');
+var doc = fixture.createArticle();
+
+var config = ProseEditor.static.mergeConfig(ProseEditor.static.config, {
+  controller: {
+    components: {
+      'alien': AlienComponent,
+      'entity': EntityComponent,
+      'container': ContainerComponent,
+      'input': InputComponent,
+      'inline-entity': InlineEntityComponent
+    }
+  },
+  bodyEditor: {
+    commands: [
+      InsertAlienCommand,
+      InsertEntityCommand,
+      InsertContainerCommand
+    ]
+  },
+  tools: [
+    InsertAlienTool,
+    InsertEntityTool,
+    InsertContainerTool
+  ]
 });
 
 function App() {
@@ -60,9 +69,5 @@ App.Prototype = function() {
 Component.extend(App);
 
 $(function() {
-  // For debugging in the console
-  window.doc = doc;
-  Component.mount(App, {
-    doc: doc
-  }, 'body');
+  Component.mount(App, { doc: doc }, 'body');
 });
