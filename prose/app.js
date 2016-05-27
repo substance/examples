@@ -2,20 +2,24 @@
 
 var Component = require('substance/ui/Component');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
-var example = require('substance/test/fixtures/collab/poem');
-var Config = require('./MyProseEditorConfig');
+var Configurator = require('substance/util/Configurator');
+
+var poem = require('./poem');
+var EditorConfig = require('./MyProseEditorConfig');
+var DocumentSession = require('substance/model/DocumentSession');
+var configurator = new Configurator();
+configurator.import(EditorConfig);
 
 function App() {
   App.super.apply(this, arguments);
 }
 
 App.Prototype = function() {
-
   this.render = function($$) {
     var el = $$('div').addClass('app');
     el.append($$(ProseEditor, {
-      doc: this.props.doc,
-      config: Config
+      documentSession: this.props.documentSession,
+      configurator: configurator
     }));
     return el;
   };
@@ -24,8 +28,15 @@ App.Prototype = function() {
 Component.extend(App);
 
 window.onload = function() {
-  var doc = example.createArticle();
+  // Creates a ProseArticle based on the ProseEditorConfig
+  var doc = configurator.createArticle(poem);
+  var documentSession = new DocumentSession(doc);
+
   // For debugging
   window.doc = doc;
-  Component.mount(App, { doc: doc }, 'body');
+  window.documentSession = documentSession;
+
+  Component.mount(App, {
+    documentSession: documentSession
+  }, 'body');
 };
