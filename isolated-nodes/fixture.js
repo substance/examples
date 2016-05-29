@@ -1,36 +1,8 @@
 'use strict';
 
-var createDocumentFactory = require('substance/model/createDocumentFactory');
-var ProseArticle = require('substance/packages/prose-editor/ProseArticle');
-var ProseSchema = require('substance/packages/prose-editor/ProseSchema');
 var insertInlineNode = require('substance/model/transform/insertInlineNode');
 
-var AlienNode = require('./alien/AlienNode');
-var EntityNode = require('./entity/EntityNode');
-var InputNode = require('./input/InputNode');
-var InlineEntityNode = require('./inline-entity/InlineEntityNode');
-
-function CustomSchema() {
-  CustomSchema.super.apply(this, arguments);
-
-  this.addNode(AlienNode);
-  this.addNode(EntityNode);
-  this.addNode(InputNode);
-  this.addNode(InlineEntityNode);
-}
-ProseSchema.extend(CustomSchema);
-
-CustomSchema.static.name = 'isolated-nodes';
-CustomSchema.static.version = '1.0.0';
-
-function CustomArticle() {
-  CustomArticle.super.apply(this, arguments);
-}
-ProseArticle.extend(CustomArticle);
-
-CustomArticle.static.Schema = CustomSchema;
-
-module.exports = createDocumentFactory(CustomArticle, function(tx) {
+module.exports = function(tx) {
   var body = tx.get('body');
 
   tx.create({
@@ -174,4 +146,4 @@ module.exports = createDocumentFactory(CustomArticle, function(tx) {
   });
   body.show('the-end');
 
-});
+};
