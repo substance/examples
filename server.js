@@ -5,9 +5,6 @@ var port = process.env.PORT || 5000;
 var server = require('substance/util/server');
 
 // For each example we need those two lines
-server.serveStyles(app, '/notepad/app.css', path.join(__dirname, 'notepad', 'app.scss'));
-server.serveJS(app, '/notepad/app.js', path.join(__dirname, 'notepad', 'app.js'));
-
 server.serveStyles(app, '/ghostwriter/app.css', path.join(__dirname, 'ghostwriter', 'app.scss'));
 server.serveJS(app, '/ghostwriter/app.js', path.join(__dirname, 'ghostwriter', 'app.js'));
 
@@ -22,10 +19,8 @@ server.serveJS(app, '/prose/app.js', path.join(__dirname, 'prose', 'app.js'));
 server.serveStyles(app, '/isolated-nodes/app.css', path.join(__dirname, 'isolated-nodes', 'app.scss'));
 server.serveJS(app, '/isolated-nodes/app.js', path.join(__dirname, 'isolated-nodes', 'app.js'));
 
-// For each example we need those two lines
-server.serveStyles(app, '/tools/app.css', path.join(__dirname, 'tools', 'app.scss'));
-server.serveJS(app, '/tools/app.js', path.join(__dirname, 'tools', 'app.js'));
-
+server.serveStyles(app, '/tables/app.css', path.join(__dirname, 'tables', 'app.scss'));
+server.serveJS(app, '/tables/app.js', path.join(__dirname, 'tables', 'app.js'));
 
 // Serve static files
 app.use(express.static(path.join(__dirname)));
