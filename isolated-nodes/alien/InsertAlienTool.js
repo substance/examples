@@ -1,6 +1,6 @@
 'use strict';
 
-var SurfaceTool = require('substance/ui/SurfaceTool');
+var Tool = require('substance/ui/Tool');
 
 function InsertAlienTool() {
   InsertAlienTool.super.apply(this, arguments);
@@ -8,20 +8,16 @@ function InsertAlienTool() {
 
 InsertAlienTool.Prototype = function() {
 
-  var _super = InsertAlienTool.super.prototype;
-
-  this.renderButton = function($$) {
-    var button = _super.renderButton.apply(this, arguments);
-    button.append($$('img').attr({
+  this.renderIcon = function($$) {
+    return $$('img').attr({
       src: 'alien/alien.svg',
       height: 12
-    }));
-    return button;
+    });
   };
 
 };
 
-SurfaceTool.extend(InsertAlienTool);
+Tool.extend(InsertAlienTool);
 
 InsertAlienTool.static.name = 'insert-alien';
 

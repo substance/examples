@@ -1,65 +1,29 @@
 'use strict';
 
-var $ = window.$ = require('substance/util/jquery');
+var DocumentSession = require('substance/model/DocumentSession');
 var Component = require('substance/ui/Component');
+var Configurator = require('substance/util/Configurator');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
-var IsolatedNodesConfig = require('./IsolatedNodesConfig');
 
-var AlienNode = require('./alien/AlienNode');
-var EntityNode = require('./entity/EntityNode');
-var InputNode = require('./input/InputNode');
-var InlineEntityNode = require('./inline-entity/InlineEntityNode');
-
-var example = require('substance/test/fixtures/collab/poem');
-var doc = example.createArticle();
-var schema = doc.getSchema();
-schema.addNode(AlienNode);
-schema.addNode(EntityNode);
-schema.addNode(InputNode);
-schema.addNode(InlineEntityNode);
-
-var insertInlineNode = require('substance/model/transform/insertInlineNode');
-var body = doc.get('body');
-
-var a1 = doc.create({
-  type: 'alien',
-  id: 'alien1'
-});
-body.show(a1.id, 4);
-
-// var a2 = doc.create({
-//   type: 'alien',
-//   id: 'alien2'
-// });
-// body.show(a2.id, 4);
-
-var e1 = doc.create({
-  type: 'entity',
-  id: 'e1',
-  name: 'Foo',
-  description: 'Bar'
-});
-body.show(e1.id, 5);
-
-var i1 = doc.create({
-  type: 'input',
-  id: 'i1',
-  content: 'Lorem ipsum...'
-});
-body.show(i1.id, 2);
-
-insertInlineNode(doc, {
-  selection: doc.createSelection(['p1', 'content'], 28),
-  node: {
-    type: 'inline-entity',
-    id : 'ie1',
-    name: 'Bla',
-    description: 'Blupp'
-  }
-});
+var Config = require('./IsolatedNodesConfig');
+var fixture = require('./fixture');
 
 function App() {
   App.super.apply(this, arguments);
+
+  var configurator = new Configurator();
+  configurator.import(Config);
+  var doc = configurator.createArticle(fixture);
+  var documentSession = new DocumentSession(doc);
+
+  // HACK: it would be better to have icon mapping supported by configurator, too
+  var iconProvider = configurator.getIconProvider();
+  iconProvider.addIcon('insert-entity', 'fa-space-shuttle');
+  iconProvider.addIcon('insert-container', 'fa-file-text-o');
+
+
+  this.configurator = configurator;
+  this.documentSession = documentSession;
 }
 
 App.Prototype = function() {
@@ -68,8 +32,8 @@ App.Prototype = function() {
     var el = $$('div').addClass('app');
 
     var editor = $$(ProseEditor, {
-      config: IsolatedNodesConfig,
-      doc: this.props.doc
+      configurator: this.configurator,
+      documentSession: this.documentSession
     });
     el.append(editor);
     return el;
@@ -78,10 +42,6 @@ App.Prototype = function() {
 
 Component.extend(App);
 
-$(function() {
-  // For debugging in the console
-  window.doc = doc;
-  Component.mount(App, {
-    doc: doc
-  }, 'body');
-});
+window.onload = function() {
+  Component.mount(App, 'body');
+};

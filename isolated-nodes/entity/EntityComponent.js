@@ -2,7 +2,6 @@
 
 var BlockNodeComponent = require('substance/ui/BlockNodeComponent');
 var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
-var Grid = require('substance/ui/Grid');
 
 function EntityComponent() {
   EntityComponent.super.apply(this, arguments);
@@ -11,43 +10,43 @@ function EntityComponent() {
 EntityComponent.Prototype = function() {
 
   this.render = function($$) {
-    if ($$.capturing) {
-      console.log('EntityComponent.render(): rendering with props', this.props);
-    }
-
     var el = $$('div').addClass('sc-entity');
 
     el.append(
       $$('div').ref('title').addClass('se-title').append('Entity')
     );
 
-    var grid = $$(Grid, {
-      columns: [4, 8]
-    });
-    grid.append(
-      $$(Grid.Row).append(
-        $$(Grid.Cell).ref('nameLabel').append('Name:'),
-        $$(Grid.Cell).append(
-          $$(TextPropertyEditor, {
-            path: [this.props.node.id, 'name'],
-            disabled: this.props.disabled
-          }).ref('nameEditor')
-        )
-      )
-    );
-    grid.append(
-      $$(Grid.Row).append(
-        $$(Grid.Cell).ref('descriptionLabel').append('Description:'),
-        $$(Grid.Cell).append(
-          $$(TextPropertyEditor, {
-            path: [this.props.node.id, 'description'],
-            disabled: this.props.disabled
-          }).ref('descriptionEditor')
-        )
+    var table = $$('table');
+    table.append(
+      $$('colgroup').append(
+        $$('col').addClass('se-label-col'),
+        $$('col').addClass('se-value-col')
       )
     );
 
-    el.append($$('div').ref('foo').addClass('se-editor').append(grid));
+    var nameRow = $$('tr');
+    nameRow.append($$('td').addClass('se-label').append('Name:'));
+    nameRow.append($$('td').addClass('se-value').append(
+      $$(TextPropertyEditor, {
+        path: [this.props.node.id, 'name'],
+        disabled: this.props.disabled
+      }).ref('nameEditor')
+    ));
+    table.append(nameRow);
+
+    table.append($$('tr').addClass('se-separator'))
+
+    var descriptionRow = $$('tr');
+    descriptionRow.append($$('td').addClass('se-label').append('Description:'));
+    descriptionRow.append($$('td').addClass('se-value').append(
+      $$(TextPropertyEditor, {
+        path: [this.props.node.id, 'description'],
+        disabled: this.props.disabled
+      }).ref('descriptionEditor')
+    ));
+    table.append(descriptionRow);
+
+    el.append(table);
 
     return el;
   };
