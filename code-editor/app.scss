@@ -1,0 +1,26 @@
+$fa-font-path:  "../fonts" !default;
+@import '../node_modules/font-awesome/scss/font-awesome';
+@import '../node_modules/substance/styles/base/index';
+
+// Substance modules
+@import '../node_modules/substance/styles/components/_all';
+@import '../node_modules/substance/packages/_all';
+
+@import './script/_script';
+
+body {
+  overflow: hidden;
+}
+
+.sc-editor .sc-surface.body {
+  padding: 40px;
+
+  > * + * {
+    margin-bottom: 20px;
+  }
+
+  .sc-paragraph {
+    padding-bottom: 0px !important;
+  }
+
+}

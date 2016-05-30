@@ -9,6 +9,7 @@
     "lodash": "4.2.1"
   },
   "devDependencies": {
+    "ace-builds": "^1.2.2",
     "browserify": "^10.2.4",
     "express": "4.13.1",
     "font-awesome": "4.5.0",
