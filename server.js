@@ -22,6 +22,9 @@ server.serveJS(app, '/isolated-nodes/app.js', path.join(__dirname, 'isolated-nod
 server.serveStyles(app, '/tables/app.css', path.join(__dirname, 'tables', 'app.scss'));
 server.serveJS(app, '/tables/app.js', path.join(__dirname, 'tables', 'app.js'));
 
+server.serveStyles(app, '/macros/app.css', path.join(__dirname, 'macros', 'app.scss'));
+server.serveJS(app, '/macros/app.js', path.join(__dirname, 'macros', 'app.js'));
+
 // Serve static files
 app.use(express.static(path.join(__dirname)));
 app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome/fonts')));
