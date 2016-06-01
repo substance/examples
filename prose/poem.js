@@ -19,6 +19,13 @@ module.exports = function(tx) {
   body.show('h2');
 
   tx.create({
+    id: 'list-item1',
+    type: 'list-item',
+    content: "And, in parting from you now"
+  });
+  body.show('list-item1');
+
+  tx.create({
     id: 'p1',
     type: 'paragraph',
     content: [
