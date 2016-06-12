@@ -8,10 +8,11 @@ var DocumentEngine = require('substance/collab/DocumentEngine');
 var TestCollabServer = require('substance/test/collab/TestCollabServer');
 var WebWorkerServer = require('./WebWorkerServer');
 
-var twoParagraphs = require('substance/test/fixtures/collab/two-paragraphs');
-var documentStoreSeed = require('substance/test/fixtures/collab/documentStoreSeed');
-var changeStoreSeed = require('substance/test/fixtures/collab/changeStoreSeed');
-
+var createTestArticle = require('substance/test/fixtures/createTestArticle');
+var createTestDocumentFactory = require('substance/test/fixtures/createTestDocumentFactory');
+var twoParagraphs = require('substance/test/fixtures/twoParagraphs');
+var documentStoreSeed = require('substance/test/fixtures/documentStoreSeed');
+var changeStoreSeed = require('substance/test/fixtures/changeStoreSeed');
 
 function Hub() {
   this.documentStore = new DocumentStore().seed(documentStoreSeed);
@@ -24,7 +25,7 @@ function Hub() {
       'prose-article': {
         name: 'prose-article',
         version: '1.0.0',
-        documentFactory: twoParagraphs
+        documentFactory: createTestDocumentFactory(twoParagraphs)
       }
     }
   });

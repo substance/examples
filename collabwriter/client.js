@@ -8,9 +8,12 @@ var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
 var IFrameSocketConnection = require('./IFrameSocketConnection');
 var CollabClient = require('substance/collab/CollabClient');
 var TestCollabSession = require('substance/test/collab/TestCollabSession');
-var twoParagraphs = require('substance/test/fixtures/collab/two-paragraphs');
+var twoParagraphs = require('substance/test/fixtures/twoParagraphs');
+var createTestArticle = require('substance/test/fixtures/createTestArticle');
 var Surface = require('substance/ui/Surface');
 var ProseEditorPackage = require('substance/packages/prose-editor/ProseEditorPackage');
+var Configurator = require('substance/util/Configurator');
+var configurator = new Configurator(ProseEditorPackage);
 
 // this flag prevents competing updates of DOM selections
 // which is only necessary in this example, where we host two
@@ -47,8 +50,8 @@ Client.Prototype = function() {
     var el = $$('div').addClass('client');
 
     var editor = $$(ProseEditor, {
-      config: ProseEditorPackage,
-      documentSession: this.session
+      documentSession: this.session,
+      configurator: configurator,
     }).ref('editor');
 
     editor.outlet('tools').append(
@@ -162,7 +165,7 @@ window.onload = function() {
   var clientId = match[1];
   window.clientId = clientId;
 
-  var doc = twoParagraphs.createArticle();
+  var doc = createTestArticle(twoParagraphs);
   Client.static.mount({
     doc: doc,
     clientId: clientId
