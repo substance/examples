@@ -90,9 +90,6 @@ SessionDumpTool.Prototype = function() {
     return el;
   };
 
-  this.onClick = function() {
-    console.log('TODO: dump client messages');
-  };
 };
 
 Component.extend(SessionDumpTool);

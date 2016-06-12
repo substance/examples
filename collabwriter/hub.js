@@ -8,7 +8,6 @@ var DocumentEngine = require('substance/collab/DocumentEngine');
 var TestCollabServer = require('substance/test/collab/TestCollabServer');
 var WebWorkerServer = require('./WebWorkerServer');
 
-var createTestArticle = require('substance/test/fixtures/createTestArticle');
 var createTestDocumentFactory = require('substance/test/fixtures/createTestDocumentFactory');
 var twoParagraphs = require('substance/test/fixtures/twoParagraphs');
 var documentStoreSeed = require('substance/test/fixtures/documentStoreSeed');
@@ -52,10 +51,10 @@ oo.initClass(Hub);
 
 var hub = new Hub();
 
-onmessage = function(evt) {
+onmessage = function(evt) { // eslint-disable-line
   hub.wss._onMessage(evt.data);
 };
 
 hub.start();
 
-console.log('Started Hub');
+console.info('Started Hub');

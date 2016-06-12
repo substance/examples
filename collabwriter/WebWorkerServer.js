@@ -22,7 +22,7 @@ WebWorkerServer.Prototype = function() {
 
   this.disconnect = function() {
     this._onMessage = function() {
-      console.log('WebWorkerServer is not connected');
+      console.warn('WebWorkerServer is not connected');
     };
   };
 
