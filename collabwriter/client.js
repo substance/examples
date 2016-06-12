@@ -1,7 +1,5 @@
 'use strict';
 
-/*jshint latedef:nofunc */
-
 var Component = require('substance/ui/Component');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');

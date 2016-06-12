@@ -41,7 +41,6 @@ function Hub() {
 Hub.Prototype = function() {
 
   this.start = function() {
-    // Connect the collabServer
     this.collabServer.bind(this.wss);
   };
 
