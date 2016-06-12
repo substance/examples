@@ -46,6 +46,10 @@ function Client() {
 
 Client.Prototype = function() {
 
+  this.didMount = function() {
+    this.refs.editor.refs.body.selectFirst();
+  };
+
   this.render = function($$) {
     var el = $$('div').addClass('client');
 
