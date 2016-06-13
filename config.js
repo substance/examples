@@ -4,6 +4,7 @@ module.exports = {
   examples: [
     'code-editor',
     'collabwriter',
+    'container-annotation',
     'form',
     'focused',
     'images',
