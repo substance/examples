@@ -5,11 +5,11 @@ var Component = require('substance/ui/Component');
 var Configurator = require('substance/util/Configurator');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
 var ProseEditorPackage = require('substance/packages/prose-editor/ProseEditorPackage');
-var InputPackage = require('./input/InputPackage');
+var EntityPackage = require('./entity/EntityPackage');
 
-var fixture = require('./fixture');
 var configurator = new Configurator(ProseEditorPackage);
-configurator.import(InputPackage);
+configurator.import(EntityPackage);
+var fixture = require('./fixture');
 
 function App() {
   App.super.apply(this, arguments);
@@ -18,13 +18,14 @@ function App() {
   var documentSession = new DocumentSession(doc);
 
   this.documentSession = documentSession;
+  this.configurator = configurator;
 }
 
 App.Prototype = function() {
   this.render = function($$) {
     var el = $$('div').addClass('app');
     var editor = $$(ProseEditor, {
-      configurator: configurator,
+      configurator: this.configurator,
       documentSession: this.documentSession
     });
     el.append(editor);

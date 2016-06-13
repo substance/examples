@@ -13,7 +13,7 @@ server.serveJS(app, '/collabwriter/app.js', path.join(__dirname, 'collabwriter',
 server.serveJS(app, '/collabwriter/hub.js', path.join(__dirname, 'collabwriter', 'hub.js'));
 server.serveJS(app, '/collabwriter/client.js', path.join(__dirname, 'collabwriter', 'client.js'));
 
-['prose', 'input', 'tables'].forEach(function(folder) {
+['prose', 'input', 'form', 'tables'].forEach(function(folder) {
   server.serveStyles(app, '/'+folder+'/app.css', path.join(__dirname, folder, 'app.scss'));
   server.serveJS(app, '/'+folder+'/app.js', path.join(__dirname, folder, 'app.js'));
 });
