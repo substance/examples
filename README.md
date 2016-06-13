@@ -2,11 +2,6 @@
 
 Here you can find a number of examples that cover various Substance API's. If you are new to Substance, check them out in the following order:
 
-1. [note](note) - Implement a custom note document
-2. [converter](converter) - A simple HTML Importer and Exporter for notes
-3. [notepad](notepad) - Simple Notepad editor implementation
-
-
 ## Install
 
 You can start playing around with the code by cloning this repo and starting the dev server.
@@ -26,6 +21,22 @@ A static distribution of the demos can be created by running the bundle command.
 ```bash
 $ npm run bundle
 ```
+
+## Examples
+
+Our examples are based on Substance users' questions. The goal of this repository is to cover every Substance feature and demonstrate it based on simple code snippets.
+
+### How can I change the icon of a tool?
+
+The easiest way to do this is to extend the tool component and overwrite the `renderIcon` method.
+
+### How can I implement my own node type?
+
+There are different kinds of node types. See a, b, c.
+
+### How to create a modal dialog?
+
+TODO
 
 ## Questions
 
