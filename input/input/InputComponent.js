@@ -8,29 +8,53 @@ function InputComponent() {
 
 InputComponent.Prototype = function() {
 
-  var _super = InputComponent.super.prototype;
+  // Register for model side updates
+  this.didMount = function() {
+    this.props.node.on('content:changed', this.onContentChange, this);
+  };
+
+  // And please always deregister
+  this.dispose = function() {
+    this.props.node.off(this);
+  };
 
   this.render = function($$) {
     var el = $$('div').addClass('sc-input');
     var input = $$('input').ref('input')
-      .val(this.props.node.content);
+      .val(this.props.node.content)
+      .on('change', this.onChange);
+    // you should disable the input when the parent asks you to do so
     if (this.props.disabled) {
-      el.addClass('sm-disabled');
       input.attr('disabled', true);
-    } else {
-      el.addClass('sm-active');
     }
     el.append(input);
     return el;
   };
 
-  this.didUpdate = function(oldProps, oldState) {
-    console.log('InputComponent.didUpdate', oldProps, oldState);
-    var input = this.refs.input;
-    var inputEl = input.getNativeElement();
-    var val = inputEl.value;
-    inputEl.focus();
-    inputEl.setSelectionRange(val.length, val.length);
+  // focus the input when this gets enabled
+  this.didUpdate = function() {
+    if (!this.props.disabled) {
+      var input = this.refs.input;
+      var inputEl = input.getNativeElement();
+      var val = inputEl.value;
+      inputEl.focus();
+      inputEl.setSelectionRange(val.length, val.length);
+    }
+  };
+
+  // this is called when the input's content has been changed
+  this.onChange = function() {
+    var documentSession = this.context.documentSession;
+    var node = this.props.node;
+    var newVal = this.refs.input.val();
+    documentSession.transaction(function(tx) {
+      tx.set([node.id, 'content'], newVal);
+    });
+  };
+
+  // this is called when the model has changed, e.g. on undo/redo
+  this.onContentChange = function() {
+    this.refs.input.val(this.props.node.content);
   };
 
 };
