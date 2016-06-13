@@ -26,9 +26,9 @@ App.Prototype = function() {
     var el = $$('div').addClass('sc-two-editors');
     el.append(
       $$(SplitPane, {
-          splitType: 'vertical',
-          sizeA: '50%'
-        }).append(
+        splitType: 'vertical',
+        sizeA: '50%'
+      }).append(
         $$('iframe').attr('src', 'client.html?id=user1').ref('user1'),
         $$('iframe').attr('src', 'client.html?id=user2').ref('user2')
       )
@@ -52,6 +52,8 @@ App.Prototype = function() {
         // console.log('Sending message to user2');
         this.refs.user2.getNativeElement().contentWindow.postMessage(JSON.stringify(msg), '*');
         break;
+      default:
+        // nothing
     }
   };
 };

@@ -31,6 +31,7 @@ WebWorkerServerSocket.Prototype = function() {
       scope: 'substance/collab'
     };
     if (data) {
+      data.scope = 'substance/collab';
       msg.data = data;
     }
     postMessage([JSON.stringify(msg)]);

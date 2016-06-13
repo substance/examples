@@ -22,7 +22,7 @@ WebWorkerServer.Prototype = function() {
 
   this.disconnect = function() {
     this._onMessage = function() {
-      console.log('WebWorkerServer is not connected');
+      console.warn('WebWorkerServer is not connected');
     };
   };
 
@@ -39,20 +39,12 @@ WebWorkerServer.Prototype = function() {
     }
   };
 
-  /*
-    New websocket connection requested. Creates the server-side
-    counterpart of the websocket and registers it in the message
-    queue.
-  */
   this.handleConnectionRequest = function(clientId) {
     var sws = new WebWorkerServerSocket(this.serverId, clientId);
     this.clients[clientId] = sws;
     this.emit('connection', sws);
   };
 
-  /*
-    Disconnect an existing websocket
-  */
   this.handleDisconnectRequest = function(clientId) {
     var sws = this.clients[clientId];
     // Emit close event on websocket server

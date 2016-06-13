@@ -3,9 +3,6 @@
 var TestWebSocketConnection = require('substance/test/collab/TestWebSocketConnection');
 var IFrameSocket = require('./IFrameSocket');
 
-/*
-  Browser WebSocket abstraction. Handles reconnects etc.
-*/
 function IFrameSocketConnection() {
   IFrameSocketConnection.super.apply(this, arguments);
 }

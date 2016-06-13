@@ -1,25 +1,33 @@
 'use strict';
 
+var DocumentSession = require('substance/model/DocumentSession');
 var Component = require('substance/ui/Component');
 var Configurator = require('substance/util/Configurator');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
 var ProseEditorPackage = require('substance/packages/prose-editor/ProseEditorPackage');
+var InputPackage = require('./input/InputPackage');
 
-var poem = require('./poem');
-var DocumentSession = require('substance/model/DocumentSession');
+var fixture = require('./fixture');
 var configurator = new Configurator(ProseEditorPackage);
+configurator.import(InputPackage);
 
 function App() {
   App.super.apply(this, arguments);
+
+  var doc = configurator.createArticle(fixture);
+  var documentSession = new DocumentSession(doc);
+
+  this.documentSession = documentSession;
 }
 
 App.Prototype = function() {
   this.render = function($$) {
     var el = $$('div').addClass('app');
-    el.append($$(ProseEditor, {
-      documentSession: this.props.documentSession,
-      configurator: configurator
-    }));
+    var editor = $$(ProseEditor, {
+      configurator: configurator,
+      documentSession: this.documentSession
+    });
+    el.append(editor);
     return el;
   };
 };
@@ -27,15 +35,5 @@ App.Prototype = function() {
 Component.extend(App);
 
 window.onload = function() {
-  // Creates a ProseArticle based on the ProseEditorConfig
-  var doc = configurator.createArticle(poem);
-  var documentSession = new DocumentSession(doc);
-
-  // For debugging
-  window.doc = doc;
-  window.documentSession = documentSession;
-
-  Component.mount(App, {
-    documentSession: documentSession
-  }, 'body');
+  Component.mount(App, 'body');
 };

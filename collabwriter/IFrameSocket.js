@@ -47,12 +47,8 @@ IFrameSocket.Prototype = function() {
     window.top.postMessage(msg, '*');
   };
 
-  /**
-    Gets called by the message queue to handle a message
-  */
   this._onMessage = function(evt) {
     var msg = JSON.parse(evt.data);
-    // Handler must be provided by user
     this.onmessage(msg);
   };
 
