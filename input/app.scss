@@ -5,9 +5,7 @@ $fa-font-path:  "../fonts" !default;
 // Substance modules
 @import '../node_modules/substance/styles/components/_all';
 @import '../node_modules/substance/packages/_all';
-
 @import './input/_input';
-@import '../styles/_editor';
 
 body {
   overflow: hidden;
