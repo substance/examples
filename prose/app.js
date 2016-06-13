@@ -1,14 +1,13 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
 var Configurator = require('substance/util/Configurator');
+var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
+var ProseEditorPackage = require('substance/packages/prose-editor/ProseEditorPackage');
 
 var poem = require('./poem');
-var EditorConfig = require('./MyProseEditorConfig');
 var DocumentSession = require('substance/model/DocumentSession');
-var configurator = new Configurator();
-configurator.import(EditorConfig);
+var configurator = new Configurator(ProseEditorPackage);
 
 function App() {
   App.super.apply(this, arguments);
