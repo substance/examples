@@ -27,19 +27,9 @@ InputComponent.Prototype = function() {
     if (this.props.disabled) {
       input.attr('disabled', true);
     }
+
     el.append(input);
     return el;
-  };
-
-  // focus the input when this gets enabled
-  this.didUpdate = function() {
-    if (!this.props.disabled) {
-      var input = this.refs.input;
-      var inputEl = input.getNativeElement();
-      var val = inputEl.value;
-      inputEl.focus();
-      inputEl.setSelectionRange(val.length, val.length);
-    }
   };
 
   // this is called when the input's content has been changed

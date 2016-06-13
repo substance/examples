@@ -16,7 +16,7 @@ module.exports = function(tx) {
     id: 'intro',
     type: 'paragraph',
     content: [
-      "You can easily create a custom element with an HTML input element"
+      "You can use custom elements with an HTML input element"
     ].join('')
   });
   body.show('intro');
