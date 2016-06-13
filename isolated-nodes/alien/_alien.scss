@@ -1,0 +1,42 @@
+.sc-alien {
+  display: inline-block;
+  position: relative;
+
+  .se-overlay {
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+
+    // show only on hover
+    visibility: hidden;
+
+    // center content
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .se-controls {
+      background-color:rgba(0,0,0,0.5);
+      color: white;
+    }
+  }
+
+  &:hover > .se-overlay {
+    visibility: visible;
+  }
+
+  &.sm-angry img {
+    background-color: red
+  }
+
+  &.sm-excited img {
+    background-color: yellow
+  }
+
+  &.sm-sad img {
+    background-color: blue
+  }
+
+  &.sm-sick img {
+    background-color: green
+  }
+}
