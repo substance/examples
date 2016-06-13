@@ -6,6 +6,8 @@ $fa-font-path:  "../fonts" !default;
 @import '../node_modules/substance/styles/components/_all';
 @import '../node_modules/substance/packages/_all';
 
+@import '../styles/_editor';
+
 body {
   overflow: hidden;
 }
@@ -16,10 +18,6 @@ body {
   bottom: 0px;
   left: 0px;
   right: 0px;
-}
-
-.sc-editor .sc-surface {
-  padding: 20px;
 }
 
 .sc-editor.left-editor {

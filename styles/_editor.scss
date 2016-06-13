@@ -1,0 +1,11 @@
+body {
+  overflow: hidden;
+}
+
+.sc-editor .sc-surface.body {
+  padding: 40px;
+
+  > * + * {
+    padding-top: 20px
+  }
+}
