@@ -22,6 +22,19 @@ body {
   border-right: 1px solid #ccc;
 }
 
+.sc-client {
+  position: relative;
+
+  > .se-blocker {
+    position: absolute;
+    top: 0px; bottom: 0px; left: 0px; right: 0px;
+    background: white;
+    opacity: 0.5;
+    z-index: 1000;
+  }
+
+}
+
 
 .se-status {
   height: 30px;

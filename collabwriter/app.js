@@ -3,21 +3,63 @@
 
 var Component = require('substance/ui/Component');
 var SplitPane = require('substance/ui/SplitPane');
+var Client = require('./client');
+var twoParagraphs = require('substance/test/fixtures/twoParagraphs');
+
+var MessageQueue = require('substance/test/collab/MessageQueue');
+var TestWebSocketServer = require('substance/test/collab/TestWebSocketServer');
+var TestWebSocketConnection = require('substance/test/collab/TestWebSocketConnection');
+var TestCollabServer = require('substance/test/collab/TestCollabServer');
+
+var DocumentEngine = require('substance/collab/DocumentEngine');
+var DocumentStore = require('substance/collab/DocumentStore');
+var ChangeStore = require('substance/collab/ChangeStore');
+var documentStoreSeed = require('substance/test/fixtures/documentStoreSeed');
+var changeStoreSeed = require('substance/test/fixtures/changeStoreSeed');
+var createTestDocumentFactory = require('substance/test/fixtures/createTestDocumentFactory');
 
 function App() {
   App.super.apply(this, arguments);
 
-  // messages from clients
-  window.onmessage = function(msg) {
-    this.onMessage(msg.data);
-  }.bind(this);
+  this.documentStore = new DocumentStore().seed(documentStoreSeed);
+  this.changeStore = new ChangeStore().seed(changeStoreSeed);
+  this.documentEngine = new DocumentEngine({
+    documentStore: this.documentStore,
+    changeStore: this.changeStore,
+    schemas: {
+      'prose-article': {
+        name: 'prose-article',
+        version: '1.0.0',
+        documentFactory: createTestDocumentFactory(twoParagraphs)
+      }
+    }
+  });
 
-  this.hub = new Worker('hub.js');
-  // messages from server
-  this.hub.onmessage = function(e) {
-    this.onMessage(JSON.parse(e.data));
-  }.bind(this);
+  this.messageQueue = new MessageQueue();
+  this.wss = new TestWebSocketServer({
+    messageQueue: this.messageQueue,
+    serverId: 'hub'
+  });
+  this.collabServer = new TestCollabServer({
+    documentEngine: this.documentEngine
+  });
+  this.collabServer.bind(this.wss);
 
+  this.conn1 = new TestWebSocketConnection({
+    messageQueue: this.messageQueue,
+    clientId: 'user1',
+    serverId: 'hub',
+  });
+  this.conn2 = new TestWebSocketConnection({
+    messageQueue: this.messageQueue,
+    clientId: 'user2',
+    serverId: 'hub'
+  });
+
+  this.messageQueue.flush();
+  this.messageQueue.start();
+
+  this.handleAction('switchUser', this.switchUser);
 }
 
 App.Prototype = function() {
@@ -29,40 +71,38 @@ App.Prototype = function() {
         splitType: 'vertical',
         sizeA: '50%'
       }).append(
-        $$('iframe').attr('src', 'client.html?id=user1').ref('user1'),
-        $$('iframe').attr('src', 'client.html?id=user2').ref('user2')
+        $$(Client, {
+          userId: 'user1',
+          connection: this.conn1
+        }).ref('user1'),
+        $$(Client, {
+          userId: 'user2',
+          connection: this.conn2,
+          disabled: true
+        }).ref('user2')
       )
     );
     return el;
   };
 
-  this.onMessage = function(msg) {
-    // console.log('App.onMessage', msg);
-    var receiver = msg.to;
-    switch(receiver) {
-      case 'server':
-        // console.log('Sending message to hub');
-        this.hub.postMessage([msg]);
-        break;
-      case 'user1':
-        // console.log('Sending message to user1');
-        this.refs.user1.getNativeElement().contentWindow.postMessage(JSON.stringify(msg), '*');
-        break;
-      case 'user2':
-        // console.log('Sending message to user2');
-        this.refs.user2.getNativeElement().contentWindow.postMessage(JSON.stringify(msg), '*');
-        break;
-      default:
-        // nothing
+  // enables the editor for user1 and disables the other
+  // Note: being in one DOM it doesn't work to have two
+  // active editors at the same time
+  this.switchUser = function(userId) {
+    if (userId === 'user1') {
+      this.refs.user1.extendProps({ disabled: false });
+      this.refs.user2.extendProps({ disabled: true });
+    } else if (userId === 'user2') {
+      this.refs.user1.extendProps({ disabled: true });
+      this.refs.user2.extendProps({ disabled: false });
     }
   };
+
 };
 
 Component.extend(App);
 
 window.onload = function() {
   var app = new App();
-  setTimeout(function() {
-    app.mount(window.document.body);
-  }, 250);
+  app.mount(window.document.body);
 };

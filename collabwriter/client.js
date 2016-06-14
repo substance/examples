@@ -3,7 +3,6 @@
 var Component = require('substance/ui/Component');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var ProseEditor = require('substance/packages/prose-editor/ProseEditor');
-var IFrameSocketConnection = require('./IFrameSocketConnection');
 var CollabClient = require('substance/collab/CollabClient');
 var TestCollabSession = require('substance/test/collab/TestCollabSession');
 var twoParagraphs = require('substance/test/fixtures/twoParagraphs');
@@ -21,18 +20,20 @@ Surface.MULTIPLE_APPS_ON_PAGE = true;
 function Client() {
   Client.super.apply(this, arguments);
 
-  this.conn = new IFrameSocketConnection({
-    clientId: this.props.clientId,
-    serverId: 'server',
-    scope: 'substance/collab'
-  });
+  this.doc = createTestArticle(twoParagraphs);
+
+  if (!this.props.connection) {
+    throw new Error("'connection' is required.");
+  }
 
   this.collabClient = new CollabClient({
-    connection: this.conn
+    connection: this.props.connection
   });
 
+  this.doc = createTestArticle(twoParagraphs);
+
   // CollabSession expects a connected and authenticated collabClient
-  this.session = new TestCollabSession(this.props.doc, {
+  this.session = new TestCollabSession(this.doc, {
     collabClient: this.collabClient,
     documentId: 'test-doc',
     version: 1,
@@ -49,9 +50,10 @@ Client.Prototype = function() {
   };
 
   this.render = function($$) {
-    var el = $$('div').addClass('client');
+    var el = $$('div').addClass('sc-client').addClass('sm-'+this.props.userId);
 
     var editor = $$(ProseEditor, {
+      disabled: this.props.disabled,
       documentSession: this.session,
       configurator: configurator,
     }).ref('editor');
@@ -61,9 +63,22 @@ Client.Prototype = function() {
       $$(ToggleConnectionTool, { session: this.session })
     );
 
+    if (this.props.disabled) {
+      el.append(
+        $$('div').addClass('se-blocker')
+          .on('mousedown', this.onMousedown)
+      );
+    }
+
     el.append(editor);
 
     return el;
+  };
+
+  this.onMousedown = function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.send('switchUser', this.props.userId);
   };
 
 };
@@ -152,21 +167,4 @@ ToggleConnectionTool.Prototype = function() {
 
 Component.extend(ToggleConnectionTool);
 
-
-window.onload = function() {
-
-  var params = window.location.search;
-  var match = /id=(\w+)/.exec(params);
-
-  if (!match) {
-    throw new Error('Could not get user id.');
-  }
-  var clientId = match[1];
-  window.clientId = clientId;
-
-  var doc = createTestArticle(twoParagraphs);
-  Client.static.mount({
-    doc: doc,
-    clientId: clientId
-  }, window.document.body);
-};
+module.exports = Client;
