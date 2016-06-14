@@ -8,7 +8,7 @@ var through2 = require('through2');
 var rename = require('gulp-rename');
 var eslint = require('gulp-eslint');
 
-var demos = ['notepad', 'collabwriter', 'ghostwriter'];
+var demos = ['collabwriter', 'input', 'form', 'focused', 'tables', 'images', 'macros'];
 
 gulp.task('lint', function() {
   return gulp.src([
