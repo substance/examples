@@ -9,10 +9,8 @@ var server = require('substance/util/server');
 
 server.serveStyles(app, '/collabwriter/app.css', path.join(__dirname, 'collabwriter', 'app.scss'));
 server.serveJS(app, '/collabwriter/app.js', path.join(__dirname, 'collabwriter', 'app.js'));
-server.serveJS(app, '/collabwriter/hub.js', path.join(__dirname, 'collabwriter', 'hub.js'));
-server.serveJS(app, '/collabwriter/client.js', path.join(__dirname, 'collabwriter', 'client.js'));
 
-['embeds','images', 'input', 'macros', 'form', 'focused', 'tables'].forEach(function(folder) {
+['collabwriter', 'images', 'input', 'macros', 'form', 'focused', 'tables'].forEach(function(folder) {
   server.serveStyles(app, '/'+folder+'/app.css', path.join(__dirname, folder, 'app.scss'));
   server.serveJS(app, '/'+folder+'/app.js', path.join(__dirname, folder, 'app.js'));
 });
