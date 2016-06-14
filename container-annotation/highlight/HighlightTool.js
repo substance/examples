@@ -1,12 +1,12 @@
 'use strict';
 
-var AnnotationTool = require('../../ui/AnnotationTool');
+var AnnotationTool = require('substance/ui/AnnotationTool');
 
 function HighlightTool() {
   HighlightTool.super.apply(this, arguments);
 }
 AnnotationTool.extend(HighlightTool);
 
-HighlightTool.static.name = 'higlight';
+HighlightTool.static.name = 'highlight';
 
 module.exports = HighlightTool;
