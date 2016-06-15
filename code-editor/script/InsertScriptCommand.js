@@ -11,7 +11,7 @@ InsertScriptCommand.Prototype = function() {
   this.createNodeData = function() {
     return {
       type: 'script',
-      language: 'js',
+      language: 'javascript',
       content: ''
     };
   };

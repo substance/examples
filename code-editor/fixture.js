@@ -23,7 +23,7 @@ module.exports = function(tx) {
   tx.create({
     id: 's1',
     type: 'script',
-    language: 'js',
+    language: 'javascript',
     source: [
       "function hello_world() {",
       "  alert('Hello World!');",

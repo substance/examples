@@ -11,16 +11,3 @@ $fa-font-path:  "../fonts" !default;
 body {
   overflow: hidden;
 }
-
-.sc-editor .sc-surface.body {
-  padding: 40px;
-
-  > * + * {
-    margin-bottom: 20px;
-  }
-
-  .sc-paragraph {
-    padding-bottom: 0px !important;
-  }
-
-}
