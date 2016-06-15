@@ -6,7 +6,7 @@ module.exports = function(tx) {
   tx.create({
     id: 'p1',
     type: 'paragraph',
-    content: "Insert new image using the image tool"
+    content: "Insert a new image using the image tool."
   });
   body.show('p1');
 
