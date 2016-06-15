@@ -32,7 +32,7 @@ module.exports = function(tx) {
     id: 'the-end',
     type: 'paragraph',
     content: [
-     "That's it."
+     "That way you can implement editor functionality using class web development practices."
     ].join('')
   });
   body.show('the-end');
