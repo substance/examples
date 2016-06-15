@@ -1,11 +1,6 @@
 # Substance Examples
 
-Here you can find a number of examples that cover various Substance API's. If you are new to Substance, check them out in the following order:
-
-1. [note](note) - Implement a custom note document
-2. [converter](converter) - A simple HTML Importer and Exporter for notes
-3. [notepad](notepad) - Simple Notepad editor implementation
-
+Here you can find a number of examples that cover various Substance API's.
 
 ## Install
 
@@ -26,6 +21,7 @@ A static distribution of the demos can be created by running the bundle command.
 ```bash
 $ npm run bundle
 ```
+
 
 ## Questions
 

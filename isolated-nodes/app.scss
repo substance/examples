@@ -1,0 +1,23 @@
+$fa-font-path:  "../fonts" !default;
+@import '../node_modules/font-awesome/scss/font-awesome';
+@import '../node_modules/substance/styles/base/index';
+
+// Substance modules
+@import '../node_modules/substance/styles/components/_all';
+@import '../node_modules/substance/packages/_all';
+
+@import './alien/_alien';
+@import './entity/_entity';
+@import './input/_input';
+@import './inline-entity/_inline-entity';
+@import './container/_container';
+
+body {
+  overflow: hidden;
+}
+
+.sc-nested-surface > .se-container {
+  border-left: 1px solid #999;
+  padding-left: 20px;
+  padding-right: 20px;
+}

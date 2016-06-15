@@ -1,0 +1,14 @@
+.sc-inline-entity {
+  background: #ccc;
+  vertical-align: super;
+  font-size: x-small;
+
+  > .sc-modal .se-modal-buttons {
+    background: transparent;
+    font-size: large;
+
+    > button.sm-close {
+      float: right;
+    }
+  }
+}
