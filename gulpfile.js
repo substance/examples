@@ -8,7 +8,7 @@ var through2 = require('through2');
 var rename = require('gulp-rename');
 var eslint = require('gulp-eslint');
 
-var demos = ['code-editor', 'collabwriter', 'input', 'form', 'focused', 'tables', 'images', 'macros'];
+var demos = ['code-editor', 'collabwriter', 'form', 'focused', 'input', 'images', 'macros', 'nested', 'tables'];
 
 gulp.task('lint', function() {
   return gulp.src([
