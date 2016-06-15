@@ -8,7 +8,7 @@ var through2 = require('through2');
 var rename = require('gulp-rename');
 var eslint = require('gulp-eslint');
 
-var demos = ['collabwriter', 'input', 'form', 'focused', 'tables', 'images', 'macros'];
+var demos = ['code-editor', 'collabwriter', 'input', 'form', 'focused', 'tables', 'images', 'macros'];
 
 gulp.task('lint', function() {
   return gulp.src([
@@ -25,6 +25,10 @@ gulp.task('assets', function () {
   });
   gulp.src('index.html')
         .pipe(gulp.dest('dist'));
+  gulp.src('node_modules/font-awesome/fonts/*')
+    .pipe(gulp.dest('./dist/fonts'));
+  gulp.src('node_modules/ace-builds/src-min/*')
+    .pipe(gulp.dest('./dist/ace'));
 });
 
 gulp.task('sass', function() {
@@ -34,9 +38,6 @@ gulp.task('sass', function() {
       .pipe(rename('app.css'))
       .pipe(gulp.dest('./dist/'+demoFolder));
   });
-
-  gulp.src('node_modules/font-awesome/fonts/*')
-    .pipe(gulp.dest('./dist/fonts'));
 });
 
 gulp.task('browserify', function() {
