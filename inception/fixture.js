@@ -16,10 +16,19 @@ module.exports = function(tx) {
     id: 'intro',
     type: 'paragraph',
     content: [
-      "This is way too crazy."
+      "In this document there is one node which is displaying the document's content itself again",
+      "up to a certain level where it ends with -- The Terminator."
     ].join(' ')
   });
   body.show('intro');
+
+  tx.create({
+    id: 'p1',
+    type: 'paragraph',
+    content: [
+      "This is way too crazy."
+    ].join(' ')
+  });
 
   tx.create({
     id: 'inception',
