@@ -8,7 +8,7 @@ module.exports = function(tx) {
     id: 'title',
     type: 'heading',
     level: 1,
-    content: 'Inline Image'
+    content: 'Inline Nodes'
   });
   body.show('title');
 
