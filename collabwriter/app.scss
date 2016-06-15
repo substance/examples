@@ -18,6 +18,11 @@ body {
   right: 0px;
 }
 
+.sc-prose-editor-toolbar {
+  overflow: hidden;
+  height: 40px;
+}
+
 .sc-editor.left-editor {
   border-right: 1px solid #ccc;
 }
@@ -29,10 +34,9 @@ body {
     position: absolute;
     top: 0px; bottom: 0px; left: 0px; right: 0px;
     background: white;
-    opacity: 0.5;
+    opacity: 0.2;
     z-index: 1000;
   }
-
 }
 
 

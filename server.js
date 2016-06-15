@@ -6,8 +6,9 @@ var path = require('path');
 var app = express();
 var port = process.env.PORT || 5000;
 var server = require('substance/util/server');
+var config = require('./config');
 
-['code-editor', 'collabwriter', 'form', 'focused', 'images', 'inception', 'input', 'macros', 'nested', 'tables'].forEach(function(folder) {
+config.examples.forEach(function(folder) {
   server.serveStyles(app, '/'+folder+'/app.css', path.join(__dirname, folder, 'app.scss'));
   server.serveJS(app, '/'+folder+'/app.js', path.join(__dirname, folder, 'app.js'));
 });

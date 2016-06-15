@@ -7,8 +7,7 @@ var uglify = require('gulp-uglify');
 var through2 = require('through2');
 var rename = require('gulp-rename');
 var eslint = require('gulp-eslint');
-
-var demos = ['code-editor', 'collabwriter', 'form', 'focused', 'input', 'inception', 'images', 'macros', 'nested', 'tables'];
+var config = require('./config');
 
 gulp.task('lint', function() {
   return gulp.src([
@@ -19,7 +18,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('assets', function () {
-  demos.forEach(function(demoFolder) {
+  config.examples.forEach(function(demoFolder) {
     gulp.src(demoFolder+'/index.html')
           .pipe(gulp.dest('dist/'+demoFolder));
   });
@@ -32,7 +31,7 @@ gulp.task('assets', function () {
 });
 
 gulp.task('sass', function() {
-  demos.forEach(function(demoFolder) {
+  config.examples.forEach(function(demoFolder) {
     gulp.src('./'+demoFolder+'/app.scss')
       .pipe(sass().on('error', sass.logError))
       .pipe(rename('app.css'))
@@ -41,7 +40,7 @@ gulp.task('sass', function() {
 });
 
 gulp.task('browserify', function() {
-    demos.forEach(function(demoFolder) {
+    config.examples.forEach(function(demoFolder) {
       gulp.src('./'+demoFolder+'/app.js')
         .pipe(through2.obj(function (file, enc, next) {
             browserify(file.path)
@@ -58,7 +57,6 @@ gulp.task('browserify', function() {
         .pipe(uglify().on('error', function(err){console.log(err); }))
         .pipe(gulp.dest('./dist/'+demoFolder));
     });
-
 });
 
 gulp.task('default', ['assets', 'sass', 'browserify']);
