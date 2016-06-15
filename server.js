@@ -10,7 +10,7 @@ var server = require('substance/util/server');
 server.serveStyles(app, '/collabwriter/app.css', path.join(__dirname, 'collabwriter', 'app.scss'));
 server.serveJS(app, '/collabwriter/app.js', path.join(__dirname, 'collabwriter', 'app.js'));
 
-['collabwriter', 'images', 'input', 'macros', 'form', 'focused', 'tables'].forEach(function(folder) {
+['code-editor', 'collabwriter', 'images', 'input', 'macros', 'form', 'focused', 'tables'].forEach(function(folder) {
   server.serveStyles(app, '/'+folder+'/app.css', path.join(__dirname, folder, 'app.scss'));
   server.serveJS(app, '/'+folder+'/app.js', path.join(__dirname, folder, 'app.js'));
 });
@@ -18,6 +18,10 @@ server.serveJS(app, '/collabwriter/app.js', path.join(__dirname, 'collabwriter',
 // Serve static files
 app.use(express.static(path.join(__dirname)));
 app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome/fonts')));
+
+// for the code-editor example
+app.use('/ace', express.static(path.join(__dirname, 'node_modules/ace-builds/src')));
+
 
 app.listen(port, function() {
   console.log("Substance Examples running on port " + port);
