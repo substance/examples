@@ -13,5 +13,6 @@ module.exports = {
     config.addCommand(InsertScriptCommand);
     config.addTool(InsertScriptTool);
     config.addIcon(InsertScriptCommand.static.name, { 'fontawesome': 'fa-code' });
+    code.addLabel('script', 'Source Code');
   }
 };

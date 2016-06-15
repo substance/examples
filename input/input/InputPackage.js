@@ -8,5 +8,6 @@ module.exports = {
   configure: function(config) {
     config.addNode(InputNode);
     config.addComponent(InputNode.static.name, InputComponent);
+    config.addLabel('input', 'Input');
   }
 };
