@@ -1,5 +1,6 @@
-var ProseEditorPackage = require('substance/packages/prose-editor/ProseEditorPackage');
+'use strict';
 
+var ProseEditorPackage = require('substance/packages/prose-editor/ProseEditorPackage');
 // Look inside ListMacro.js in Substance to learn how macros are written.
 var ListMacro = require('substance/packages/list/ListMacro');
 
