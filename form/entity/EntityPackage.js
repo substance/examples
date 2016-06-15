@@ -13,5 +13,9 @@ module.exports = {
     config.addCommand(InsertEntityCommand);
     config.addTool(InsertEntityTool);
     config.addIcon(InsertEntityCommand.static.name, { 'fontawesome': 'fa-space-shuttle' });
+
+    config.addLabel('entity', 'Entity');
+    config.addLabel('entity.name', 'Name');
+    config.addLabel('entity.description', 'Description');
   }
 };
