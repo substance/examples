@@ -8,7 +8,7 @@ module.exports = function(tx) {
     id: 'title',
     type: 'heading',
     level: 1,
-    content: 'Form Element'
+    content: 'Embedded Forms'
   });
   body.show('title');
 
