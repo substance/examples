@@ -22,39 +22,31 @@ module.exports = function(tx) {
   });
   body.show('intro');
 
-  tx.create({id: 't1_1_1',type: 'paragraph', content: 'Lorem'});
-  tx.create({id: 't1_1_2',type: 'paragraph', content: 'ipsum'});
-  tx.create({id: 't1_1_3',type: 'paragraph', content: 'dolor'});
-  tx.create({id: 't1_1_4',type: 'paragraph', content: 'sit'});
-  tx.create({id: 't1_1_5',type: 'paragraph', content: 'amet'});
+  var loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis facilisis et nisi consequat gravida. Vestibulum non lobortis dui. Proin eu orci justo. Maecenas in sapien blandit tortor congue tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus sed suscipit lorem, non ornare dui. Aenean ornare augue vel augue mattis tempor sed sed sem.".split(' ');
 
-  tx.create({id: 't1_2_1',type: 'paragraph', content: 'Foo'});
-  tx.create({id: 't1_2_2',type: 'paragraph', content: ''});
-  tx.create({id: 't1_2_3',type: 'paragraph', content: ''});
-  tx.create({id: 't1_2_4',type: 'paragraph', content: ''});
-  tx.create({id: 't1_2_5',type: 'paragraph', content: ''});
-
-  tx.create({id: 't1_3_1',type: 'paragraph', content: 'Bar'});
-  tx.create({id: 't1_3_2',type: 'paragraph', content: 'Bla'});
-  tx.create({id: 't1_3_3',type: 'paragraph', content: ''});
-  tx.create({id: 't1_3_4',type: 'paragraph', content: ''});
-  tx.create({id: 't1_3_5',type: 'paragraph', content: ''});
-
-  tx.create({id: 't1_4_1',type: 'paragraph', content: ''});
-  tx.create({id: 't1_4_2',type: 'paragraph', content: 'Blupp'});
-  tx.create({id: 't1_4_3',type: 'paragraph', content: ''});
-  tx.create({id: 't1_4_4',type: 'paragraph', content: ''});
-  tx.create({id: 't1_4_5',type: 'paragraph', content: ''});
+  var rows = 4;
+  var cols = 5;
+  var cells = [];
+  var pos = 0;
+  var tableId = 't1';
+  for (var i=0; i<rows; i++) {
+    var row = [];
+    for (var j=0; j<cols; j++) {
+      var cellId = [tableId, i, j].join('_');
+      var cellContent = tx.create({
+        id: cellId,
+        type: 'paragraph',
+        content: loremIpsum[pos++]
+      });
+      row.push(cellId);
+    }
+    cells.push(row);
+  }
 
   tx.create({
     id: 't1',
     type: 'table',
-    cells: [
-      [{content:'t1_1_1'}, {content:'t1_1_2'}, {content:'t1_1_3'}, {content:'t1_1_4'}, {content:'t1_1_5'}],
-      [{content:'t1_2_1'}, {content:'t1_2_2'}, {content:'t1_2_3'}, {content:'t1_2_4'}, {content:'t1_2_5'}],
-      [{content:'t1_3_1'}, {content:'t1_3_2'}, {content:'t1_3_3'}, {content:'t1_3_4'}, {content:'t1_3_5'} ],
-      [{content:'t1_4_1'}, {content:'t1_4_2'}, {content:'t1_4_3'}, {content:'t1_4_4'}, {content:'t1_4_5'} ]
-    ]
+    cells: cells
   });
   body.show('t1');
 
