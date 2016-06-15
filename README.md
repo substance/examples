@@ -1,6 +1,6 @@
 # Substance Examples
 
-Here you can find a number of examples that cover various Substance API's. If you are new to Substance, check them out in the following order:
+Here you can find a number of examples that cover various Substance API's.
 
 ## Install
 
