@@ -13,8 +13,6 @@ ContainerComponent.Prototype = function() {
     var el = $$('div').addClass('sc-container');
     el.append(
       $$(ContainerEditor, {
-        name: this.props.node.id,
-        containerId: this.props.node.id,
         node: this.props.node
       }).ref('editor')
     );
