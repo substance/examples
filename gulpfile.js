@@ -17,7 +17,7 @@ gulp.task('lint', function() {
     .pipe(eslint.failAfterError());
 });
 
-gulp.task('assets', function () {
+gulp.task('assets', function() {
   config.examples.forEach(function(demoFolder) {
     gulp.src(demoFolder+'/index.html')
           .pipe(gulp.dest('dist/'+demoFolder));
@@ -28,6 +28,22 @@ gulp.task('assets', function () {
     .pipe(gulp.dest('./dist/fonts'));
   gulp.src('node_modules/ace-builds/src-min/*')
     .pipe(gulp.dest('./dist/ace'));
+
+  // focused example has some assets
+  gulp.src('focused/alien/alien.svg')
+    .pipe(gulp.dest('./dist/focused/alien'));
+
+  // inline-nodes example has some assets
+  gulp.src('inline-nodes/inline-image/smile.png')
+    .pipe(gulp.dest('./dist/inline-nodes/inline-image'));
+  gulp.src('inline-nodes/inline-image/shipit.png')
+    .pipe(gulp.dest('./dist/inline-nodes/inline-image'));
+  gulp.src('inline-nodes/inline-image/michael.jpg')
+    .pipe(gulp.dest('./dist/inline-nodes/inline-image'));
+  gulp.src('inline-nodes/inline-image/oliver.jpg')
+    .pipe(gulp.dest('./dist/inline-nodes/inline-image'));
+  gulp.src('inline-nodes/inline-image/daniel.jpg')
+    .pipe(gulp.dest('./dist/inline-nodes/inline-image'));
 });
 
 gulp.task('sass', function() {
