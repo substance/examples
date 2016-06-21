@@ -159,4 +159,48 @@ module.exports = function(tx) {
     expressionId: 'target-year'
   });
   body.show('p2');
+
+  tx.create({
+    id: 'notes',
+    type: 'heading',
+    level: 2,
+    content: 'Notes'
+  });
+  body.show('notes');
+  tx.create({
+    id: 'note1',
+    type: 'paragraph',
+    content: [
+      "This is Work-In-Progress. At the current state the example demonstrates",
+      "that expressions can be used symbolically in other expressions (red color).",
+      "Some expressions (green color) can be changed by the user updating the value of",
+      "all dependent expressions.",
+    ].join(' ')
+  });
+  body.show('note1');
+
+
+  tx.create({
+    id: 'links',
+    type: 'heading',
+    level: 2,
+    content: 'Links'
+  });
+  body.show('links');
+  tx.create({
+    id: 'link1',
+    type: 'list-item',
+    content: [
+      "http://worrydream.com/ClimateChange/#tools"
+    ].join(' ')
+  });
+  body.show('link1');
+  tx.create({
+    id: 'link2',
+    type: 'list-item',
+    content: [
+      "http://worrydream.com/Tangle"
+    ].join(' ')
+  });
+  body.show('link2');
 };
