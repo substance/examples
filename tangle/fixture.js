@@ -132,6 +132,7 @@ module.exports = function(tx) {
     startOffset: 52,
     endOffset: 53,
     value: 'Math.pow(10, Math.log10($/$)/($-2016))-1.0',
+    units: '%',
     showSource: false
   });
   tx.create({
