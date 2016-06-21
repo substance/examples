@@ -9,6 +9,14 @@ function Expression() {
 
 Expression.Prototype = function() {
 
+  this.getValue = function() {
+    if (this.hasOwnProperty('_preliminaryValue')) {
+      return this._preliminaryValue;
+    } else {
+      return this.value;
+    }
+  }
+
   this.getDisplayValue = function() {
     var value = this.getEvaluatedValue();
     if (this.units) {
@@ -39,10 +47,10 @@ Expression.Prototype = function() {
           }
         }
       });
-      fragmenter.start(null, this.value, annotations);
+      fragmenter.start(null, this.getValue(), annotations);
       unfoldedExpression = parts.join('');
     } else {
-      unfoldedExpression = String(this.value);
+      unfoldedExpression = String(this.getValue());
     }
 
     var result;
@@ -69,7 +77,7 @@ Expression.static.defineSchema({
   value: { type: 'string', default: ' ' },
   showSource: { type: 'boolean', default: true },
   units: { type: 'string', optional: true },
-  constant: { type: 'boolean', optional: true }
+  variable: { type: 'boolean', optional: true }
 });
 
 Expression.UNITS = {

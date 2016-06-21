@@ -54,7 +54,6 @@ module.exports = function(tx) {
     endOffset: 20,
     value: '17000000000000',
     units: 'TW',
-    constant: true,
     showSource: false
   });
 
@@ -66,7 +65,6 @@ module.exports = function(tx) {
     endOffset: 42,
     value: '178000000000',
     units: 'GW',
-    constant: true,
     showSource: false
   });
 
@@ -78,7 +76,6 @@ module.exports = function(tx) {
     endOffset: 48,
     value: '$ / $',
     units: '%',
-    constant: true,
     showSource: false
   });
   tx.create({
@@ -114,6 +111,7 @@ module.exports = function(tx) {
     endOffset: 10,
     value: '1.0',
     units: '%',
+    variable: true,
     showSource: false
   });
   tx.create({
@@ -123,6 +121,7 @@ module.exports = function(tx) {
     startOffset: 27,
     endOffset: 28,
     value: '2050',
+    variable: true,
     showSource: false
   });
   tx.create({

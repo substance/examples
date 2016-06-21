@@ -24,6 +24,11 @@
   &.sm-inline {
     color: rgba(blue, 0.8);
     font-style: italic;
+
+    &.sm-variable {
+      color: rgba(green, 0.8);
+    }
   }
+
 
 }
