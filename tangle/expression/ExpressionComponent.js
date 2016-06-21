@@ -13,13 +13,17 @@ ExpressionComponent.Prototype = function() {
 
   this.didMount = function() {
     _super.didMount.call(this);
-    this.props.node.on('value:changed', this.rerender, this);
-    this.props.node.on('showSource:changed', this.rerender, this);
+    var node = this.props.node;
+    node.on('value:changed', this.rerender, this);
+    node.on('showSource:changed', this.rerender, this);
+    node.getDocument().on('expression:update', this.rerender, this);
   };
 
   this.dispose = function() {
     _super.dispose.call(this);
-    this.props.node.off(this);
+    var node = this.props.node;
+    node.off(this);
+    node.getDocument().off(this);
   };
 
   this.render = function($$) { // eslint-disable-line
@@ -37,6 +41,9 @@ ExpressionComponent.Prototype = function() {
       );
     } else {
       el.addClass('sm-inline');
+      if (node.variable) {
+        el.addClass('sm-variable');
+      }
     }
     return el;
   };
@@ -60,7 +67,6 @@ ExpressionComponent.Prototype = function() {
   };
 
   this.confirmValue = function() {
-    console.log('WAD')
     var node = this.props.node;
     this.context.documentSession.transaction(function(tx) {
       tx.set([node.id, 'showSource'], false);

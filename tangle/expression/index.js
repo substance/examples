@@ -17,5 +17,6 @@ module.exports = {
     config.addTool(EditExpressionTool, { overlay: true });
     config.addIcon('edit-value', { 'fontawesome': 'fa-edit' });
     config.addIcon('confirm-value', { 'fontawesome': 'fa-check' });
+    config.addIcon('drag-value', { 'fontawesome': ' fa-arrows-h' });
   }
 };
