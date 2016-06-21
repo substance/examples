@@ -32,11 +32,11 @@ EditExpressionTool.Prototype = function() {
   };
 
   this._onToggle = function() {
-    var inplace = !this.props.node.inplace;
+    var showSource = !this.props.node.showSource;
     var node = this.props.node;
     var ds = this.context.documentSession;
     var sel;
-    if (inplace) {
+    if (showSource) {
       sel = ds.createSelection({
         type: 'property',
         path: [node.id, 'value'],
@@ -46,7 +46,7 @@ EditExpressionTool.Prototype = function() {
       sel = node.getSelection();
     }
     ds.transaction(function(tx) {
-      tx.set([node.id, 'inplace'], inplace);
+      tx.set([node.id, 'showSource'], showSource);
       return { selection: sel };
     });
   };

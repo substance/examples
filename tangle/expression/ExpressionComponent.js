@@ -14,7 +14,7 @@ ExpressionComponent.Prototype = function() {
   this.didMount = function() {
     _super.didMount.call(this);
     this.props.node.on('value:changed', this.rerender, this);
-    this.props.node.on('inplace:changed', this.rerender, this);
+    this.props.node.on('showSource:changed', this.rerender, this);
   };
 
   this.dispose = function() {
@@ -26,8 +26,15 @@ ExpressionComponent.Prototype = function() {
     var node = this.props.node;
     var el = _super.render.apply(this, arguments);
     el.addClass('sc-expression');
-    if (node.inplace) {
-      el.addClass('sm-inplace');
+    if (node.showSource) {
+      el.addClass('sm-show-source');
+      el.append(
+        $$('button')
+          .addClass('se-confirm-value')
+          .attr('contenteditable', false)
+          .append(this.context.iconProvider.renderIcon($$, 'confirm-value'))
+          .on('mousedown', this.confirmValue)
+      );
     } else {
       el.addClass('sm-inline');
     }
@@ -37,7 +44,7 @@ ExpressionComponent.Prototype = function() {
   this.renderContent = function($$) {
     var el;
     var node = this.props.node;
-    if (node.inplace) {
+    if (node.showSource) {
       el = $$(TextPropertyEditor, {
         disabled: this.props.disabled,
         tagName: 'span',
@@ -50,6 +57,18 @@ ExpressionComponent.Prototype = function() {
       );
     }
     return el;
+  };
+
+  this.confirmValue = function() {
+    console.log('WAD')
+    var node = this.props.node;
+    this.context.documentSession.transaction(function(tx) {
+      tx.set([node.id, 'showSource'], false);
+      return {
+        // TODO: why is this still selecting the whole node?
+        selection: node.getSelection().collapse('left')
+      };
+    });
   };
 
 };

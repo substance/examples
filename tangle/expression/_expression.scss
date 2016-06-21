@@ -4,7 +4,11 @@
     padding: 3px 4px;
   }
 
-  &.sm-inplace {
+  > .se-confirm-value {
+    display: inline;
+  }
+
+  &.sm-show-source {
 
     &::before {
       content: "[";

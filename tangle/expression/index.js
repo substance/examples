@@ -16,5 +16,6 @@ module.exports = {
     config.addIcon(ExpressionCommand.static.name, { 'fontawesome': 'fa-cube' });
     config.addTool(EditExpressionTool, { overlay: true });
     config.addIcon('edit-value', { 'fontawesome': 'fa-edit' });
+    config.addIcon('confirm-value', { 'fontawesome': 'fa-check' });
   }
 };
