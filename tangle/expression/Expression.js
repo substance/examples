@@ -14,6 +14,8 @@ Expression.Prototype = function() {
     if (this.units) {
       var factor = Expression.UNITS[this.units];
       value /= factor;
+      // round to 2-digits
+      value = Math.round(value*100)/100;
       value = [value, this.units].join(' ');
     }
     return String(value);
