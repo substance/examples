@@ -31,5 +31,9 @@
     }
   }
 
+  &.sm-highlighted {
+    outline: 2px dashed rgba(brown, 0.4);
+    background: rgba(brown, 0.1);
+  }
 
 }

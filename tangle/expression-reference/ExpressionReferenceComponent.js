@@ -19,9 +19,20 @@ ExpressionReferenceComponent.Prototype = function() {
 
   this.renderContent = function($$) {
     var node = this.props.node;
-    var doc = node.getDocument();
-    var expressionNode = doc.get(node.expressionId);
+    var expressionNode = node.getExpressionNode();
     return $$('span').append(expressionNode.getDisplayValue());
+  };
+
+  this.setState = function(newState) {
+    _super.setState.apply(this, arguments);
+    var expressionNode = this.props.node.getExpressionNode();
+    if (newState.mode === 'selected') {
+      expressionNode.highlighted = true;
+      expressionNode.emit('highlighted:changed');
+    } else if (expressionNode.highlighted) {
+      expressionNode.highlighted = false;
+      expressionNode.emit('highlighted:changed');
+    }
   };
 
 };
