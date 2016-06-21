@@ -11,7 +11,9 @@ ExpressionReference.Prototype = function() {
   this.getEvaluatedValue = function() {
     var doc = this.getDocument();
     var expressionNode = doc.get(this.expressionId);
-    return expressionNode.getEvaluatedValue();
+    if (expressionNode) {
+      return expressionNode.getEvaluatedValue();
+    }
   };
 
 };
