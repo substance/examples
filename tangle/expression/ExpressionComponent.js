@@ -16,6 +16,7 @@ ExpressionComponent.Prototype = function() {
     var node = this.props.node;
     node.on('value:changed', this.rerender, this);
     node.on('showSource:changed', this.rerender, this);
+    node.on('highlighted:changed', this.rerender, this);
     node.getDocument().on('expression:update', this.rerender, this);
   };
 
@@ -44,6 +45,9 @@ ExpressionComponent.Prototype = function() {
       if (node.variable) {
         el.addClass('sm-variable');
       }
+    }
+    if (node.highlighted) {
+      el.addClass('sm-highlighted');
     }
     return el;
   };

@@ -9,11 +9,14 @@ function ExpressionReference() {
 ExpressionReference.Prototype = function() {
 
   this.getEvaluatedValue = function() {
-    var doc = this.getDocument();
-    var expressionNode = doc.get(this.expressionId);
+    var expressionNode = this.getExpressionNode();
     if (expressionNode) {
       return expressionNode.getEvaluatedValue();
     }
+  };
+
+  this.getExpressionNode = function() {
+    return this.getDocument().get(this.expressionId);
   };
 
 };
