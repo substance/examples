@@ -11,5 +11,6 @@ module.exports = {
     config.addCommand(InsertContainerCommand);
     config.addTool(InsertContainerTool);
     config.addIcon(InsertContainerTool.static.name, { 'fontawesome': 'fa-align-justify' });
+    config.addStyle(__dirname+'/_container.scss');
   }
 };

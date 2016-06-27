@@ -11,6 +11,7 @@ module.exports = {
     config.addNode(AlienNode);
     config.addComponent(AlienNode.static.name, AlienComponent);
     config.addCommand(InsertAlienCommand);
+    config.addStyle(__dirname + '/_alien.scss');
     config.addTool(InsertAlienTool);
   }
 };
