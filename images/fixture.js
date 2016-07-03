@@ -11,6 +11,13 @@ module.exports = function(tx) {
   body.show('p1');
 
   tx.create({
+    id: 'i1',
+    type: 'image',
+    src: "http://substance.io/images/stencila.gif"
+  });
+  body.show('i1');
+
+  tx.create({
     id: 'p2',
     type: 'paragraph',
     content: "Please note that images are not actually uploaded in this example. You would need to provide a custom file client that talks to an image store. See FileClientStub which reveals the API you have to implement."
