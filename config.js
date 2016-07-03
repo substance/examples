@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  examples: ['inline-nodes', 'code-editor', 'collabwriter', 'form', 'focused', 'images', 'inception', 'input', 'macros', 'nested', 'tables']
+  examples: ['code-editor', 'collabwriter', 'form', 'focused', 'images', 'inception', 'inline-nodes', 'inline-property', 'input', 'macros', 'nested', 'tables']
 };
