@@ -8,5 +8,6 @@ module.exports = {
   configure: function(config) {
     config.addNode(RecursiveNode);
     config.addComponent(RecursiveNode.static.name, RecursiveComponent);
+    config.addStyle(__dirname+'/_recursive.scss');
   }
 };

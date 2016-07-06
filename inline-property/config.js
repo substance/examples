@@ -1,13 +1,13 @@
 'use strict';
 
 var ProseEditorPackage = require('substance/packages/prose-editor/ProseEditorPackage');
-var EntityPackage = require('./entity/EntityPackage');
+var InlinePropertyPackage = require('./inline-property/package');
 
 module.exports = {
-  name: 'form-example',
+  name: 'inline-property-example',
   configure: function(config) {
     config.import(ProseEditorPackage);
-    config.import(EntityPackage);
+    config.import(InlinePropertyPackage);
     config.addStyle(__dirname+'/app.scss');
   }
 };

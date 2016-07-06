@@ -9,5 +9,6 @@ module.exports = {
     config.addNode(InputNode);
     config.addComponent(InputNode.static.name, InputComponent);
     config.addLabel('input', 'Input');
+    config.addStyle(__dirname+'/_input.scss');
   }
 };

@@ -9,9 +9,15 @@ var server = require('substance/util/server');
 var config = require('./config');
 
 config.examples.forEach(function(folder) {
-  server.serveStyles(app, '/'+folder+'/app.css', path.join(__dirname, folder, 'app.scss'));
+  server.serveStyles(app, '/'+folder+'/app.css', {
+    scssPath: path.join(__dirname, folder, 'app.scss'),
+    configPath: path.join(__dirname, folder, 'config')
+  });
   server.serveJS(app, '/'+folder+'/app.js', path.join(__dirname, folder, 'app.js'));
 });
+
+server.serveStyles(app, '/tags/app.css', path.join(__dirname, 'tags', 'app.scss'));
+server.serveJS(app, '/tags/app.js', path.join(__dirname, 'tags', 'app.js'));
 
 // Serve static files
 app.use(express.static(path.join(__dirname)));

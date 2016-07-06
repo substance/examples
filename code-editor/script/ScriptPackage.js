@@ -13,6 +13,7 @@ module.exports = {
     config.addCommand(InsertScriptCommand);
     config.addTool(InsertScriptTool);
     config.addIcon(InsertScriptCommand.static.name, { 'fontawesome': 'fa-code' });
+    config.addStyle(__dirname+'/_script.scss');
     config.addLabel('script', 'Source Code');
   }
 };
