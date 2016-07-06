@@ -7,6 +7,6 @@ module.exports = {
   configure: function(config) {
     config.import(ProseEditorPackage);
     config.import(ImagePackage);
-    config.addStyle(__dirname+'/app.scss');
+    config.addStyle(__dirname, 'app.scss');
   }
 };

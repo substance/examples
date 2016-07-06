@@ -10,8 +10,9 @@ var config = require('./config');
 
 config.examples.forEach(function(folder) {
   server.serveStyles(app, '/'+folder+'/app.css', {
-    scssPath: path.join(__dirname, folder, 'app.scss'),
-    configPath: path.join(__dirname, folder, 'config')
+    rootDir: __dirname,
+    configuratorPath: require.resolve('./lib/ExampleConfigurator'),
+    configPath: require.resolve('./'+folder+'/config')
   });
   server.serveJS(app, '/'+folder+'/app.js', path.join(__dirname, folder, 'app.js'));
 });

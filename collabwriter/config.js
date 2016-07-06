@@ -6,6 +6,6 @@ module.exports = {
   name: 'collab-writer',
   configure: function(config) {
     config.import(ProseEditorPackage);
-    config.addStyle(__dirname +'/app.scss');
+    config.addStyle(__dirname, 'app.scss');
   }
 };
