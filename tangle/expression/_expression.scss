@@ -1,0 +1,25 @@
+.sc-expression {
+
+  > .se-container {
+    padding: 3px 4px;
+  }
+
+  &.sm-inplace {
+
+    &::before {
+      content: "[";
+    }
+    &::after {
+      content: "]";
+    }
+
+    color: rgba(green, 0.8);
+    background: #efefef;
+  }
+
+  &.sm-inline {
+    color: rgba(blue, 0.8);
+    font-style: italic;
+  }
+
+}
