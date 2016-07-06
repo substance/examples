@@ -14,5 +14,6 @@ module.exports = {
     'macros',
     'nested',
     'tables',
+    'tangle'
   ]
 };
