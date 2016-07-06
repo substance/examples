@@ -8,5 +8,6 @@ module.exports = {
   configure: function(config) {
     config.addNode(ExpressionReference);
     config.addComponent(ExpressionReference.static.name, ExpressionReferenceComponent);
+    config.addStyle(__dirname, '_expression-reference.scss');
   }
 };
