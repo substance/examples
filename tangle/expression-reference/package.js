@@ -2,6 +2,7 @@
 
 var ExpressionReference = require('./ExpressionReference');
 var ExpressionReferenceComponent = require('./ExpressionReferenceComponent');
+var DropExpressionReference = require('./DropExpressionReference');
 
 module.exports = {
   name: 'expression-reference',
@@ -9,5 +10,6 @@ module.exports = {
     config.addNode(ExpressionReference);
     config.addComponent(ExpressionReference.static.name, ExpressionReferenceComponent);
     config.addStyle(__dirname, '_expression-reference.scss');
+    config.addDragAndDrop(DropExpressionReference);
   }
 };

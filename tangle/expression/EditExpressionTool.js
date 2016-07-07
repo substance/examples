@@ -43,23 +43,7 @@ EditExpressionTool.Prototype = function() {
   };
 
   this._onToggle = function() {
-    var showSource = !this.props.node.showSource;
-    var node = this.props.node;
-    var ds = this.context.documentSession;
-    var sel;
-    if (showSource) {
-      sel = ds.createSelection({
-        type: 'property',
-        path: [node.id, 'value'],
-        startOffset: 0
-      });
-    } else {
-      sel = node.getSelection();
-    }
-    ds.transaction(function(tx) {
-      tx.set([node.id, 'showSource'], showSource);
-      return { selection: sel };
-    });
+    this.props.node.emit('toggle:showSource');
   };
 
   this._onDelete = function() {
@@ -75,7 +59,6 @@ EditExpressionTool.Prototype = function() {
 
   this._startDragValue = function(event) {
     var node = this.props.node;
-    console.log('YAY', event);
     var wdoc = DefaultDOMElement.wrapNativeElement(window.document);
     wdoc.on('mousemove', this._onDragValue, this);
     wdoc.on('mouseup', this._finishDragValue, this);

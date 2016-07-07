@@ -75,7 +75,6 @@ Expression.static.name = 'expression';
 
 Expression.static.defineSchema({
   value: { type: 'string', default: ' ' },
-  showSource: { type: 'boolean', default: true },
   units: { type: 'string', optional: true },
   variable: { type: 'boolean', optional: true }
 });
