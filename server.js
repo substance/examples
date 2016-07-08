@@ -11,7 +11,7 @@ var config = require('./config');
 config.examples.forEach(function(folder) {
   server.serveStyles(app, '/'+folder+'/app.css', {
     rootDir: __dirname,
-    configuratorPath: require.resolve('./lib/ExampleConfigurator'),
+    configuratorPath: require.resolve('substance/packages/prose-editor/ProseEditorConfigurator'),
     configPath: require.resolve('./'+folder+'/config')
   });
   server.serveJS(app, '/'+folder+'/app.js', path.join(__dirname, folder, 'app.js'));
