@@ -1,0 +1,39 @@
+.sc-expression {
+
+  > .se-container {
+    padding: 3px 4px;
+  }
+
+  > .se-confirm-value {
+    color: rgba(green, 0.8);
+    display: inline;
+  }
+
+  &.sm-show-source {
+
+    &::before {
+      content: "[";
+    }
+    &::after {
+      content: "]";
+    }
+
+    color: rgba(black, 0.5);
+    background: #efefef;
+  }
+
+  &.sm-inline {
+    color: rgba(blue, 0.8);
+    font-style: italic;
+
+    &.sm-variable {
+      color: rgba(green, 0.8);
+    }
+  }
+
+  &.sm-highlighted {
+    outline: 2px dashed rgba(brown, 0.4);
+    background: rgba(brown, 0.1);
+  }
+
+}
