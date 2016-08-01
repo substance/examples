@@ -1,0 +1,85 @@
+.sc-tags {
+  color: #2079DC;
+  border-bottom: 1px solid #CEDFF3;
+}
+
+// Link tool prompt (also used for Embeds)
+
+.sc-tags-tool {
+
+  .se-prompt {
+    padding: 15px;
+    padding-bottom: 0px;
+
+    background: white;
+    @include shadow;
+    @include border;
+    
+    position: absolute;
+    left: -150px;
+    top: 40px;
+    z-index: 50000;
+    width: 300px;
+
+    .se-prompt-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+
+    a.se-delete-tag {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 13px;
+      color: red;
+    }
+
+    a.se-close-prompt {
+      position: absolute;
+      right: 20px;
+      padding-top: 16px;
+      font-size: 15px;
+      color: #ABABAB;
+      
+      &:hover {
+        color: rgba(0, 0, 0, 0.75);
+      }
+    }
+
+    .se-tags {
+      .se-tag {
+        display: block;
+        float: left;
+        background-color: rgba(52, 152, 219, 0.5);
+        padding: 3px 5px;
+        border-radius: 3px;
+        margin-right: 5px;
+        margin-top: 5px;
+        cursor: pointer;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
+        &.se-hihglight-remove {
+          background-color: red;
+          color: #fff;
+          
+          &:after {
+            content: "×";
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+
+    input {
+      margin: 10px 0 15px;
+      width: 100%;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      min-width: auto;
+      padding: 0 23px 0 10px;
+    }
+  }
+}
