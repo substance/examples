@@ -5,7 +5,7 @@ const {
 } = substance
 
 /*
-  The node definition
+  Node definition
 */
 class InlineImage extends InlineNode {}
 
@@ -15,7 +15,7 @@ InlineImage.define({
 })
 
 /*
-  The node display component
+  Node display component
 */
 class InlineImageComponent extends Component {
   didMount() {
@@ -27,7 +27,7 @@ class InlineImageComponent extends Component {
   }
 
   render($$) {
-    var el = $$('img')
+    let el = $$('img')
       .attr('src', this.props.node.src)
       .addClass('sc-inline-image');
     return el;
@@ -54,7 +54,7 @@ class EditInlineImageTool extends Tool {
       $$(Input, {
         type: 'url',
         path: urlPath,
-        placeholder: 'Paste or type a link url'
+        placeholder: 'Paste or type an image url'
       }),
       $$(Button, {
         icon: 'delete',
@@ -65,7 +65,7 @@ class EditInlineImageTool extends Tool {
   }
 
   onDelete() {
-    var ds = this.context.documentSession;
+    let ds = this.context.documentSession;
     ds.transaction(function(tx, args) {
       return deleteSelection(tx, args)
     })
@@ -94,8 +94,8 @@ const InlineImagePackage = {
 /*
   Example document
 */
-var fixture = function(tx) {
-  var body = tx.get('body')
+const fixture = function(tx) {
+  let body = tx.get('body')
   tx.create({
     id: 'title',
     type: 'heading',
