@@ -12,7 +12,8 @@ module.exports = {
   "globals": {
     "Promise": true,
     "Map": true,
-    "substance": true
+    "substance": true,
+    "ace": true
   },
   "rules": {
     // 0 - off, 1 - warning, 2 - error

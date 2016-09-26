@@ -7,6 +7,7 @@ b.task('clean', function() {
 // copy assets
 b.task('assets', function() {
   b.copy('node_modules/font-awesome', './lib/font-awesome')
+  b.copy('node_modules/ace-builds/src', './lib/ace')
 })
 
 // this optional task makes it easier to work on Substance core
