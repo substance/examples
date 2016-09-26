@@ -1,0 +1,13 @@
+/* Substance Component styles */
+@import '../lib/substance/substance.css';
+/* You may want to use your own reset and pagestyle */
+@import '../lib/substance/substance-reset.css';
+@import '../lib/substance/substance-pagestyle.css';
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
+
+body {
+  overflow: hidden;
+}
+.sc-inline-image {
+  max-height: 30px;
+}
