@@ -1,0 +1,10 @@
+/* Substance Component styles */
+@import '../lib/substance/substance.css';
+/* You may want to use your own reset and pagestyle */
+@import '../lib/substance/substance-reset.css';
+@import '../lib/substance/substance-pagestyle.css';
+@import url('../lib/font-awesome/css/font-awesome.min.css');
+
+body {
+  overflow: hidden;
+}
