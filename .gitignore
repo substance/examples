@@ -1,6 +1,7 @@
 # Logs
 logs
 *.log
+lib
 _site
 dist
 

@@ -1,0 +1,18 @@
+{
+  "name": "substance-examples",
+  "description": "Substance examples",
+  "dependencies": {
+    "lodash": "^4.14.1",
+    "substance": "substance/substance#develop"
+  },
+  "devDependencies": {
+    "eslint": "^3.2.2",
+    "font-awesome": "4.5.0",
+    "substance-bundler": "*"
+  },
+  "scripts": {
+    "bundle": "node make",
+    "start": "node make -s -w"
+  },
+  "version": "1.0.0-beta.5"
+}
