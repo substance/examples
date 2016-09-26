@@ -1,12 +1,13 @@
 var b = require('substance-bundler');
 
 b.task('clean', function() {
-  b.rm('./dist')
+  b.rm('./lib')
 })
 
 // this optional task makes it easier to work on Substance core
 b.task('substance', function() {
-  b.make('substance', 'clean', 'css', 'browser:umd')
+  // i need to build substance manually for now
+  b.make('substance', 'clean', 'css', 'browser')
   b.copy('node_modules/substance/dist', './lib/substance')
 })
 
