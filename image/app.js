@@ -35,8 +35,8 @@ const fixture = function(tx) {
 let config = {
   name: 'image-example',
   configure: function(config) {
-    config.import(ProseEditorPackage);
-    config.import(ImagePackage);
+    config.import(ProseEditorPackage)
+    config.import(ImagePackage)
   }
 }
 let configurator = new ProseEditorConfigurator().import(config)
