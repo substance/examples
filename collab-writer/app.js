@@ -59,10 +59,6 @@ class Client extends Component {
       documentSession: this.session,
       configurator: configurator,
     }).ref('editor');
-    editor.outlet('tools').append(
-      // $$(SessionDumpTool, { session: this.session }),
-      // $$(ToggleConnectionTool, { session: this.session })
-    );
     if (this.props.disabled) {
       el.append(
         $$('div').addClass('se-blocker')
@@ -79,90 +75,6 @@ class Client extends Component {
     this.send('switchUser', this.props.userId)
   }
 }
-
-// function SessionDumpTool() {
-//   SessionDumpTool.super.apply(this, arguments);
-// }
-
-// SessionDumpTool.Prototype = function() {
-
-//   this.render = function($$) {
-//     var el = $$('div')
-//       .attr('title', 'Dump Session message log')
-//       .addClass('se-tool')
-//       .append(
-//         $$('button')
-//           .append($$(Icon, {icon: 'fa-tasks'}))
-//           .on('click', this.onClick)
-//       );
-//     return el;
-//   };
-
-// };
-
-// Component.extend(SessionDumpTool);
-
-// function ToggleConnectionTool() {
-//   ToggleConnectionTool.super.apply(this, arguments);
-// }
-
-// ToggleConnectionTool.Prototype = function() {
-
-//   this.didMount = function() {
-//     this.session = this.props.session;
-//     this.session.on('connected', this._onConnected, this);
-//     this.session.on('disconnected', this._onDisconnected, this);
-//   };
-
-//   this._onConnected = function() {
-//     this.setState({
-//       connected: true
-//     });
-//   };
-
-//   this._onDisconnected = function() {
-//     this.setState({
-//       connected: false
-//     });
-//   };
-
-//   this.dispose = function() {
-//     this.session.off(this);
-//   };
-
-//   this.getInitialState = function() {
-//     return {
-//       connected: true
-//     };
-//   };
-
-//   this.render = function($$) {
-//     var el = $$('div')
-//       .attr('title', this.state.connected ? 'Disconnect': 'Connect (aka sync)')
-//       .addClass('se-tool')
-//       .append(
-//         $$('button').addClass('se-debug')
-//           .append($$(Icon, {
-//             icon: this.state.connected ? 'fa-toggle-on' : 'fa-toggle-off'
-//           }), ' Connected')
-//           .on('click', this.onClick)
-//       );
-//     return el;
-//   };
-
-//   this.onClick = function() {
-//     var connected = this.state.connected;
-//     if (connected) {
-//       this.props.session.disconnect();
-//     } else {
-//       this.props.session.sync();
-//     }
-//   };
-// };
-
-// Component.extend(ToggleConnectionTool);
-
-
 
 /*
   App
