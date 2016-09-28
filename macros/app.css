@@ -8,3 +8,6 @@
 body {
   overflow: hidden;
 }
+.sc-inline-image {
+  max-height: 30px;
+}
