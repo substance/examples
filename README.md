@@ -14,7 +14,6 @@ $ npm start
 
 And navigate to [http://localhost:5000](http://localhost:5000)
 
-
 ## Questions
 
 Please create an issue in the [Substance repository](https://github.com/substance/substance/issues).

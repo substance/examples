@@ -103,14 +103,10 @@ const fixture = function(tx) {
 /*
   Application
 */
-let config = {
-  name: 'hybrid-inline-example',
-  configure: function(config) {
-    config.import(ProseEditorPackage)
-    config.import(HybridInlinePackage)
-  }
-}
-let configurator = new ProseEditorConfigurator().import(config)
+
+let configurator = new ProseEditorConfigurator()
+  .import(ProseEditorPackage)
+  .import(HybridInlinePackage)
 
 window.onload = function() {
   let doc = configurator.createArticle(fixture)
