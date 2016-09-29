@@ -1,0 +1,40 @@
+/* Substance Component styles */
+@import '../lib/substance/substance.css';
+/* You may want to use your own reset and pagestyle */
+@import '../lib/substance/substance-reset.css';
+@import '../lib/substance/substance-pagestyle.css';
+@import url('../lib/font-awesome/css/font-awesome.min.css');
+
+body {
+  overflow: hidden;
+}
+
+.sc-entity {
+  border: solid 1px #ccc;
+  padding: 2px 10px 10px;
+  background: #F0F0F0;
+  min-width: 400px;
+}
+
+.sc-entity .se-title {
+  font-size: x-small;
+  font-style: italic;
+}
+
+.sc-entity > table {
+  width: 100%;
+  margin-top: 10px;
+  table-layout: fixed;
+}
+
+.sc-entity > table > colgroup > col.se-label-col {
+  width: 200px;
+}
+
+.sc-entity > table .sc-text-property-editor.sm-enabled {
+  background: #ffffff;
+}
+
+.sc-entity > table > tr.se-separator {
+  height: 10px;
+}

@@ -4,14 +4,21 @@ module.exports = {
     "commonjs": true,
     "node": true
   },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 6
+  },
   "extends": "eslint:recommended",
   "globals": {
-    "QUnit": true
+    "Promise": true,
+    "Map": true,
+    "substance": true,
+    "ace": true
   },
   "rules": {
     // 0 - off, 1 - warning, 2 - error
     "indent": ["error", 2, { "SwitchCase": 1 }],
-    "semi": [2, "always"],
+    "semi": [0, "never"],
     "comma-dangle": [2, "only-multiline"],
     "no-cond-assign": 2,
     "no-console": [2, { allow: ["warn", "info", "error", "assert"] }],
@@ -43,7 +50,7 @@ module.exports = {
     "use-isnan": 2,
     "valid-jsdoc": 0,
     "valid-typeof": 2,
-    "strict": [2, "safe"],
+    "strict": 0, // [2, "safe"],
 
     // Best practices
     "accessor-pairs": 0,

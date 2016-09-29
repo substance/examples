@@ -1,0 +1,59 @@
+/* Substance Component styles */
+@import '../lib/substance/substance.css';
+/* You may want to use your own reset and pagestyle */
+@import '../lib/substance/substance-reset.css';
+@import '../lib/substance/substance-pagestyle.css';
+@import url('../lib/font-awesome/css/font-awesome.min.css');
+
+body {
+  overflow: hidden;
+}
+
+.sc-alien {
+  display: inline-block;
+  position: relative;
+}
+
+.sc-alien .se-overlay {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  /* show only on hover */
+  visibility: hidden;
+  /* center content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sc-alien .se-overlay .se-controls {
+  background-color:rgba(0,0,0,0.5);
+  color: white;
+}
+
+.sc-alien:hover > .se-overlay {
+  visibility: visible;
+}
+
+.sc-alien.sm-angry img {
+  background-color: red
+}
+
+.sc-alien.sm-excited img {
+  background-color: yellow
+}
+
+.sc-alien.sm-sad img {
+  background-color: blue
+}
+
+.sc-alien.sm-sick img {
+  background-color: green
+}
+
+.sc-isolated-node.sm-alien.sm-selected ::selection {
+  background: transparent;
+}
+
+.sc-isolated-node.sm-alien.sm-selected ::-moz-selection {
+  background: transparent;
+}
