@@ -13,7 +13,7 @@ b.task('assets', function() {
 // this optional task makes it easier to work on Substance core
 b.task('substance', function() {
   // i need to build substance manually for now
-  b.make('substance', 'clean', 'css', 'browser')
+  b.make('substance', 'clean', 'browser')
   b.copy('node_modules/substance/dist', './lib/substance')
 })
 

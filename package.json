@@ -3,10 +3,9 @@
   "description": "Substance examples",
   "devDependencies": {
     "lodash": "^4.14.1",
-    "substance": "substance/substance#develop",
-    "eslint": "^3.2.2",
+    "substance": "1.0.0-beta.5.5",
     "font-awesome": "4.5.0",
-    "substance-bundler": "*",
+    "substance-bundler": "0.5.1",
     "ace-builds": "^1.2.2"
   },
   "scripts": {
