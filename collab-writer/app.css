@@ -5,7 +5,6 @@
 @import '../lib/substance/substance-pagestyle.css';
 @import url('../lib/font-awesome/css/font-awesome.min.css');
 
-
 body {
   overflow: hidden;
 }
@@ -34,14 +33,3 @@ body {
   opacity: 0.2;
   z-index: 1000;
 }
-
-/*
- overriding user colors on the right side to give a better visual distinction
-*/
-
-// .sc-editor.right-editor .sc-text-property .se-cursor.sm-user-1 {
-//   outline-color: green;
-// }
-// .sc-editor.right-editor .sc-text-property .se-selection-fragment.sm-user-1 {
-//   background: green;
-// }
