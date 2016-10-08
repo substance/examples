@@ -12,6 +12,7 @@ var examples = [
   'inline-node',
   'input',
   'macros',
+  'marker',
   'nested'
 ]
 
