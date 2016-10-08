@@ -57,7 +57,7 @@ function _example(name, legacy) {
   const src = './'+name+'/'
   const dist = './dist/'+name+'/'
   if (fs.existsSync(src+'assets')) {
-    b.copy(src+'assets', dist)
+    b.copy(src+'assets', dist+'assets')
   }
   b.copy(src+'index.html', dist)
   b.css(src+'app.css', dist+'app.css', { variables: legacy })
