@@ -1,0 +1,35 @@
+/* Substance Component styles */
+@import '../lib/substance/substance.css';
+/* You may want to use your own reset and pagestyle */
+@import '../lib/substance/substance-reset.css';
+@import '../lib/substance/substance-pagestyle.css';
+@import url('../lib/font-awesome/css/font-awesome.min.css');
+
+body {
+  overflow: hidden;
+}
+
+.sc-two-editors {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+
+.sc-editor.left-editor {
+  border-right: 1px solid #ccc;
+}
+
+.sc-client {
+  position: relative;
+}
+
+.sc-client > .se-blocker {
+  position: absolute;
+  top: 0px; bottom: 0px; left: 0px; right: 0px;
+  background: white;
+  opacity: 0.2;
+  z-index: 1000;
+}

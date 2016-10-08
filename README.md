@@ -14,15 +14,6 @@ $ npm start
 
 And navigate to [http://localhost:5000](http://localhost:5000)
 
-## Bundling
-
-A static distribution of the demos can be created by running the bundle command. To adapt the bundling process edit `gulpfile.js`.
-
-```bash
-$ npm run bundle
-```
-
-
 ## Questions
 
 Please create an issue in the [Substance repository](https://github.com/substance/substance/issues).
