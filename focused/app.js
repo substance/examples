@@ -32,7 +32,7 @@ class AlienComponent extends Component {
   render($$) {
     let el = $$('div').addClass('sc-alien sg-hide-selection')
     el.append(
-      $$('img').attr('height', 100).attr('src', 'alien.svg')
+      $$('img').attr('height', 100).attr('src', 'assets/alien.svg')
     )
     if (this.props.node.mood) {
       el.addClass('sm-' + this.props.node.mood)

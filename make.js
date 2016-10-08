@@ -1,27 +1,73 @@
 var b = require('substance-bundler');
+var fs = require('fs')
+
+var examples = [
+  'code-editor',
+  'collab-writer',
+  'focused',
+  'form',
+  'hybrid-inline',
+  'image',
+  'inception',
+  'inline-node',
+  'input',
+  'macros',
+  'nested'
+]
 
 b.task('clean', function() {
-  b.rm('./lib')
+  b.rm('./dist')
 })
 
-// copy assets
-b.task('assets', function() {
-  b.copy('node_modules/font-awesome', './lib/font-awesome')
-  b.copy('node_modules/ace-builds/src', './lib/ace')
-})
-
-// this optional task makes it easier to work on Substance core
 b.task('substance', function() {
-  // i need to build substance manually for now
   b.make('substance', 'clean', 'browser')
-  b.copy('node_modules/substance/dist', './lib/substance')
 })
 
-// build all
-b.task('default', ['substance', 'assets'])
+b.task('assets', function() {
+  b.copy('node_modules/font-awesome', './dist/lib/font-awesome')
+  b.copy('node_modules/ace-builds/src', './dist/lib/ace')
+  b.copy('node_modules/substance/dist', './dist/lib/substance')
+  b.copy('./index.html', './dist/')
+})
+
+b.task('examples', function() {
+  examples.forEach(function(name) {
+    _example(name, true)
+  })
+})
+
+examples.forEach(function(name) {
+  b.task(name, function() {
+    _example(name, false)
+  })
+})
+
+b.task('default', ['clean', 'assets', 'examples'])
+
+b.task('dev', ['substance', 'default'])
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)
 b.serve({
-  static: true, route: '/', folder: '.'
+  static: true, route: '/', folder: 'dist'
 })
+
+// builds one
+function _example(name, legacy) {
+  const src = './'+name+'/'
+  const dist = './dist/'+name+'/'
+  if (fs.existsSync(src+'assets')) {
+    b.copy(src+'assets', dist)
+  }
+  b.copy(src+'index.html', dist)
+  b.css(src+'app.css', dist+'app.css', { variables: legacy })
+  b.js(src+'app.js', {
+    buble: legacy,
+    commonjs: { include: ['/**/lodash/**'] },
+    targets: [{
+      useStrict: !legacy,
+      dest: dist+'app.js',
+      format: 'umd', moduleName: 'example'+name
+    }]
+  })
+}

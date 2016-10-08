@@ -11,7 +11,7 @@ class InlineImage extends InlineNode {}
 
 InlineImage.define({
   type: 'inline-image',
-  src: { type: 'string', 'default': './images/smile.png'}
+  src: { type: 'string', 'default': './assets/smile.png'}
 })
 
 /*
@@ -124,7 +124,7 @@ const fixture = function(tx) {
   tx.create({
     type: 'inline-image',
     id: 'i2',
-    src: './images/michael.jpg',
+    src: './assets/michael.jpg',
     path: ['the-end', 'content'],
     startOffset: 15,
     endOffset: 16
@@ -132,7 +132,7 @@ const fixture = function(tx) {
   tx.create({
     type: 'inline-image',
     id: 'i3',
-    src: './images/oliver.jpg',
+    src: './assets/oliver.jpg',
     path: ['the-end', 'content'],
     startOffset: 25,
     endOffset: 26
@@ -140,7 +140,7 @@ const fixture = function(tx) {
   tx.create({
     type: 'inline-image',
     id: 'i4',
-    src: './images/daniel.jpg',
+    src: './assets/daniel.jpg',
     path: ['the-end', 'content'],
     startOffset: 35,
     endOffset: 36
