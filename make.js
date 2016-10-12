@@ -21,7 +21,7 @@ b.task('clean', function() {
 })
 
 b.task('substance', function() {
-  b.make('substance', 'clean', 'browser')
+  b.make('substance', 'clean', 'browser:pure')
 })
 
 b.task('assets', function() {
@@ -38,7 +38,7 @@ b.task('examples', function() {
 })
 
 examples.forEach(function(name) {
-  b.task(name, function() {
+  b.task('dev:'+name, ['substance', 'assets'], function() {
     _example(name, false)
   })
 })
