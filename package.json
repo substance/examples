@@ -3,7 +3,7 @@
   "description": "Substance examples",
   "devDependencies": {
     "lodash": "^4.14.1",
-    "substance": "1.0.0-beta.5.8",
+    "substance": "substance/substance#spellchecker",
     "font-awesome": "4.5.0",
     "substance-bundler": "0.5.1",
     "ace-builds": "^1.2.2"
