@@ -1,0 +1,8 @@
+@import '../common.css';
+
+/* spell-check */
+@import './spell-check/_spell-error.css';
+
+body {
+  overflow: hidden;
+}
