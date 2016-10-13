@@ -10,7 +10,7 @@
   },
   "scripts": {
     "bundle": "node make",
-    "start": "node make -s -w"
+    "start": "node make dev -s -w"
   },
   "version": "1.0.0-beta.5"
 }
