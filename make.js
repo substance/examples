@@ -13,6 +13,7 @@ var examples = [
   'input',
   'macros',
   'marker',
+  'spell-check',
   'nested'
 ]
 
@@ -21,6 +22,10 @@ b.task('clean', function() {
 })
 
 b.task('substance', function() {
+  b.make('substance', 'clean', 'browser')
+})
+
+b.task('substance:pure', function() {
   b.make('substance', 'clean', 'browser:pure')
 })
 
@@ -38,14 +43,20 @@ b.task('examples', function() {
 })
 
 examples.forEach(function(name) {
-  b.task('dev:'+name, ['substance', 'assets'], function() {
+  b.task('dev:'+name, ['substance:pure', 'assets'], function() {
     _example(name, false)
+  })
+
+  b.task(name, ['substance', 'assets'], function() {
+    _example(name, true)
   })
 })
 
-b.task('default', ['clean', 'assets', 'examples'])
+// Used for deployment (transpiled js and css)
+b.task('default', ['clean', 'substance', 'assets', 'examples'])
 
-b.task('dev', ['substance', 'default'])
+// Used for development (native js + css)
+b.task('dev', ['clean', 'substance:pure', 'assets', 'examples'])
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)
@@ -53,7 +64,7 @@ b.serve({
   static: true, route: '/', folder: 'dist'
 })
 
-// builds one
+// builds one example
 function _example(name, legacy) {
   const src = './'+name+'/'
   const dist = './dist/'+name+'/'
