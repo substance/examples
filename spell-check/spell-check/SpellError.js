@@ -1,6 +1,10 @@
-import { PropertyAnnotation } from 'substance'
+import { Marker } from 'substance'
 
-class SpellError extends PropertyAnnotation {}
+class SpellError extends Marker {
+  invalidate() {
+    this.remove()
+  }
+}
 
 SpellError.define({
   type: 'spell-error',

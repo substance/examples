@@ -23,8 +23,9 @@ class CorrectionTool extends Tool {
   }
 
   _applyCorrection(suggestion) {
-    let ds = this.context.documentSession;
-    ds.transaction(function(tx, args) {
+    let surfaceManager = this.context.surfaceManager;
+    let surface = surfaceManager.getFocusedSurface()
+    surface.transaction(function(tx, args) {
       return insertText(tx, {
         selection: args.selection,
         text: suggestion
