@@ -1,5 +1,3 @@
-import SpellError from './spell-check/SpellError'
-
 // Fake dictionary
 const SUGGESTIONS = [
   'Bug',
@@ -36,19 +34,21 @@ export default function fixture(doc) {
   })
   body.show('p4')
 
-  // doc.addMarker('spell-error', new SpellError(doc, {
-  //   id: 'se1',
-  //   path: ['p1', 'content'],
-  //   startOffset: 240,
-  //   endOffset: 244,
-  //   suggestions: SUGGESTIONS
-  // }))
-
-  // doc.addMarker('spell-error', new SpellError(doc, {
-  //   id: 'se2',
-  //   path: ['p1', 'content'],
-  //   startOffset: 279,
-  //   endOffset: 286,
-  //   suggestions: SUGGESTIONS
-  // }))
+  // using data directly means that this happens outside of the session
+  doc.data.create({
+    type: 'spell-error',
+    id: 'se1',
+    path: ['p1', 'content'],
+    startOffset: 240,
+    endOffset: 244,
+    suggestions: SUGGESTIONS
+  })
+  doc.data.create({
+    type: 'spell-error',
+    id: 'se2',
+    path: ['p1', 'content'],
+    startOffset: 279,
+    endOffset: 286,
+    suggestions: SUGGESTIONS
+  })
 }
