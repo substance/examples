@@ -65,8 +65,8 @@ class EditInlineImageTool extends Tool {
   }
 
   onDelete() {
-    let ds = this.context.documentSession;
-    ds.transaction(function(tx, args) {
+    let editSession = this.context.editSession
+    editSession.transaction(function(tx, args) {
       return deleteSelection(tx, args)
     })
   }
