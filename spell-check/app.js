@@ -17,7 +17,8 @@ const cfg = new Configurator().import(config)
 
 window.onload = function() {
   const doc = cfg.createArticle(fixture)
-  let documentSession = new DocumentSession(doc, cfg, {
+  let documentSession = new DocumentSession(doc, {
+    configurator: cfg,
     context: {}
   })
   ProseEditor.mount({
