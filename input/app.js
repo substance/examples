@@ -106,20 +106,17 @@ const fixture = function(tx) {
 /*
   Application
 */
-let config = {
-  name: 'input-example',
-  configure: function(config) {
-    config.import(ProseEditorPackage)
-    config.import(InputPackage)
-  }
-}
-let configurator = new ProseEditorConfigurator().import(config)
+let cfg = new ProseEditorConfigurator()
+cfg.import(ProseEditorPackage)
+cfg.import(InputPackage)
 
 window.onload = function() {
-  let doc = configurator.createArticle(fixture)
-  let documentSession = new DocumentSession(doc)
+  let doc = cfg.createArticle(fixture)
+  let documentSession = new DocumentSession(doc, {
+    configurator: cfg
+  })
   ProseEditor.mount({
     documentSession: documentSession,
-    configurator: configurator
+    configurator: cfg
   }, document.body)
 }

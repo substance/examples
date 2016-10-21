@@ -12,8 +12,6 @@ var examples = [
   'inline-node',
   'input',
   'macros',
-  'marker',
-  'spell-check',
   'nested'
 ]
 
@@ -42,6 +40,12 @@ b.task('examples', function() {
   })
 })
 
+b.task('examples:pure', function() {
+  examples.forEach(function(name) {
+    _example(name, false)
+  })
+})
+
 examples.forEach(function(name) {
   b.task('dev:'+name, ['substance:pure', 'assets'], function() {
     _example(name, false)
@@ -56,7 +60,7 @@ examples.forEach(function(name) {
 b.task('default', ['clean', 'substance', 'assets', 'examples'])
 
 // Used for development (native js + css)
-b.task('dev', ['clean', 'substance:pure', 'assets', 'examples'])
+b.task('dev', ['clean', 'substance:pure', 'assets', 'examples:pure'])
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)

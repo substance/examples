@@ -109,7 +109,7 @@ let ScriptPackage = {
     config.addNode(Script)
     config.addComponent(Script.type, ScriptEditor)
     config.addCommand('insert-script', InsertScriptCommand)
-    config.addTool('insert-script', Tool, {target: 'insert'})
+    config.addTool('insert-script', Tool, {toolGroup: 'insert'})
     config.addIcon('insert-script', { 'fontawesome': 'fa-code' })
     config.addLabel('insert-script', 'Source Code')
   }
@@ -160,20 +160,17 @@ let fixture = function(tx) {
 /*
   Application
 */
-let config = {
-  name: 'code-editor-example',
-  configure: function(config) {
-    config.import(ProseEditorPackage)
-    config.import(ScriptPackage)
-  }
-}
-let configurator = new ProseEditorConfigurator().import(config)
+let cfg = new ProseEditorConfigurator()
+cfg.import(ProseEditorPackage)
+cfg.import(ScriptPackage)
 
 window.onload = function() {
-  let doc = configurator.createArticle(fixture)
-  let documentSession = new DocumentSession(doc)
+  let doc = cfg.createArticle(fixture)
+  let documentSession = new DocumentSession(doc, {
+    configurator: cfg
+  })
   ProseEditor.mount({
     documentSession: documentSession,
-    configurator: configurator
+    configurator: cfg
   }, document.body)
 }

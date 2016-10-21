@@ -28,24 +28,20 @@ const fixture = function(tx) {
   body.show('p2')
 }
 
-
 /*
   Application
 */
-let config = {
-  name: 'image-example',
-  configure: function(config) {
-    config.import(ProseEditorPackage)
-    config.import(ImagePackage)
-  }
-}
-let configurator = new ProseEditorConfigurator().import(config)
+let cfg = new ProseEditorConfigurator()
+cfg.import(ProseEditorPackage)
+cfg.import(ImagePackage)
 
 window.onload = function() {
-  let doc = configurator.createArticle(fixture)
-  let documentSession = new DocumentSession(doc)
+  let doc = cfg.createArticle(fixture)
+  let documentSession = new DocumentSession(doc, {
+    configurator: cfg
+  })
   ProseEditor.mount({
     documentSession: documentSession,
-    configurator: configurator
+    configurator: cfg
   }, document.body)
 }
