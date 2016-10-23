@@ -22,11 +22,13 @@ const _moods = ['normal', 'angry', 'excited', 'sad', 'sick']
 class AlienComponent extends Component {
 
   didMount() {
-    this.props.node.on('mood:changed', this.rerender, this)
+    this.context.editSession.onRender('document', this.rerender, this, {
+      path: [this.props.node.id, 'mood']
+    })
   }
 
   dispose() {
-    this.props.node.off(this)
+    this.context.editSession.off(this)
   }
 
   render($$) {

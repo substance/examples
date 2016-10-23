@@ -17,14 +17,16 @@ InputNode.defineSchema({
   Node display component
 */
 class InputComponent extends Component {
-  // Register for model side updates
   didMount() {
-    this.props.node.on('content:changed', this.onContentChange, this)
+    // Register for model side updates
+    this.context.editSession.onRender('document', this.onContentChange, this, {
+      path: [this.props.node.id, 'content']
+    })
   }
 
   // And please always deregister
   dispose() {
-    this.props.node.off(this)
+    this.context.editSession.off(this)
   }
 
   render($$) {

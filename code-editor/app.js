@@ -33,6 +33,7 @@ class ScriptEditor extends Component {
   }
 
   didMount() {
+    let editSession = this.context.editSession
     let node = this.props.node;
     let editor = ace.edit(this.refs.source.getNativeElement())
     // editor.setTheme("ace/theme/monokai");
@@ -59,11 +60,13 @@ class ScriptEditor extends Component {
     });
 
     this.editor = editor
-    this.props.node.on('source:changed', this._onModelChange, this)
+    editSession.onRender('document', this._onModelChange, this, {
+      path: [node.id, 'source']
+    })
   }
 
   dispose() {
-    this.props.node.off(this)
+    this.context.editSession.off(this)
     this.editor.destroy()
   }
 

@@ -31,12 +31,14 @@ class HybridInlineComponent extends InlineNodeComponent {
 
   didMount() {
     super.didMount()
-    this.props.node.on('content:changed', this.rerender, this)
+    this.context.editSession.onRender('document', this.rerender, this, {
+      path: [this.props.node.id, 'content']
+    })
   }
 
   dispose() {
     super.dispose()
-    this.props.node.off(this)
+    this.context.editSession.off(this)
   }
 
   getClassNames() {

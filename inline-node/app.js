@@ -21,11 +21,13 @@ InlineImage.define({
 */
 class InlineImageComponent extends Component {
   didMount() {
-    this.props.node.on('src:changed', this.rerender, this)
+    this.context.editSession.onRender('document', this.rerender, this, {
+      path: [this.props.node.id, 'src']
+    })
   }
 
   dispose() {
-    this.props.node.off(this);
+    this.context.editSession.off(this)
   }
 
   render($$) {
