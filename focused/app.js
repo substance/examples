@@ -1,6 +1,6 @@
 const {
-  Component, ProseEditor, DocumentNode, ProseEditorConfigurator, DocumentSession,
-  ProseEditorPackage,
+  Component, ProseEditor, DocumentNode, ProseEditorConfigurator,
+  EditorSession, ProseEditorPackage,
 } = substance
 
 /*
@@ -22,13 +22,13 @@ const _moods = ['normal', 'angry', 'excited', 'sad', 'sick']
 class AlienComponent extends Component {
 
   didMount() {
-    this.context.editSession.onRender('document', this.rerender, this, {
+    this.context.editorSession.onRender('document', this.rerender, this, {
       path: [this.props.node.id, 'mood']
     })
   }
 
   dispose() {
-    this.context.editSession.off(this)
+    this.context.editorSession.off(this)
   }
 
   render($$) {
@@ -128,12 +128,11 @@ cfg.import(AlienPackage)
 
 window.onload = function() {
   let doc = cfg.createArticle(fixture)
-  let documentSession = new DocumentSession(doc, {
+  let editorSession = new EditorSession(doc, {
     configurator: cfg
   })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: cfg
+    editorSession: editorSession
   }, document.body)
 }
 

@@ -1,5 +1,5 @@
 const {
-  Component, ContainerEditor, DocumentNode, DocumentSession, ProseEditor, ProseEditorConfigurator, ProseEditorPackage
+  Component, ContainerEditor, DocumentNode, EditorSession, ProseEditor, ProseEditorConfigurator, ProseEditorPackage
 } = substance
 
 /*
@@ -122,11 +122,10 @@ cfg.import(RecursivePackage)
 
 window.onload = function() {
   let doc = cfg.createArticle(fixture)
-  let documentSession = new DocumentSession(doc, {
+  let editorSession = new EditorSession(doc, {
     configurator: cfg
   })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: cfg
+    editorSession: editorSession
   }, document.body)
 }

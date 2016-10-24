@@ -1,5 +1,5 @@
 const {
-  ProseEditor, ProseEditorConfigurator, DocumentSession, DocumentNode,
+  ProseEditor, ProseEditorConfigurator, EditorSession, DocumentNode,
   ProseEditorPackage, Component
 } = substance
 
@@ -19,14 +19,14 @@ InputNode.defineSchema({
 class InputComponent extends Component {
   didMount() {
     // Register for model side updates
-    this.context.editSession.onRender('document', this.onContentChange, this, {
+    this.context.editorSession.onRender('document', this.onContentChange, this, {
       path: [this.props.node.id, 'content']
     })
   }
 
   // And please always deregister
   dispose() {
-    this.context.editSession.off(this)
+    this.context.editorSession.off(this)
   }
 
   render($$) {
@@ -45,10 +45,10 @@ class InputComponent extends Component {
 
   // this is called when the input's content has been changed
   onChange() {
-    let documentSession = this.context.documentSession
+    let editorSession = this.context.editorSession
     let node = this.props.node
     let newVal = this.refs.input.val()
-    documentSession.transaction(function(tx) {
+    editorSession.transaction(function(tx) {
       tx.set([node.id, 'content'], newVal)
     })
   }
@@ -114,11 +114,10 @@ cfg.import(InputPackage)
 
 window.onload = function() {
   let doc = cfg.createArticle(fixture)
-  let documentSession = new DocumentSession(doc, {
+  let editorSession = new EditorSession(doc, {
     configurator: cfg
   })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: cfg
+    editorSession: editorSession
   }, document.body)
 }

@@ -1,5 +1,5 @@
 const {
-  ProseEditor, ProseEditorConfigurator, DocumentSession, DocumentNode,
+  ProseEditor, ProseEditorConfigurator, EditorSession, DocumentNode,
   ProseEditorPackage, BlockNodeComponent, TextPropertyEditor
 } = substance
 
@@ -117,11 +117,10 @@ cfg.import(EntityPackage)
 
 window.onload = function() {
   let doc = cfg.createArticle(fixture)
-  let documentSession = new DocumentSession(doc, {
+  let editorSession = new EditorSession(doc, {
     configurator: cfg
   })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: cfg
+    editorSession: editorSession
   }, document.body)
 }

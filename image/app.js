@@ -1,5 +1,5 @@
 const {
-  ProseEditor, ProseEditorConfigurator, DocumentSession,
+  ProseEditor, ProseEditorConfigurator, EditorSession,
   ProseEditorPackage, ImagePackage
 } = substance
 
@@ -37,11 +37,10 @@ cfg.import(ImagePackage)
 
 window.onload = function() {
   let doc = cfg.createArticle(fixture)
-  let documentSession = new DocumentSession(doc, {
+  let editorSession = new EditorSession(doc, {
     configurator: cfg
   })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: cfg
+    editorSession: editorSession
   }, document.body)
 }

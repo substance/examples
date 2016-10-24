@@ -1,5 +1,5 @@
 const {
-  Component, ProseEditor, ProseEditorConfigurator, DocumentSession,
+  Component, ProseEditor, ProseEditorConfigurator, EditorSession,
   ProseEditorPackage, InlineNode, InsertInlineNodeCommand, EditInlineNodeCommand,
   AnnotationTool, Tool, deleteSelection, substanceGlobals
 } = substance
@@ -21,13 +21,13 @@ InlineImage.define({
 */
 class InlineImageComponent extends Component {
   didMount() {
-    this.context.editSession.onRender('document', this.rerender, this, {
+    this.context.editorSession.onRender('document', this.rerender, this, {
       path: [this.props.node.id, 'src']
     })
   }
 
   dispose() {
-    this.context.editSession.off(this)
+    this.context.editorSession.off(this)
   }
 
   render($$) {
@@ -69,8 +69,8 @@ class EditInlineImageTool extends Tool {
   }
 
   onDelete() {
-    let editSession = this.context.editSession
-    editSession.transaction(function(tx, args) {
+    let editorSession = this.context.editorSession
+    editorSession.transaction(function(tx, args) {
       return deleteSelection(tx, args)
     })
   }
@@ -161,11 +161,10 @@ cfg.import(InlineImagePackage)
 
 window.onload = function() {
   let doc = cfg.createArticle(fixture)
-  let documentSession = new DocumentSession(doc, {
+  let editorSession = new EditorSession(doc, {
     configurator: cfg
   })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: cfg
+    editorSession: editorSession
   }, document.body)
 }

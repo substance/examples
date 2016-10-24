@@ -1,5 +1,5 @@
 const {
-  Component, ProseEditor, ProseEditorConfigurator, DocumentSession,
+  Component, ProseEditor, ProseEditorConfigurator, EditorSession,
   ProseEditorPackage, BlockNode, Tool, InsertNodeCommand
 } = substance
 
@@ -33,7 +33,7 @@ class ScriptEditor extends Component {
   }
 
   didMount() {
-    let editSession = this.context.editSession
+    let editorSession = this.context.editorSession
     let node = this.props.node;
     let editor = ace.edit(this.refs.source.getNativeElement())
     // editor.setTheme("ace/theme/monokai");
@@ -60,13 +60,13 @@ class ScriptEditor extends Component {
     });
 
     this.editor = editor
-    editSession.onRender('document', this._onModelChange, this, {
+    editorSession.onRender('document', this._onModelChange, this, {
       path: [node.id, 'source']
     })
   }
 
   dispose() {
-    this.context.editSession.off(this)
+    this.context.editorSession.off(this)
     this.editor.destroy()
   }
 
@@ -169,11 +169,10 @@ cfg.import(ScriptPackage)
 
 window.onload = function() {
   let doc = cfg.createArticle(fixture)
-  let documentSession = new DocumentSession(doc, {
+  let editorSession = new EditorSession(doc, {
     configurator: cfg
   })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: cfg
+    editorSession: editorSession
   }, document.body)
 }

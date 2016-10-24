@@ -56,8 +56,7 @@ class Client extends Component {
     var el = $$('div').addClass('sc-client').addClass('sm-'+this.props.userId);
     var editor = $$(ProseEditor, {
       disabled: this.props.disabled,
-      documentSession: this.session,
-      configurator: configurator,
+      editorSession: this.session
     }).ref('editor');
     if (this.props.disabled) {
       el.append(

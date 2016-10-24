@@ -1,5 +1,5 @@
 const {
-  ProseEditor, ProseEditorConfigurator, DocumentSession, InlineNode,
+  ProseEditor, ProseEditorConfigurator, EditorSession, InlineNode,
   ProseEditorPackage, TextPropertyEditor, InlineNodeComponent
 } = substance
 
@@ -31,14 +31,14 @@ class HybridInlineComponent extends InlineNodeComponent {
 
   didMount() {
     super.didMount()
-    this.context.editSession.onRender('document', this.rerender, this, {
+    this.context.editorSession.onRender('document', this.rerender, this, {
       path: [this.props.node.id, 'content']
     })
   }
 
   dispose() {
     super.dispose()
-    this.context.editSession.off(this)
+    this.context.editorSession.off(this)
   }
 
   getClassNames() {
@@ -112,11 +112,10 @@ cfg.import(HybridInlinePackage)
 
 window.onload = function() {
   let doc = cfg.createArticle(fixture)
-  let documentSession = new DocumentSession(doc, {
+  let editorSession = new EditorSession(doc, {
     configurator: cfg
   })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: cfg
+    editorSession: editorSession
   }, document.body)
 }
