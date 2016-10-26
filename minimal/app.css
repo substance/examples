@@ -1,0 +1,30 @@
+@import '../common.css';
+
+.sc-container {
+  padding-left: 10px;
+  padding-right: 10px;
+  border-left: 1px solid #ccc;
+}
+
+.sc-minimal-editor .se-minimal-editor-content {
+  max-width: 500px;
+  padding: 50px;
+  margin: 0px auto;
+}
+
+/* Add some padding */
+.sc-minimal-editor .sc-container-editor > * + * {
+  padding-top: 20px;
+}
+
+.sc-text-tools {
+  position: absolute;
+}
+
+.sc-text-tools .sc-tool-group > * {
+  display: inline-block;
+}
+
+.sc-overlay.sm-theme-dark > .se-active-tools > .sc-tool-group > .se-tool + .se-tool {
+  margin-left: 5px;
+}

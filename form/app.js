@@ -1,7 +1,7 @@
-const {
+import {
   ProseEditor, ProseEditorConfigurator, EditorSession, DocumentNode,
   ProseEditorPackage, BlockNodeComponent, TextPropertyEditor
-} = substance
+} from 'substance'
 
 /*
   Node definition

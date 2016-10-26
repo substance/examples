@@ -1,7 +1,7 @@
-const {
+import {
   ProseEditor, ProseEditorConfigurator, EditorSession,
   ProseEditorPackage, ImagePackage
-} = substance
+} from 'substance'
 
 /*
   Example document

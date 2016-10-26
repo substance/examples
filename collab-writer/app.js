@@ -1,10 +1,10 @@
-const {
+import {
   Component, SplitPane, twoParagraphs, MessageQueue, TestWebSocketServer,
   TestWebSocketConnection, TestCollabServer, DocumentEngine, DocumentStore,
   ChangeStore, documentStoreSeed, changeStoreSeed, createTestDocumentFactory,
   ProseEditorConfigurator, ProseEditorPackage, Surface, CollabClient,
   TestCollabSession, ProseEditor
-} = substance
+} from 'substance'
 
 const collabWriterConfig = {
   name: 'collab-writer',

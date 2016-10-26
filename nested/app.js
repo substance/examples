@@ -1,6 +1,6 @@
-const {
+import {
   Component, ContainerEditor, EditorSession, InsertNodeCommand, ProseEditor, insertNode, ProseEditorConfigurator, ProseEditorPackage, Tool
-} = substance
+} from 'substance'
 
 /*
   Container display component

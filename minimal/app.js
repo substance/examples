@@ -3,24 +3,8 @@ import {
   ProseEditorPackage, HeadingMacro
 } from 'substance'
 
-/*
-  Example document
-*/
-const fixture = function(tx) {
-  let body = tx.get('body')
-  tx.create({
-    id: 'p1',
-    type: 'paragraph',
-    content: "Type # followed by a space to create a heading!"
-  })
-  body.show('p1')
-  tx.create({
-    id: 'p2',
-    type: 'paragraph',
-    content: ""
-  })
-  body.show('p2')
-}
+import MinimalEditor from './MinimalEditor'
+import fixture from './fixture'
 
 /*
   Application
@@ -35,7 +19,7 @@ window.onload = function() {
   let editorSession = new EditorSession(doc, {
     configurator: cfg
   })
-  ProseEditor.mount({
+  MinimalEditor.mount({
     editorSession: editorSession
   }, document.body)
 }

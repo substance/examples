@@ -12,7 +12,8 @@ var examples = [
   'inline-node',
   'input',
   'macros',
-  'nested'
+  'nested',
+  'minimal'
 ]
 
 b.task('clean', function() {
@@ -80,6 +81,7 @@ function _example(name, legacy) {
   b.js(src+'app.js', {
     buble: legacy,
     commonjs: { include: ['/**/lodash/**'] },
+    external: ['substance'],
     targets: [{
       useStrict: !legacy,
       dest: dist+'app.js',

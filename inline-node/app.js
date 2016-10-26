@@ -1,8 +1,8 @@
-const {
+import {
   Component, ProseEditor, ProseEditorConfigurator, EditorSession,
   ProseEditorPackage, InlineNode, InsertInlineNodeCommand, EditInlineNodeCommand,
   AnnotationTool, Tool, deleteSelection, substanceGlobals
-} = substance
+} from 'substance'
 
 substanceGlobals.DEBUG_RENDERING = true;
 
