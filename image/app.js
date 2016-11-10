@@ -17,7 +17,7 @@ const fixture = function(tx) {
   tx.create({
     id: 'i1',
     type: 'image',
-    src: "http://substance.io/images/stencila.gif"
+    src: "https://pbs.twimg.com/profile_images/706616363599532032/b5z-Hw5g.jpg"
   })
   body.show('i1')
   tx.create({
@@ -26,6 +26,13 @@ const fixture = function(tx) {
     content: "Please note that images are not actually uploaded in this example. You would need to provide a custom file client that talks to an image store. See FileClientStub which reveals the API you have to implement."
   })
   body.show('p2')
+  tx.create({
+    id: 'i2',
+    type: 'image',
+    src: "https://pbs.twimg.com/profile_images/706616363599532032/b5z-Hw5g.jpg"
+  })
+  body.show('i2')
+
 }
 
 /*
