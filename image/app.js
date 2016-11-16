@@ -1,7 +1,7 @@
-const {
-  ProseEditor, ProseEditorConfigurator, DocumentSession,
+import {
+  ProseEditor, ProseEditorConfigurator, EditorSession,
   ProseEditorPackage, ImagePackage
-} = substance
+} from 'substance'
 
 /*
   Example document
@@ -14,10 +14,17 @@ const fixture = function(tx) {
     content: "Insert a new image using the image tool."
   })
   body.show('p1')
+
+  tx.create({
+    id: 'f1',
+    type: 'file',
+    fileType: 'image',
+    url: 'https://pbs.twimg.com/profile_images/706616363599532032/b5z-Hw5g.jpg'
+  })
   tx.create({
     id: 'i1',
     type: 'image',
-    src: "http://substance.io/images/stencila.gif"
+    imageFile: 'f1'
   })
   body.show('i1')
   tx.create({
@@ -26,26 +33,27 @@ const fixture = function(tx) {
     content: "Please note that images are not actually uploaded in this example. You would need to provide a custom file client that talks to an image store. See FileClientStub which reveals the API you have to implement."
   })
   body.show('p2')
+  tx.create({
+    id: 'i2',
+    type: 'image',
+    imageFile: 'f1'
+  })
+  body.show('i2')
 }
-
 
 /*
   Application
 */
-let config = {
-  name: 'image-example',
-  configure: function(config) {
-    config.import(ProseEditorPackage)
-    config.import(ImagePackage)
-  }
-}
-let configurator = new ProseEditorConfigurator().import(config)
+let cfg = new ProseEditorConfigurator()
+cfg.import(ProseEditorPackage)
+cfg.import(ImagePackage)
 
 window.onload = function() {
-  let doc = configurator.createArticle(fixture)
-  let documentSession = new DocumentSession(doc)
+  let doc = cfg.createArticle(fixture)
+  let editorSession = new EditorSession(doc, {
+    configurator: cfg
+  })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: configurator
+    editorSession: editorSession
   }, document.body)
 }

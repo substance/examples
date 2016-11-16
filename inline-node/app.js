@@ -1,8 +1,10 @@
-const {
-  Component, ProseEditor, ProseEditorConfigurator, DocumentSession,
+import {
+  Component, ProseEditor, ProseEditorConfigurator, EditorSession,
   ProseEditorPackage, InlineNode, InsertInlineNodeCommand, EditInlineNodeCommand,
-  AnnotationTool, Tool, deleteSelection
-} = substance
+  AnnotationTool, Tool, deleteSelection, substanceGlobals
+} from 'substance'
+
+substanceGlobals.DEBUG_RENDERING = true;
 
 /*
   Node definition
@@ -19,11 +21,13 @@ InlineImage.define({
 */
 class InlineImageComponent extends Component {
   didMount() {
-    this.props.node.on('src:changed', this.rerender, this)
+    this.context.editorSession.onRender('document', this.rerender, this, {
+      path: [this.props.node.id, 'src']
+    })
   }
 
   dispose() {
-    this.props.node.off(this);
+    this.context.editorSession.off(this)
   }
 
   render($$) {
@@ -65,8 +69,8 @@ class EditInlineImageTool extends Tool {
   }
 
   onDelete() {
-    let ds = this.context.documentSession;
-    ds.transaction(function(tx, args) {
+    let editorSession = this.context.editorSession
+    editorSession.transaction(function(tx, args) {
       return deleteSelection(tx, args)
     })
   }
@@ -84,8 +88,8 @@ const InlineImagePackage = {
     config.addComponent(InlineImage.type, InlineImageComponent)
     config.addCommand('add-inline-image', InsertInlineNodeCommand, {nodeType: InlineImage.type})
     config.addCommand('edit-inline-image', EditInlineNodeCommand, {nodeType: InlineImage.type})
-    config.addTool('add-inline-image', AnnotationTool, { target: 'insert'})
-    config.addTool('edit-inline-image', EditInlineImageTool, { target: 'overlay' })
+    config.addTool('add-inline-image', AnnotationTool, { toolGroup: 'insert'})
+    config.addTool('edit-inline-image', EditInlineImageTool, { toolGroup: 'overlay' })
     config.addIcon('add-inline-image', { 'fontawesome': 'fa-image' })
     config.addLabel('add-inline-image', 'Inline Image')
   }
@@ -151,20 +155,16 @@ const fixture = function(tx) {
 /*
   Application
 */
-let config = {
-  name: 'inline-nodes-example',
-  configure: function(config) {
-    config.import(ProseEditorPackage)
-    config.import(InlineImagePackage)
-  }
-}
-let configurator = new ProseEditorConfigurator().import(config)
+let cfg = new ProseEditorConfigurator()
+cfg.import(ProseEditorPackage)
+cfg.import(InlineImagePackage)
 
 window.onload = function() {
-  let doc = configurator.createArticle(fixture)
-  let documentSession = new DocumentSession(doc)
+  let doc = cfg.createArticle(fixture)
+  let editorSession = new EditorSession(doc, {
+    configurator: cfg
+  })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: configurator
+    editorSession: editorSession
   }, document.body)
 }

@@ -1,6 +1,6 @@
-const {
-  Component, ContainerEditor, DocumentSession, InsertNodeCommand, ProseEditor, insertNode, ProseEditorConfigurator, ProseEditorPackage, Tool
-} = substance
+import {
+  Component, ContainerEditor, EditorSession, InsertNodeCommand, ProseEditor, insertNode, ProseEditorConfigurator, ProseEditorPackage, Tool
+} from 'substance'
 
 /*
   Container display component
@@ -125,20 +125,17 @@ const fixture = function(tx) {
 /*
   Application
 */
-let config = {
-  name: 'inception-example',
-  configure: function(config) {
-    config.import(ProseEditorPackage);
-    config.import(ContainerPackage);
-  }
-}
-let configurator = new ProseEditorConfigurator().import(config)
+
+let cfg = new ProseEditorConfigurator()
+cfg.import(ProseEditorPackage);
+cfg.import(ContainerPackage);
 
 window.onload = function() {
-  let doc = configurator.createArticle(fixture)
-  let documentSession = new DocumentSession(doc)
+  let doc = cfg.createArticle(fixture)
+  let editorSession = new EditorSession(doc, {
+    configurator: cfg
+  })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: configurator
+    editorSession: editorSession
   }, document.body)
 }

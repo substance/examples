@@ -1,10 +1,10 @@
-const {
+import {
   Component, SplitPane, twoParagraphs, MessageQueue, TestWebSocketServer,
   TestWebSocketConnection, TestCollabServer, DocumentEngine, DocumentStore,
   ChangeStore, documentStoreSeed, changeStoreSeed, createTestDocumentFactory,
   ProseEditorConfigurator, ProseEditorPackage, Surface, CollabClient,
   TestCollabSession, ProseEditor
-} = substance
+} from 'substance'
 
 const collabWriterConfig = {
   name: 'collab-writer',
@@ -16,11 +16,6 @@ const collabWriterConfig = {
 }
 
 var configurator = new ProseEditorConfigurator().import(collabWriterConfig)
-
-// this flag prevents competing updates of DOM selections
-// which is only necessary in this example, where we host two
-// clients in one DOM
-Surface.MULTIPLE_APPS_ON_PAGE = true;
 
 class Client extends Component {
   constructor(...args) {
@@ -36,13 +31,12 @@ class Client extends Component {
       connection: this.props.connection
     });
 
-    this.doc = configurator.createArticle(twoParagraphs)
-
     // CollabSession expects a connected and authenticated collabClient
     this.session = new TestCollabSession(this.doc, {
+      configurator: configurator,
       collabClient: this.collabClient,
       documentId: 'test-doc',
-      version: 1,
+      version: 0,
       logging: true,
       autoSync: true
     });
@@ -56,8 +50,7 @@ class Client extends Component {
     var el = $$('div').addClass('sc-client').addClass('sm-'+this.props.userId);
     var editor = $$(ProseEditor, {
       disabled: this.props.disabled,
-      documentSession: this.session,
-      configurator: configurator,
+      editorSession: this.session
     }).ref('editor');
     if (this.props.disabled) {
       el.append(
@@ -97,7 +90,6 @@ class App extends Component {
         }
       }
     })
-
     this.messageQueue = new MessageQueue()
     this.wss = new TestWebSocketServer({
       messageQueue: this.messageQueue,

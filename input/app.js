@@ -1,7 +1,7 @@
-const {
-  ProseEditor, ProseEditorConfigurator, DocumentSession, DocumentNode,
+import {
+  ProseEditor, ProseEditorConfigurator, EditorSession, DocumentNode,
   ProseEditorPackage, Component
-} = substance
+} from 'substance'
 
 /*
   Node definition
@@ -17,14 +17,16 @@ InputNode.defineSchema({
   Node display component
 */
 class InputComponent extends Component {
-  // Register for model side updates
   didMount() {
-    this.props.node.on('content:changed', this.onContentChange, this)
+    // Register for model side updates
+    this.context.editorSession.onRender('document', this.onContentChange, this, {
+      path: [this.props.node.id, 'content']
+    })
   }
 
   // And please always deregister
   dispose() {
-    this.props.node.off(this)
+    this.context.editorSession.off(this)
   }
 
   render($$) {
@@ -43,10 +45,10 @@ class InputComponent extends Component {
 
   // this is called when the input's content has been changed
   onChange() {
-    let documentSession = this.context.documentSession
+    let editorSession = this.context.editorSession
     let node = this.props.node
     let newVal = this.refs.input.val()
-    documentSession.transaction(function(tx) {
+    editorSession.transaction(function(tx) {
       tx.set([node.id, 'content'], newVal)
     })
   }
@@ -106,20 +108,16 @@ const fixture = function(tx) {
 /*
   Application
 */
-let config = {
-  name: 'input-example',
-  configure: function(config) {
-    config.import(ProseEditorPackage)
-    config.import(InputPackage)
-  }
-}
-let configurator = new ProseEditorConfigurator().import(config)
+let cfg = new ProseEditorConfigurator()
+cfg.import(ProseEditorPackage)
+cfg.import(InputPackage)
 
 window.onload = function() {
-  let doc = configurator.createArticle(fixture)
-  let documentSession = new DocumentSession(doc)
+  let doc = cfg.createArticle(fixture)
+  let editorSession = new EditorSession(doc, {
+    configurator: cfg
+  })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: configurator
+    editorSession: editorSession
   }, document.body)
 }

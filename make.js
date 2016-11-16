@@ -12,7 +12,8 @@ var examples = [
   'inline-node',
   'input',
   'macros',
-  'nested'
+  'nested',
+  'minimal'
 ]
 
 b.task('clean', function() {
@@ -21,6 +22,10 @@ b.task('clean', function() {
 
 b.task('substance', function() {
   b.make('substance', 'clean', 'browser')
+})
+
+b.task('substance:pure', function() {
+  b.make('substance', 'clean', 'browser:pure')
 })
 
 b.task('assets', function() {
@@ -36,15 +41,27 @@ b.task('examples', function() {
   })
 })
 
-examples.forEach(function(name) {
-  b.task(name, function() {
+b.task('examples:pure', function() {
+  examples.forEach(function(name) {
     _example(name, false)
   })
 })
 
-b.task('default', ['clean', 'assets', 'examples'])
+examples.forEach(function(name) {
+  b.task('dev:'+name, ['substance:pure', 'assets'], function() {
+    _example(name, false)
+  })
 
-b.task('dev', ['substance', 'default'])
+  b.task(name, ['substance', 'assets'], function() {
+    _example(name, true)
+  })
+})
+
+// Used for deployment (transpiled js and css)
+b.task('default', ['clean', 'substance', 'assets', 'examples'])
+
+// Used for development (native js + css)
+b.task('dev', ['clean', 'substance:pure', 'assets', 'examples:pure'])
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)
@@ -52,7 +69,7 @@ b.serve({
   static: true, route: '/', folder: 'dist'
 })
 
-// builds one
+// builds one example
 function _example(name, legacy) {
   const src = './'+name+'/'
   const dist = './dist/'+name+'/'
@@ -64,6 +81,7 @@ function _example(name, legacy) {
   b.js(src+'app.js', {
     buble: legacy,
     commonjs: { include: ['/**/lodash/**'] },
+    external: ['substance'],
     targets: [{
       useStrict: !legacy,
       dest: dist+'app.js',
