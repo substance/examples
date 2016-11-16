@@ -17,11 +17,6 @@ const collabWriterConfig = {
 
 var configurator = new ProseEditorConfigurator().import(collabWriterConfig)
 
-// this flag prevents competing updates of DOM selections
-// which is only necessary in this example, where we host two
-// clients in one DOM
-Surface.MULTIPLE_APPS_ON_PAGE = true;
-
 class Client extends Component {
   constructor(...args) {
     super(...args)
@@ -36,13 +31,12 @@ class Client extends Component {
       connection: this.props.connection
     });
 
-    this.doc = configurator.createArticle(twoParagraphs)
-
     // CollabSession expects a connected and authenticated collabClient
     this.session = new TestCollabSession(this.doc, {
+      configurator: configurator,
       collabClient: this.collabClient,
       documentId: 'test-doc',
-      version: 1,
+      version: 0,
       logging: true,
       autoSync: true
     });
@@ -96,7 +90,6 @@ class App extends Component {
         }
       }
     })
-
     this.messageQueue = new MessageQueue()
     this.wss = new TestWebSocketServer({
       messageQueue: this.messageQueue,
