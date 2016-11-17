@@ -7,12 +7,13 @@ class MinimalEditor extends ProseEditor {
   render($$) {
     let el = $$('div').addClass('sc-minimal-editor')
     let editor = this._renderEditor($$)
-    let ScrollPane = this.componentRegistry.get('scroll-pane')
+    let BodyScrollPane = this.componentRegistry.get('body-scroll-pane')
     let Overlay = this.componentRegistry.get('overlay')
     let ContextMenu = this.componentRegistry.get('context-menu')
 
-    let scrollPane = $$(ScrollPane, {
-      noStyle: true
+    let scrollPane = $$(BodyScrollPane, {
+      noStyle: true,
+      contextMenu: 'custom'
     }).append(
       $$('div').addClass('se-minimal-editor-content').append(
         editor
@@ -23,7 +24,6 @@ class MinimalEditor extends ProseEditor {
       $$(AnnotationTools),
       $$(ContextMenu)
     )
-
     el.append(scrollPane)
     return el
   }

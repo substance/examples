@@ -7,7 +7,7 @@ class TextTools extends Toolbox {
 
   didMount() {
     super.didMount()
-    this.context.scrollPane.on('overlay:position', this._position, this)
+    this.context.scrollPane.on('dom-selection:rendered', this._position, this)
   }
 
   dispose() {
@@ -46,14 +46,12 @@ class TextTools extends Toolbox {
     if (this.hasActiveTools()) {
       this.el.removeClass('sm-hidden')
       if (hints) {
-        let contentWidth = this.el.htmlProp('offsetWidth')
         let selRect = hints.selectionRect
-        let innerContentRect = hints.innerContentRect
 
         // By default, gutter is centered (y-axis) and left of the scrollPane content (x-axis)
         this.el.css('top', selRect.top + selRect.height - selRect.height / 2)
         // Right align to the gutter
-        this.el.css('left', innerContentRect.left - contentWidth)
+        this.el.css('left', 20)
       }
     } else {
       this.el.addClass('sm-hidden')
