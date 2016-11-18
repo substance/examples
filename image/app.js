@@ -5,12 +5,10 @@ import {
 
 import fixture from './fixture'
 
-/*
-  Application
-*/
 let cfg = new ProseEditorConfigurator()
 cfg.import(ProseEditorPackage)
 cfg.import(ImagePackage)
+// Enable save button
 cfg.import(PersistencePackage)
 
 window.onload = function() {
