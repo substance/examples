@@ -1,7 +1,7 @@
 import {
   Component, ProseEditor, ProseEditorConfigurator, EditorSession,
   ProseEditorPackage, InlineNode, InsertInlineNodeCommand, EditInlineNodeCommand,
-  AnnotationTool, Tool, deleteSelection, substanceGlobals
+  AnnotationTool, Tool, substanceGlobals
 } from 'substance'
 
 substanceGlobals.DEBUG_RENDERING = true;
@@ -70,8 +70,8 @@ class EditInlineImageTool extends Tool {
 
   onDelete() {
     let editorSession = this.context.editorSession
-    editorSession.transaction(function(tx, args) {
-      return deleteSelection(tx, args)
+    editorSession.transaction(function(tx) {
+      tx.deleteSelection()
     })
   }
 }
