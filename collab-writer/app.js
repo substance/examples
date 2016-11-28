@@ -1,73 +1,13 @@
 import {
-  Component, SplitPane, twoParagraphs, MessageQueue, TestWebSocketServer,
+  Component, SplitPane, MessageQueue, TestWebSocketServer,
   TestWebSocketConnection, TestCollabServer, DocumentEngine, DocumentStore,
   ChangeStore, documentStoreSeed, changeStoreSeed, createTestDocumentFactory,
-  ProseEditorConfigurator, ProseEditorPackage, Surface, CollabClient,
-  TestCollabSession, ProseEditor
+  ProseEditorConfigurator, ProseEditorPackage, twoParagraphs
 } from 'substance'
 
-const collabWriterConfig = {
-  name: 'collab-writer',
-  configure: function(config) {
-    config.import(ProseEditorPackage)
-    // TODO: Add custom tools
-    // config.addTool...
-  }
-}
+import Client from './Client'
 
-var configurator = new ProseEditorConfigurator().import(collabWriterConfig)
-
-class Client extends Component {
-  constructor(...args) {
-    super(...args)
-
-    this.doc = configurator.createArticle(twoParagraphs)
-
-    if (!this.props.connection) {
-      throw new Error("'connection' is required.");
-    }
-
-    this.collabClient = new CollabClient({
-      connection: this.props.connection
-    });
-
-    // CollabSession expects a connected and authenticated collabClient
-    this.session = new TestCollabSession(this.doc, {
-      configurator: configurator,
-      collabClient: this.collabClient,
-      documentId: 'test-doc',
-      version: 0,
-      logging: true,
-      autoSync: true
-    });
-  }
-
-  didMount() {
-    this.refs.editor.refs.body.selectFirst();
-  }
-
-  render($$) {
-    var el = $$('div').addClass('sc-client').addClass('sm-'+this.props.userId);
-    var editor = $$(ProseEditor, {
-      disabled: this.props.disabled,
-      editorSession: this.session
-    }).ref('editor');
-    if (this.props.disabled) {
-      el.append(
-        $$('div').addClass('se-blocker')
-          .on('mousedown', this.onMousedown)
-      );
-    }
-    el.append(editor)
-    return el
-  }
-
-  onMousedown(e) {
-    e.stopPropagation()
-    e.preventDefault()
-    this.send('switchUser', this.props.userId)
-  }
-}
+var configurator = new ProseEditorConfigurator().import(ProseEditorPackage)
 
 /*
   App
@@ -116,6 +56,12 @@ class App extends Component {
     this.handleAction('switchUser', this.switchUser)
   }
 
+  getChildContext() {
+    return {
+      configurator: configurator
+    }
+  }
+
   render($$) {
     var el = $$('div').addClass('sc-two-editors')
     el.append(
@@ -125,12 +71,14 @@ class App extends Component {
       }).append(
         $$(Client, {
           userId: 'user1',
-          connection: this.conn1
+          connection: this.conn1,
+          debug: true
         }).ref('user1'),
         $$(Client, {
           userId: 'user2',
           connection: this.conn2,
-          disabled: true
+          disabled: true,
+          debug: true
         }).ref('user2')
       )
     )
