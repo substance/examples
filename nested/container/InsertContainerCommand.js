@@ -1,18 +1,13 @@
-import { InsertNodeCommand, insertNode } from 'substance'
+import { InsertNodeCommand } from 'substance'
 
 class InsertContainerCommand extends InsertNodeCommand {
 
-  insertNode(tx, args) {
-    let textType = tx.getSchema().getDefaultTextType()
-    let p = tx.create({
-      type: textType,
-      content: 'Lorem ipsum'
-    })
-    args.node = {
+  createNodeData(tx) {
+    let p = tx.createDefaultTextNode('Lorem ipsum.')
+    return {
       type: 'container',
       nodes: [p.id]
     }
-    return insertNode(tx, args)
   }
 }
 
