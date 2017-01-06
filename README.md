@@ -23,7 +23,7 @@ $ npm install
 $ npm start
 ```
 
-Now you can navigate to [http://localhost:5000](http://localhost:5000)
+Now you can navigate to [http://localhost:5555](http://localhost:5555)
 
 ## Questions
 
