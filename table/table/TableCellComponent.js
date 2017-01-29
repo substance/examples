@@ -1,13 +1,13 @@
-import { Component, TextPropertyComponent } from 'substance'
+import { Component, TextPropertyEditor } from 'substance'
 
 class TableCellComponent extends Component {
   render($$) {
     let node = this.props.node
     let el = $$('td').addClass('sc-table-cell')
-    el.attr('contenteditable', true)
     el.append(
-      $$(TextPropertyComponent, {
-        path: node.getTextPath()
+      $$(TextPropertyEditor, {
+        path: node.getTextPath(),
+        disabled: this.props.disabled
       })
     )
     if (node.rowspan > 0) {
@@ -19,5 +19,6 @@ class TableCellComponent extends Component {
     return el
   }
 }
+
 
 export default TableCellComponent
