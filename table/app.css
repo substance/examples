@@ -1,0 +1,6 @@
+@import '../common.css';
+@import './table/_table.css';
+
+body {
+  overflow: hidden;
+}
