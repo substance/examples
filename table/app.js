@@ -1,10 +1,9 @@
 import {
   ProseEditor, ProseEditorConfigurator, EditorSession,
-  ProseEditorPackage, ImagePackage
+  ProseEditorPackage, TablePackage
 } from 'substance'
 
 import fixture from './fixture'
-import TablePackage from './table/TablePackage'
 
 let cfg = new ProseEditorConfigurator()
 cfg.import(ProseEditorPackage)
