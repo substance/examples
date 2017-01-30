@@ -13,7 +13,8 @@ var examples = [
   'input',
   'macros',
   'nested',
-  'minimal'
+  'minimal',
+  'table'
 ]
 
 b.task('clean', function() {
