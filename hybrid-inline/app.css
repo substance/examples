@@ -4,7 +4,15 @@ body {
   overflow: hidden;
 }
 
-.sc-hybrid-inline > .se-container {
+.sc-hybrid-inline {
+  background: rgba(0,0,0, 0.3);
+}
+
+.sc-hybrid-inline > .se-content {
   padding: 2px 4px;
-  background: #eee;
+}
+
+.sc-hybrid-inline.sm-focused,
+.sc-hybrid-inline.sm-selected {
+  outline: 2px solid blue;
 }

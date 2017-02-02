@@ -53,7 +53,7 @@ class HybridInlineComponent extends InlineNodeComponent {
       tagName: 'span',
       path: [node.id, 'content'],
       withoutBreak: true
-    }).ref('content')
+    })
     return el
   }
 }
