@@ -4,12 +4,10 @@ var path = require('path')
 
 var examples = [
   'code-editor',
-  'collab-writer',
   'focused',
   'form',
   'hybrid-inline',
   'image',
-  'inception',
   'inline-node',
   'input',
   'macros',
