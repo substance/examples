@@ -59,14 +59,14 @@ class AlienComponent extends Component {
     event.preventDefault()
     event.stopPropagation()
 
-    let surface = this.context.surface
+    let editorSession = this.context.editorSession
     let node = this.props.node
 
     let mood = node.mood || 'normal'
     let idx = _moods.indexOf(mood)
     idx = (idx+1) % _moods.length
     mood = _moods[idx]
-    surface.transaction(function(tx) {
+    editorSession.transaction(function(tx) {
       tx.set([node.id, 'mood'], mood)
     })
     this.rerender()
