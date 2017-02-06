@@ -75,7 +75,7 @@ class ScriptEditor extends Component {
     let nodeId = this.props.node.id
     let source = editor.getValue()
     if (source !== this.props.node.source) {
-      this.context.surface.transaction(function(tx) {
+      this.context.editorSession.transaction(function(tx) {
         tx.set([nodeId, 'source'], editor.getValue())
       }, { source: this, skipSelection: true })
     }
