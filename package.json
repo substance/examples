@@ -2,7 +2,7 @@
   "name": "substance-examples",
   "description": "Substance examples",
   "devDependencies": {
-    "substance": "substance/substance#develop",
+    "substance": "substance/substance#isolated-nodes",
     "font-awesome": "4.5.0",
     "substance-bundler": "0.7.1",
     "ace-builds": "^1.2.2"
