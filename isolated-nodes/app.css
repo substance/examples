@@ -3,3 +3,11 @@
 body {
   overflow: hidden;
 }
+
+.sc-figure img {
+  max-width: 200px;
+}
+
+.sc-inline-image {
+  max-height: 30px;
+}
