@@ -20,24 +20,28 @@ b.task('clean', function() {
   b.rm('./dist')
 })
 
+b.task('substance:browser', function() {
+  b.make('substance', 'browser')
+})
+
 b.task('substance:css', function() {
   b.make('substance', 'css')
 })
 
-b.task('assets', ['substance:css'], function() {
+b.task('assets', ['substance:browser'], function() {
   b.copy('node_modules/font-awesome', './dist/lib/font-awesome')
   b.copy('node_modules/ace-builds/src', './dist/lib/ace')
   b.copy('node_modules/substance/dist', './dist/lib/substance')
   b.copy('./index.html', './dist/')
 })
 
-b.task('examples', function() {
+b.task('examples',  ['assets'], function() {
   examples.forEach(function(name) {
     _example(name, true)
   })
 })
 
-b.task('examples:pure', function() {
+b.task('examples:pure', ['assets'], function() {
   examples.forEach(function(name) {
     _example(name, false)
   })
@@ -74,15 +78,21 @@ function _example(name, legacy) {
   }
   b.copy(src+'index.html', dist)
   b.css(src+'app.css', dist+'app.css', { variables: legacy })
-  b.js(src+'app.js', {
+  let opts = {
     target: {
-      // useStrict: !legacy,
+      useStrict: !legacy,
       dest: dist+'app.js',
       format: 'umd', moduleName: 'example_'+name
     },
     ignore: ['./XNode'],
-    alias: {
+  }
+  if (legacy) {
+    opts.external = ['substance']
+    opts.buble = true
+  } else {
+    opts.alias = {
       'substance': path.join(__dirname, 'node_modules/substance/index.es.js')
-    },
-  })
+    }
+  }
+  b.js(src+'app.js', opts)
 }
