@@ -13,7 +13,8 @@ var examples = [
   'macros',
   'nested',
   'minimal',
-  'table'
+  'table',
+  'isolated-nodes',
 ]
 
 b.task('clean', function() {
