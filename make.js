@@ -13,7 +13,8 @@ var examples = [
   'macros',
   'nested',
   'minimal',
-  'table'
+  'table',
+  'isolated-nodes',
 ]
 
 b.task('clean', function() {
@@ -28,11 +29,24 @@ b.task('substance:css', function() {
   b.make('substance', 'css')
 })
 
-b.task('assets', ['substance:browser'], function() {
+function _assets(legacy) {
+  if (legacy) {
+    b.make('substance', 'browser')
+  } else {
+    b.make('substance', 'css')
+  }
   b.copy('node_modules/font-awesome', './dist/lib/font-awesome')
   b.copy('node_modules/ace-builds/src', './dist/lib/ace')
   b.copy('node_modules/substance/dist', './dist/lib/substance')
   b.copy('./index.html', './dist/')
+}
+
+b.task('assets', function() {
+  _assets(true)
+})
+
+b.task('assets:dev', function() {
+  _assets(false)
 })
 
 b.task('examples',  ['assets'], function() {
@@ -41,14 +55,14 @@ b.task('examples',  ['assets'], function() {
   })
 })
 
-b.task('examples:pure', ['assets'], function() {
+b.task('examples:dev', ['assets:dev'], function() {
   examples.forEach(function(name) {
     _example(name, false)
   })
 })
 
 examples.forEach(function(name) {
-  b.task('dev:'+name, ['assets'], function() {
+  b.task('dev:'+name, ['assets:dev'], function() {
     _example(name, false)
   })
 
@@ -61,7 +75,7 @@ examples.forEach(function(name) {
 b.task('default', ['clean', 'assets', 'examples'])
 
 // Used for development (native js + css)
-b.task('dev', ['clean', 'assets', 'examples:pure'])
+b.task('dev', ['clean', 'assets:dev', 'examples:dev'])
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)

@@ -1,18 +1,22 @@
 import {
   ProseEditor, ProseEditorConfigurator, EditorSession,
-  ProseEditorPackage, substanceGlobals
+  ProseEditorPackage, TablePackage
 } from 'substance'
-
-import InlineImagePackage from './InlineImagePackage'
+import ExampleFigureNode from './ExampleFigureNode'
+import ExampleFigureComponent from './ExampleFigureComponent'
+import InlineImagePackage from '../inline-node/InlineImagePackage'
 import fixture from './fixture'
-
-substanceGlobals.DEBUG_RENDERING = true;
 
 
 window.onload = function() {
   let cfg = new ProseEditorConfigurator()
+
   cfg.import(ProseEditorPackage)
+  cfg.import(TablePackage)
   cfg.import(InlineImagePackage)
+
+  cfg.addNode(ExampleFigureNode)
+  cfg.addComponent(ExampleFigureNode.type, ExampleFigureComponent)
 
   let doc = cfg.createArticle(fixture)
   let editorSession = new EditorSession(doc, {
