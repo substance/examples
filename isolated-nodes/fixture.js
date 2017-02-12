@@ -47,7 +47,7 @@ export default function(tx) {
   tx.create({
     id: 'fig1',
     type: 'figure',
-    url: 'https://pbs.twimg.com/profile_images/706616363599532032/b5z-Hw5g.jpg',
+    url: './assets/alien.svg',
     caption: 'This is the figure caption'
   })
   body.show('fig1')

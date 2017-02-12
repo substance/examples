@@ -1,6 +1,6 @@
 import {
   ProseEditor, ProseEditorConfigurator, EditorSession,
-  ProseEditorPackage, TablePackage
+  ProseEditorPackage
 } from 'substance'
 import ExampleFigureNode from './ExampleFigureNode'
 import ExampleFigureComponent from './ExampleFigureComponent'
@@ -12,7 +12,6 @@ window.onload = function() {
   let cfg = new ProseEditorConfigurator()
 
   cfg.import(ProseEditorPackage)
-  cfg.import(TablePackage)
   cfg.import(InlineImagePackage)
 
   cfg.addNode(ExampleFigureNode)
