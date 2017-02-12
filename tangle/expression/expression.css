@@ -1,0 +1,41 @@
+.sc-expression .se-content {
+  padding: 3px 4px;
+}
+
+.sc-expression .se-confirm-value {
+  color: rgba(0, 255, 0, 0.8);
+  display: inline;
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.sc-expression.sm-show-source {
+  color: rgba(0, 0, 0, 0.5);
+  /*background: rgba(0, 0, 0, 0.2);*/
+}
+
+.sc-expression.sm-show-source::before {
+  content: "[";
+}
+
+.sc-expression.sm-show-source::after {
+  content: "]";
+}
+
+.sc-expression.sm-inline {
+  color: rgba(0, 0, 255, 0.8);
+  font-style: italic;
+}
+
+.sc-expression.sm-inline.sm-variable {
+  color: rgba(0, 255, 0, 0.8);
+}
+
+.sc-expression.sm-highlighted {
+  outline: 2px dashed rgba(160,82,45, 0.4);
+  background: rgba(160,82,45, 0.1);
+}
+
+.sc-edit-expression-tool > * {
+  display: inline-block;
+}
