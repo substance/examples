@@ -15,6 +15,7 @@ var examples = [
   'minimal',
   'table',
   'isolated-nodes',
+  'tangle',
 ]
 
 b.task('clean', function() {
