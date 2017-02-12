@@ -1,5 +1,4 @@
-import { InlineNode } from 'substance'
-import Fragmenter from 'substance/model/Fragmenter'
+import { InlineNode, Fragmenter } from 'substance'
 
 class Expression extends InlineNode {
 

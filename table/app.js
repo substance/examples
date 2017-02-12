@@ -1,13 +1,12 @@
 import {
   ProseEditor, ProseEditorConfigurator, EditorSession,
-  ProseEditorPackage, TablePackage
+  ProseEditorPackage
 } from 'substance'
 
 import fixture from './fixture'
 
 let cfg = new ProseEditorConfigurator()
 cfg.import(ProseEditorPackage)
-cfg.import(TablePackage)
 
 window.onload = function() {
   let doc = cfg.createArticle(fixture)

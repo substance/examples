@@ -6,13 +6,11 @@ var examples = [
   'code-editor',
   'focused',
   'form',
-  'hybrid-inline',
   'image',
   'inline-node',
   'input',
   'macros',
   'nested',
-  'minimal',
   'table',
   'isolated-nodes',
   'tangle',
@@ -22,20 +20,7 @@ b.task('clean', function() {
   b.rm('./dist')
 })
 
-b.task('substance:browser', function() {
-  b.make('substance', 'browser')
-})
-
-b.task('substance:css', function() {
-  b.make('substance', 'css')
-})
-
 function _assets(legacy) {
-  if (legacy) {
-    b.make('substance', 'browser')
-  } else {
-    b.make('substance', 'css')
-  }
   b.copy('node_modules/font-awesome', './dist/lib/font-awesome')
   b.copy('node_modules/ace-builds/src', './dist/lib/ace')
   b.copy('node_modules/substance/dist', './dist/lib/substance')
@@ -46,7 +31,7 @@ b.task('assets', function() {
   _assets(true)
 })
 
-b.task('assets:dev', function() {
+b.task('dev:assets', function() {
   _assets(false)
 })
 
@@ -56,14 +41,14 @@ b.task('examples',  ['assets'], function() {
   })
 })
 
-b.task('examples:dev', ['assets:dev'], function() {
+b.task('dev:examples', ['dev:assets'], function() {
   examples.forEach(function(name) {
     _example(name, false)
   })
 })
 
 examples.forEach(function(name) {
-  b.task('dev:'+name, ['assets:dev'], function() {
+  b.task('dev:'+name, ['dev:assets'], function() {
     _example(name, false)
   })
 
@@ -76,7 +61,7 @@ examples.forEach(function(name) {
 b.task('default', ['clean', 'assets', 'examples'])
 
 // Used for development (native js + css)
-b.task('dev', ['clean', 'assets:dev', 'examples:dev'])
+b.task('dev', ['clean', 'dev:assets', 'dev:examples'])
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5555)
