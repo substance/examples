@@ -60,13 +60,13 @@ class EditExpressionTool extends Tool {
 
   _onDragValue(event) {
     let node = this.props.node
-    console.log('UPDATING VALUE')
+    // console.log('UPDATING VALUE')
     let diff = event.clientX - this._startX
     if (node.units) {
       diff *= Expression.UNITS[node.units]
     }
     let prelimValue = this._value + diff
-    console.log('#### ', prelimValue)
+    // console.log('#### ', prelimValue)
     node._preliminaryValue = prelimValue
     node.getDocument().emit('expression:update')
   }
