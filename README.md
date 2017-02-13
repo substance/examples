@@ -10,12 +10,6 @@ You can start playing around with the code by cloning this repo and starting the
 $ git clone https://github.com/substance/examples.git
 ```
 
-Unless you want to make contributions to the lastest development version, please checkout the master branch which shows usage of the latest Substance release.
-
-```bash
-git checkout master
-```
-
 Now install dependencies and start the dev environment.
 
 ```bash
