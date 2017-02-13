@@ -2,6 +2,10 @@ var b = require('substance-bundler');
 var fs = require('fs')
 var path = require('path')
 
+// We need to increase the maximum number of allowed listeners as we want to
+// watch for changes on a large number of files
+require('events').EventEmitter.prototype._maxListeners = 100
+
 var examples = [
   'code-editor',
   'focused',
