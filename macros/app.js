@@ -1,7 +1,7 @@
-const {
-  ProseEditor, ProseEditorConfigurator, DocumentSession,
+import {
+  ProseEditor, ProseEditorConfigurator, EditorSession,
   ProseEditorPackage, HeadingMacro
-} = substance
+} from 'substance'
 
 /*
   Example document
@@ -25,20 +25,17 @@ const fixture = function(tx) {
 /*
   Application
 */
-let config = {
-  name: 'macros-example',
-  configure: function(config) {
-    config.import(ProseEditorPackage)
-    config.addMacro(HeadingMacro)
-  }
-}
-let configurator = new ProseEditorConfigurator().import(config)
+
+let cfg = new ProseEditorConfigurator()
+cfg.import(ProseEditorPackage)
+cfg.addMacro(HeadingMacro)
 
 window.onload = function() {
-  let doc = configurator.createArticle(fixture)
-  let documentSession = new DocumentSession(doc)
+  let doc = cfg.createArticle(fixture)
+  let editorSession = new EditorSession(doc, {
+    configurator: cfg
+  })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: configurator
+    editorSession: editorSession
   }, document.body)
 }

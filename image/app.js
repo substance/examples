@@ -1,51 +1,43 @@
-const {
-  ProseEditor, ProseEditorConfigurator, DocumentSession,
-  ProseEditorPackage, ImagePackage
-} = substance
+import {
+  ProseEditor, ProseEditorConfigurator, EditorSession,
+  ProseEditorPackage, ImagePackage, PersistencePackage
+} from 'substance'
 
-/*
-  Example document
-*/
-const fixture = function(tx) {
-  let body = tx.get('body')
-  tx.create({
-    id: 'p1',
-    type: 'paragraph',
-    content: "Insert a new image using the image tool."
-  })
-  body.show('p1')
-  tx.create({
-    id: 'i1',
-    type: 'image',
-    src: "http://substance.io/images/stencila.gif"
-  })
-  body.show('i1')
-  tx.create({
-    id: 'p2',
-    type: 'paragraph',
-    content: "Please note that images are not actually uploaded in this example. You would need to provide a custom file client that talks to an image store. See FileClientStub which reveals the API you have to implement."
-  })
-  body.show('p2')
-}
+import fixture from './fixture'
 
+class SaveHandlerStub {
 
-/*
-  Application
-*/
-let config = {
-  name: 'image-example',
-  configure: function(config) {
-    config.import(ProseEditorPackage)
-    config.import(ImagePackage)
+  /*
+    Saving a document involves two steps.
+    - syncing files (e.g. images) with a backend
+    - storing a snapshot of the document's content (e.g. a XML serialization)
+  */
+  saveDocument(params) {
+    console.info('Simulating save ...', params)
+
+    return params.fileManager.sync()
+    .then(() => {
+      // Here you would run a converter (HTML/XML) usually
+      // and send the result to a REST endpoint.
+      console.info('Creating document snapshot...')
+    })
+
   }
 }
-let configurator = new ProseEditorConfigurator().import(config)
+
+let cfg = new ProseEditorConfigurator()
+cfg.import(ProseEditorPackage)
+cfg.import(ImagePackage)
+// Enable save button
+cfg.import(PersistencePackage)
+cfg.setSaveHandlerClass(SaveHandlerStub)
 
 window.onload = function() {
-  let doc = configurator.createArticle(fixture)
-  let documentSession = new DocumentSession(doc)
+  let doc = cfg.createArticle(fixture)
+  let editorSession = new EditorSession(doc, {
+    configurator: cfg
+  })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: configurator
+    editorSession: editorSession
   }, document.body)
 }

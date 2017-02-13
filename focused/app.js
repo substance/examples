@@ -1,7 +1,7 @@
-const {
-  Component, ProseEditor, DocumentNode, ProseEditorConfigurator, DocumentSession,
-  ProseEditorPackage,
-} = substance
+import {
+  Component, ProseEditor, DocumentNode, ProseEditorConfigurator,
+  EditorSession, ProseEditorPackage,
+} from 'substance'
 
 /*
   Node definition
@@ -22,17 +22,19 @@ const _moods = ['normal', 'angry', 'excited', 'sad', 'sick']
 class AlienComponent extends Component {
 
   didMount() {
-    this.props.node.on('mood:changed', this.rerender, this)
+    this.context.editorSession.onRender('document', this.rerender, this, {
+      path: [this.props.node.id, 'mood']
+    })
   }
 
   dispose() {
-    this.props.node.off(this)
+    this.context.editorSession.off(this)
   }
 
   render($$) {
     let el = $$('div').addClass('sc-alien sg-hide-selection')
     el.append(
-      $$('img').attr('height', 100).attr('src', 'alien.svg')
+      $$('img').attr('height', 100).attr('src', 'assets/alien.svg')
     )
     if (this.props.node.mood) {
       el.addClass('sm-' + this.props.node.mood)
@@ -57,14 +59,14 @@ class AlienComponent extends Component {
     event.preventDefault()
     event.stopPropagation()
 
-    let surface = this.context.surface
+    let editorSession = this.context.editorSession
     let node = this.props.node
 
     let mood = node.mood || 'normal'
     let idx = _moods.indexOf(mood)
     idx = (idx+1) % _moods.length
     mood = _moods[idx]
-    surface.transaction(function(tx) {
+    editorSession.transaction(function(tx) {
       tx.set([node.id, 'mood'], mood)
     })
     this.rerender()
@@ -87,7 +89,6 @@ const AlienPackage = {
 */
 const fixture = function(tx) {
   let body = tx.get('body')
-
   tx.create({
     id: 'title',
     type: 'heading',
@@ -121,23 +122,17 @@ const fixture = function(tx) {
 /*
   Application
 */
-
-let config = {
-  name: 'focused-example',
-  configure: function(config) {
-    config.import(ProseEditorPackage)
-    config.import(AlienPackage)
-  }
-}
-let configurator = new ProseEditorConfigurator().import(config)
+let cfg = new ProseEditorConfigurator()
+cfg.import(ProseEditorPackage)
+cfg.import(AlienPackage)
 
 window.onload = function() {
-  let doc = configurator.createArticle(fixture)
-  let documentSession = new DocumentSession(doc)
+  let doc = cfg.createArticle(fixture)
+  let editorSession = new EditorSession(doc, {
+    configurator: cfg
+  })
   ProseEditor.mount({
-    documentSession: documentSession,
-    configurator: configurator
+    editorSession: editorSession
   }, document.body)
 }
-
 
