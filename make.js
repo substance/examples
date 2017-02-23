@@ -14,6 +14,7 @@ var examples = [
   'inline-node',
   'input',
   'macros',
+  'container-annotation',
   'nested',
   'table',
   'isolated-nodes',

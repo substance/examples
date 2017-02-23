@@ -1,0 +1,9 @@
+@import '../common.css';
+
+.sc-highlight {
+  background: rgba(255, 200, 50, 0.3);
+}
+
+body {
+  overflow: hidden;
+}
