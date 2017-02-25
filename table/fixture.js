@@ -9,7 +9,7 @@ export default function(tx) {
 
   // row-1
   tx.create({ id: 'tc1', type: 'table-cell', content: "A1:A2", rowspan: 2 })
-  tx.create({ id: 'tc2', type: 'table-cell', content: "B1",    colspan: 2 })
+  tx.create({ id: 'tc2', type: 'table-cell', content: "B1", colspan: 2 })
   // row-2
   tx.create({ id: 'tc3', type: 'table-cell', content: "B2"})
   tx.create({ id: 'tc4', type: 'table-cell', content: "C2"})
@@ -24,7 +24,7 @@ export default function(tx) {
     // null values mark merged cells
     cells: [
       ['tc1', 'tc2', null ],
-      [null,  'tc3', 'tc4'],
+      [null, 'tc3', 'tc4'],
       ['tc5', 'tc6', 'tc7']
     ]
   })

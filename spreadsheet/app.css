@@ -1,0 +1,6 @@
+@import '../common.css';
+@import './spreadsheet/_spreadsheet.css';
+
+body {
+  overflow: hidden;
+}

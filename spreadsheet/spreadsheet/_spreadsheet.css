@@ -1,0 +1,9 @@
+.sc-spreadsheet {
+  display: table;
+  width: 100%;
+}
+.sc-spreadsheet .sc-spreadsheet-cell {
+  border: 1px solid #ddd;
+  padding: 5px;
+  height: 30px;
+}

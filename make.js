@@ -15,16 +15,17 @@ var examples = [
   'input',
   'macros',
   'nested',
+  'spreadsheet',
   'table',
   'isolated-nodes',
-  'tangle',
+  'tangle'
 ]
 
 b.task('clean', function() {
   b.rm('./dist')
 })
 
-function _assets(legacy) {
+function _assets() {
   b.copy('node_modules/font-awesome', './dist/lib/font-awesome')
   b.copy('node_modules/ace-builds/src', './dist/lib/ace')
   b.copy('node_modules/substance/dist', './dist/lib/substance')
