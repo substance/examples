@@ -1,9 +1,14 @@
 .sc-spreadsheet {
   display: table;
-  width: 100%;
+  /*width: 100%;*/
 }
 .sc-spreadsheet .sc-spreadsheet-cell {
   border: 1px solid #ddd;
   padding: 5px;
   height: 30px;
+  width: 100px;
+}
+
+.sc-spreadsheet .sc-spreadsheet-cell.sm-edit {
+  outline: 2px solid var(--local-selection-color);
 }

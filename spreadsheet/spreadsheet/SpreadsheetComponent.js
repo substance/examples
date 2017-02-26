@@ -20,56 +20,35 @@ class SpreadsheetComponent extends Component {
           let cellEl = $$(SpreadsheetCellComponent, {
             node: cellNode,
             disabled: this.props.disabled
-          }).ref(cellNode.id)
+          })
+          .ref(cellNode.id)
+          .on('dblclick', this.onDblClick)
+
           rowEl.append(cellEl)
         }
       }
       el.append(rowEl)
     }
-    el.on('click', this.onClick)
-    el.on('dblclick', this.onDblClick)
     return el
   }
 
   onClick(event) {
-    event.stopPropagation()
     // console.log('Clicked on Table', this.props.node.id, event.target)
   }
 
-  // TODO: this should only be used for the initial table state
   onDblClick(event) {
     event.stopPropagation()
-    // console.log('DblClicked on Spreadsheet', this.props.node.id, event.target)
-
-    // HACK: assuming that if the event.target has a surface
-    // it is a TextPropertyEditor of a cell
-    let comp = Component.unwrap(event.target)
-    if (comp) {
-      let cellComp
-      if (comp._isSpreadsheetCellComponent) {
-        cellComp = comp
-      } else if (comp._isTextPropertyEditor) {
-        cellComp = comp.getParent()
-      } else if (comp._isTextPropertyComponent) {
-        cellComp = comp.getParent().getParent()
-      } else {
-        console.warn('TODO: find the right cell')
-      }
-      if (cellComp) {
-        cellComp.grabFocus()
-      }
+    let comp = Component.unwrap(event.currentTarget)
+    if (this.editedCell) {
+      this.editedCell.extendProps({
+        edit: false
+      })
     }
-  }
-
-  grabFocus() {
-    let cellId = this.props.node.cells[0][0]
-    if (cellId) {
-      let comp = this.refs[cellId]
-      comp.grabFocus()
-    }
+    this.editedCell = comp
+    this.editedCell.extendProps({
+      edit: true
+    })
   }
 }
-
-SpreadsheetComponent.hasDropzones = true
 
 export default SpreadsheetComponent

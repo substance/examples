@@ -6,11 +6,21 @@ class SpreadsheetCellComponent extends Component {
   render($$) {
     let node = this.props.node
     let el = $$('td').addClass('sc-spreadsheet-cell')
-    el.append(
-      $$(SpreadsheetCellEditor, {
-        content: node.source
-      }).ref('sourceEditor')
-    )
+
+    if (this.props.edit) {
+      el.addClass('sm-edit')
+      el.append(
+        $$(SpreadsheetCellEditor, {
+          content: node.source
+        }).ref('sourceEditor')
+      )
+    } else {
+      // Render value
+      el.append(
+        $$('div').append(node.value)
+      )
+    }
+
     if (node.rowspan > 0) {
       el.attr('rowspan', node.rowspan)
     }

@@ -53,7 +53,7 @@ class SpreadsheetCellEditor extends Component {
   }
 
   render($$) {
-    let el = $$('div').addClass('sc-rich-text-area')
+    let el = $$('div').addClass('sc-spreadsheet-cell-editor')
     el.append(
       $$(SourceTextEditor, {
         editorSession: this.editorSession,
