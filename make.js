@@ -40,7 +40,7 @@ b.task('dev:assets', function() {
   _assets(false)
 })
 
-b.task('examples',  ['assets'], function() {
+b.task('examples', ['assets'], function() {
   examples.forEach(function(name) {
     _example(name, true)
   })

@@ -1,16 +1,15 @@
-import { Component } from 'substance'
+import { Component } from 'substance'
 // import TextPropertyEditor from '../../ui/TextPropertyEditor'
+import SpreadsheetCellEditor from '../spreadsheet-cell-editor/SpreadsheetCellEditor'
 
 class SpreadsheetCellComponent extends Component {
   render($$) {
     let node = this.props.node
     let el = $$('td').addClass('sc-spreadsheet-cell')
     el.append(
-      node.content
-      // $$(TextPropertyEditor, {
-      //   path: node.getTextPath(),
-      //   disabled: this.props.disabled
-      // }).ref('editor')
+      $$(SpreadsheetCellEditor, {
+        content: node.source
+      }).ref('sourceEditor')
     )
     if (node.rowspan > 0) {
       el.attr('rowspan', node.rowspan)
