@@ -20,16 +20,48 @@ var examples = [
   'tangle',
 ]
 
-b.task('clean', function() {
-  b.rm('./dist')
-})
+function _buildSubstance() {
+  if (!fs.existsSync(path.join(__dirname, 'node_modules/substance/dist/substance.js'))){
+    b.make('substance', 'browser:pure')
+  }
+}
 
-function _assets(legacy) {
+function _assets() {
   b.copy('node_modules/font-awesome', './dist/lib/font-awesome')
   b.copy('node_modules/ace-builds/src', './dist/lib/ace')
   b.copy('node_modules/substance/dist', './dist/lib/substance')
   b.copy('./index.html', './dist/')
 }
+
+// builds one example
+function _example(name, legacy) {
+  const src = './'+name+'/'
+  const dist = './dist/'+name+'/'
+  if (fs.existsSync(src+'assets')) {
+    b.copy(src+'assets', dist+'assets')
+  }
+  b.copy(src+'index.html', dist)
+  b.css(src+'app.css', dist+'app.css', { variables: legacy })
+  let opts = {
+    target: {
+      useStrict: !legacy,
+      dest: dist+'app.js',
+      format: 'umd', moduleName: 'example_'+name
+    },
+    ignore: ['./XNode'],
+  }
+  opts.external = {
+    'substance': 'window.substance'
+  }
+  if (legacy) {
+    opts.buble = true
+  }
+  b.js(src+'app.js', opts)
+}
+
+b.task('clean', function() {
+  b.rm('./dist')
+})
 
 b.task('assets', function() {
   _assets(true)
@@ -72,31 +104,3 @@ b.setServerPort(5555)
 b.serve({
   static: true, route: '/', folder: 'dist'
 })
-
-// builds one example
-function _example(name, legacy) {
-  const src = './'+name+'/'
-  const dist = './dist/'+name+'/'
-  if (fs.existsSync(src+'assets')) {
-    b.copy(src+'assets', dist+'assets')
-  }
-  b.copy(src+'index.html', dist)
-  b.css(src+'app.css', dist+'app.css', { variables: legacy })
-  let opts = {
-    target: {
-      useStrict: !legacy,
-      dest: dist+'app.js',
-      format: 'umd', moduleName: 'example_'+name
-    },
-    ignore: ['./XNode'],
-  }
-  if (legacy) {
-    opts.external = ['substance']
-    opts.buble = true
-  } else {
-    opts.alias = {
-      'substance': path.join(__dirname, 'node_modules/substance/index.es.js')
-    }
-  }
-  b.js(src+'app.js', opts)
-}
