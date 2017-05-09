@@ -1,4 +1,4 @@
-import { AnnotationTool, InsertInlineNodeCommand, EditInlineNodeCommand } from 'substance'
+import { InsertInlineNodeCommand, EditInlineNodeCommand } from 'substance'
 import InlineImage from './InlineImage'
 import InlineImageComponent from './InlineImageComponent'
 import EditInlineImageTool from './EditInlineImageTool'
@@ -12,10 +12,16 @@ export default {
   configure: function(config) {
     config.addNode(InlineImage)
     config.addComponent(InlineImage.type, InlineImageComponent)
-    config.addCommand('add-inline-image', InsertInlineNodeCommand, {nodeType: InlineImage.type})
-    config.addCommand('edit-inline-image', EditInlineNodeCommand, {nodeType: InlineImage.type})
-    config.addTool('add-inline-image', AnnotationTool, { toolGroup: 'insert'})
-    config.addTool('edit-inline-image', EditInlineImageTool, { toolGroup: 'overlay' })
+    config.addCommand('add-inline-image', InsertInlineNodeCommand, {
+      nodeType: InlineImage.type,
+      commandGroup: 'insert'
+    })
+    config.addCommand('edit-inline-image', EditInlineNodeCommand, {
+      nodeType: InlineImage.type,
+      commandGroup: 'prompt'
+    })
+
+    config.addTool('edit-inline-image', EditInlineImageTool)
     config.addIcon('add-inline-image', { 'fontawesome': 'fa-image' })
     config.addLabel('add-inline-image', 'Inline Image')
   }

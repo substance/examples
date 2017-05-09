@@ -1,7 +1,9 @@
 import {
-  ProseEditor, ProseEditorConfigurator, EditorSession,
+  Configurator, EditorSession,
   ProseEditorPackage, ImagePackage, PersistencePackage
 } from 'substance'
+
+const { ProseEditor } = ProseEditorPackage
 
 import fixture from './fixture'
 
@@ -21,11 +23,10 @@ class SaveHandlerStub {
       // and send the result to a REST endpoint.
       console.info('Creating document snapshot...')
     })
-
   }
 }
 
-let cfg = new ProseEditorConfigurator()
+let cfg = new Configurator()
 cfg.import(ProseEditorPackage)
 cfg.import(ImagePackage)
 // Enable save button

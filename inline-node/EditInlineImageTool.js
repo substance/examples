@@ -7,12 +7,12 @@ class EditInlineImageTool extends Tool {
 
   getUrlPath() {
     let propPath = this.constructor.urlPropertyPath
-    return [this.props.node.id].concat(propPath)
+    let nodeId = this.props.commandState.nodeId
+    return [nodeId].concat(propPath)
   }
 
   render($$) {
     let Input = this.getComponent('input')
-    let Button = this.getComponent('button')
     let el = $$('div').addClass('sc-edit-link-tool')
     let urlPath = this.getUrlPath()
 
@@ -21,20 +21,9 @@ class EditInlineImageTool extends Tool {
         type: 'url',
         path: urlPath,
         placeholder: 'Paste or type an image url'
-      }),
-      $$(Button, {
-        icon: 'delete',
-        style: this.props.style
-      }).on('click', this.onDelete)
+      })
     )
     return el
-  }
-
-  onDelete() {
-    let editorSession = this.context.editorSession
-    editorSession.transaction(function(tx) {
-      tx.deleteSelection()
-    })
   }
 }
 

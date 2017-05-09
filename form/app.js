@@ -1,7 +1,9 @@
 import {
-  ProseEditor, ProseEditorConfigurator, EditorSession, DocumentNode,
+  Configurator, EditorSession, DocumentNode,
   ProseEditorPackage, BlockNodeComponent, TextPropertyEditor
 } from 'substance'
+
+const { ProseEditor } = ProseEditorPackage
 
 /*
   Node definition
@@ -111,7 +113,7 @@ const fixture = function(tx) {
 /*
   Application
 */
-let cfg = new ProseEditorConfigurator()
+let cfg = new Configurator()
 cfg.import(ProseEditorPackage)
 cfg.import(EntityPackage)
 
