@@ -4,14 +4,14 @@ import Expression from './Expression'
 class EditExpressionTool extends Tool {
 
   render($$) {
-    let node = this.props.node
+    let node = this.props.commandState.node
     let Button = this.getComponent('button')
 
     let el = $$('div').addClass('sc-edit-expression-tool')
     el.append(
       $$(Button, {
         icon: 'edit-value',
-        style: this.props.style
+        theme: this.props.theme
       }).attr('title', 'Toggle mode')
         .on('click', this._onToggle)
     )
@@ -20,7 +20,7 @@ class EditExpressionTool extends Tool {
       el.append(
         $$(Button, {
           icon: 'drag-value',
-          style: this.props.style
+          theme: this.props.theme
         }).attr('title', 'Change Value')
           .on('mousedown', this._startDragValue)
       )
@@ -29,7 +29,7 @@ class EditExpressionTool extends Tool {
     el.append(
       $$(Button, {
         icon: 'delete',
-        style: this.props.style
+        theme: this.props.theme
       }).attr('title', 'Remove')
         .on('click', this._onDelete)
     )
@@ -37,11 +37,11 @@ class EditExpressionTool extends Tool {
   }
 
   _onToggle() {
-    this.props.node.emit('toggle:showSource')
+    this.props.commandState.node.emit('toggle:showSource')
   }
 
   _onDelete() {
-    let node = this.props.node
+    let node = this.props.commandState.node
     let editorSession = this.context.editorSession
     editorSession.transaction((tx) => {
       tx.selection = node.getSelection()
@@ -50,7 +50,7 @@ class EditExpressionTool extends Tool {
   }
 
   _startDragValue(event) {
-    let node = this.props.node
+    let node = this.props.commandState.node
     let wdoc = DefaultDOMElement.wrapNativeElement(window.document)
     wdoc.on('mousemove', this._onDragValue, this)
     wdoc.on('mouseup', this._finishDragValue, this)
@@ -59,7 +59,7 @@ class EditExpressionTool extends Tool {
   }
 
   _onDragValue(event) {
-    let node = this.props.node
+    let node = this.props.commandState.node
     // console.log('UPDATING VALUE')
     let diff = event.clientX - this._startX
     if (node.units) {
@@ -75,7 +75,7 @@ class EditExpressionTool extends Tool {
     let wdoc = DefaultDOMElement.wrapNativeElement(window.document)
     wdoc.off(this)
 
-    let node = this.props.node
+    let node = this.props.commandState.node
     let editorSession = this.context.editorSession
     let newVal = node._preliminaryValue
     delete node._preliminaryValue

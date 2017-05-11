@@ -1,11 +1,13 @@
 import {
-  EditorSession, ProseEditor, ProseEditorConfigurator, ProseEditorPackage
+  EditorSession, Configurator, ProseEditorPackage
 } from 'substance'
 import ExpressionPackage from './expression/ExpressionPackage'
 import ExpressionReferencePackage from './expression-reference/ExpressionReferencePackage'
 import fixture from './fixture'
 
-let cfg = new ProseEditorConfigurator()
+const { ProseEditor } = ProseEditorPackage
+
+let cfg = new Configurator()
 cfg.import(ProseEditorPackage)
 cfg.import(ExpressionPackage)
 cfg.import(ExpressionReferencePackage)

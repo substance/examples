@@ -1,15 +1,15 @@
 import {
-  ProseEditor, ProseEditorConfigurator, EditorSession,
-  ProseEditorPackage
+  Configurator, EditorSession, ProseEditorPackage
 } from 'substance'
 import ExampleFigureNode from './ExampleFigureNode'
 import ExampleFigureComponent from './ExampleFigureComponent'
 import InlineImagePackage from '../inline-node/InlineImagePackage'
 import fixture from './fixture'
 
+const { ProseEditor } = ProseEditorPackage
 
 window.onload = function() {
-  let cfg = new ProseEditorConfigurator()
+  let cfg = new Configurator()
 
   cfg.import(ProseEditorPackage)
   cfg.import(InlineImagePackage)

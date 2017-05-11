@@ -1,7 +1,9 @@
 import {
-  Component, ProseEditor, ProseEditorConfigurator, EditorSession,
-  ProseEditorPackage, BlockNode, Tool, InsertNodeCommand
+  Component, Configurator, EditorSession,
+  ProseEditorPackage, BlockNode, InsertNodeCommand
 } from 'substance'
+
+const { ProseEditor } = ProseEditorPackage
 
 /*
   Node definition
@@ -29,7 +31,7 @@ class ScriptEditor extends Component {
 
   // don't rerender because this would destroy ACE
   shouldRerender() {
-    return false;
+    return false
   }
 
   didMount() {
@@ -57,7 +59,7 @@ class ScriptEditor extends Component {
         editor.blur()
       }.bind(this),
       readOnly: true // false if this command should not apply in readOnly mode
-    });
+    })
 
     this.editor = editor
     editorSession.onRender('document', this._onModelChange, this, {
@@ -111,8 +113,9 @@ let ScriptPackage = {
   configure: function(config) {
     config.addNode(Script)
     config.addComponent(Script.type, ScriptEditor)
-    config.addCommand('insert-script', InsertScriptCommand)
-    config.addTool('insert-script', Tool, {toolGroup: 'insert'})
+    config.addCommand('insert-script', InsertScriptCommand, {
+      commandGroup: 'insert'
+    })
     config.addIcon('insert-script', { 'fontawesome': 'fa-code' })
     config.addLabel('insert-script', 'Source Code')
   }
@@ -148,7 +151,7 @@ let fixture = function(tx) {
       "  alert('Hello World!');",
       "}"
     ].join("\n")
-  });
+  })
   body.show('s1')
   tx.create({
     id: 'the-end',
@@ -163,7 +166,7 @@ let fixture = function(tx) {
 /*
   Application
 */
-let cfg = new ProseEditorConfigurator()
+let cfg = new Configurator()
 cfg.import(ProseEditorPackage)
 cfg.import(ScriptPackage)
 

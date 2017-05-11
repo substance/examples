@@ -1,7 +1,9 @@
 import {
-  ProseEditor, ProseEditorConfigurator, EditorSession,
+  Configurator, EditorSession,
   ProseEditorPackage, substanceGlobals
 } from 'substance'
+
+const { ProseEditor } = ProseEditorPackage
 
 import InlineImagePackage from './InlineImagePackage'
 import fixture from './fixture'
@@ -10,7 +12,7 @@ substanceGlobals.DEBUG_RENDERING = true;
 
 
 window.onload = function() {
-  let cfg = new ProseEditorConfigurator()
+  let cfg = new Configurator()
   cfg.import(ProseEditorPackage)
   cfg.import(InlineImagePackage)
 

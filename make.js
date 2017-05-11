@@ -100,7 +100,7 @@ b.task('default', ['clean', 'assets', 'examples'])
 b.task('dev', ['clean', 'dev:assets', 'dev:examples'])
 
 // starts a server when CLI argument '-s' is set
-b.setServerPort(5555)
+b.setServerPort(5556)
 b.serve({
   static: true, route: '/', folder: 'dist'
 })

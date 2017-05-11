@@ -1,7 +1,10 @@
 import {
-  Component, ProseEditor, DocumentNode, ProseEditorConfigurator,
+  Component, DocumentNode, Configurator,
   EditorSession, ProseEditorPackage,
 } from 'substance'
+
+const { ProseEditor } = ProseEditorPackage
+
 
 /*
   Node definition
@@ -122,7 +125,7 @@ const fixture = function(tx) {
 /*
   Application
 */
-let cfg = new ProseEditorConfigurator()
+let cfg = new Configurator()
 cfg.import(ProseEditorPackage)
 cfg.import(AlienPackage)
 
@@ -135,4 +138,3 @@ window.onload = function() {
     editorSession: editorSession
   }, document.body)
 }
-
