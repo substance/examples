@@ -3,7 +3,7 @@ import {
   ProseEditorPackage, BlockNodeComponent, TextPropertyEditor
 } from 'substance'
 
-const { ProseEditor } = ProseEditorPackage
+const { ProseEditor } = ProseEditorPackage
 
 /*
   Node definition
