@@ -1,11 +1,12 @@
 import {
-  ProseEditor, ProseEditorConfigurator, EditorSession,
-  ProseEditorPackage
+  Configurator, EditorSession, ProseEditorPackage
 } from 'substance'
+
+const { ProseEditor } = ProseEditorPackage
 
 import fixture from './fixture'
 
-let cfg = new ProseEditorConfigurator()
+let cfg = new Configurator()
 cfg.import(ProseEditorPackage)
 
 window.onload = function() {

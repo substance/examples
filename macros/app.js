@@ -1,7 +1,10 @@
 import {
-  ProseEditor, ProseEditorConfigurator, EditorSession,
-  ProseEditorPackage, HeadingMacro
+  Configurator, EditorSession,
+  ProseEditorPackage, HeadingPackage
 } from 'substance'
+
+const { ProseEditor } = ProseEditorPackage
+const { HeadingMacro } = HeadingPackage
 
 /*
   Example document
@@ -26,7 +29,7 @@ const fixture = function(tx) {
   Application
 */
 
-let cfg = new ProseEditorConfigurator()
+let cfg = new Configurator()
 cfg.import(ProseEditorPackage)
 cfg.addMacro(HeadingMacro)
 

@@ -1,14 +1,15 @@
 import {
-  EditorSession, ProseEditor, ProseEditorConfigurator, ProseEditorPackage
+  EditorSession, Configurator, ProseEditorPackage
 } from 'substance'
+
+const { ProseEditor } = ProseEditorPackage
 
 import fixture from './fixture'
 import ContainerPackage from './container/ContainerPackage'
 
-
-let cfg = new ProseEditorConfigurator()
-cfg.import(ProseEditorPackage);
-cfg.import(ContainerPackage);
+let cfg = new Configurator()
+cfg.import(ProseEditorPackage)
+cfg.import(ContainerPackage)
 
 window.onload = function() {
   let doc = cfg.createArticle(fixture)

@@ -1,6 +1,6 @@
 import ExpressionReference from './ExpressionReference'
 import ExpressionReferenceComponent from './ExpressionReferenceComponent'
-import DropExpressionReference from './DropExpressionReference'
+// import DropExpressionReference from './DropExpressionReference'
 
 export default {
   name: 'expression-reference',

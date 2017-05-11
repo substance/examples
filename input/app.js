@@ -1,6 +1,8 @@
 import {
-  ProseEditor, Configurator, EditorSession, ProseEditorPackage
+  Configurator, EditorSession, ProseEditorPackage
 } from 'substance'
+
+const { ProseEditor } = ProseEditorPackage
 
 import InputPackage from './input/InputPackage'
 import fixture from './fixture'
