@@ -94,7 +94,10 @@ examples.forEach(function(name) {
 })
 
 // Used for deployment (transpiled js and css)
-b.task('default', ['clean', 'assets', 'examples'])
+// b.task('default', ['clean', 'assets', 'examples'])
+// quick-fix: using the dev setup because the legacy transpilation
+// setup is broken ATM
+b.task('default', ['dev'])
 
 // Used for development (native js + css)
 b.task('dev', ['clean', 'dev:assets', 'dev:examples'])
