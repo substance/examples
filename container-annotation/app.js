@@ -1,8 +1,10 @@
 import {
-  ProseEditor, ProseEditorConfigurator, EditorSession,
-  ProseEditorPackage,
-  ContainerAnnotation, ContainerAnnotationCommand, AnnotationTool
+  Configurator, EditorSession,
+  ProseEditorPackage, ContainerAnnotationPackage
 } from 'substance'
+
+const { ProseEditor } = ProseEditorPackage
+const { ContainerAnnotation, ContainerAnnotationCommand } = ContainerAnnotationPackage
 
 import fixture from './fixture'
 
@@ -20,8 +22,7 @@ const HighlightPackage = {
   name: 'highlight',
   configure: function(config) {
     config.addNode(Highlight)
-    config.addCommand('highlight', ContainerAnnotationCommand, {nodeType: 'highlight'})
-    config.addTool('highlight', AnnotationTool, { toolGroup: 'default' })
+    config.addCommand('highlight', ContainerAnnotationCommand, {nodeType: 'highlight', commandGroup: 'annotations'})
     config.addIcon('highlight', { 'fontawesome': 'fa-pencil' })
   }
 }
@@ -29,8 +30,9 @@ const HighlightPackage = {
 /*
   Application
 */
-let cfg = new ProseEditorConfigurator()
+let cfg = new Configurator()
 cfg.import(ProseEditorPackage)
+cfg.import(ContainerAnnotationPackage)
 cfg.import(HighlightPackage)
 
 window.onload = function() {

@@ -8,6 +8,7 @@ require('events').EventEmitter.prototype._maxListeners = 100
 
 var examples = [
   'code-editor',
+  'container-annotation',
   'focused',
   'form',
   'image',
